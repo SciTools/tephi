@@ -1,0 +1,3 @@
+# pressure, temperature, wind_direction, wind_speed
+1012, 13.2, 267, 10
+1014, 14.0, 315, 12
