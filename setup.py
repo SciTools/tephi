@@ -11,5 +11,6 @@ setup(
                  'GNU Lesser General Public License v3 (LGPLv3)'],
     description='Tephigram plotting in Python',
     long_description=open('README.rst').read(),
-    test_suite='tephi.tests'
+    test_suite='tephi.tests',
+    zip_safe=False
 )
