@@ -9,9 +9,9 @@ This section describes how to visualise one or more data sets as a tephigram.
 
    import os.path
    import tephi
-   dew_point = os.path.join(tephi.RESOURCES_DIR, 'dews.txt')
-   dry_bulb = os.path.join(tephi.RESOURCES_DIR, 'temps.txt')
-   winds = os.path.join(tephi.RESOURCES_DIR, 'barbs.txt')
+   dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
+   dry_bulb = os.path.join(tephi.DATA_DIR, 'temps.txt')
+   winds = os.path.join(tephi.DATA_DIR, 'barbs.txt')
    dews, temps = tephi.loadtxt(dew_point, dry_bulb)
 
 
@@ -61,11 +61,11 @@ And a 2-dimensional *dry-bulb* data set, with each named tuple printed individua
     -69.]
 
 A convenience function, as introduced above, has been provided to assist with loading one or more text files of pressure, temperature, wind speed and wind direction data; see :func:`tephi.loadtxt`. 
-Here it is used to load the third example data set that contains four columns of data, being *pressure*, *temperature*, *wind speed* and *wind direction*:
+Here it is used to load the third example data set that contains four columns of data, being *pressure*, *temperature*, *wind speed* and *wind direction*::
 
     >>> import os.path
     >>> import tephi
-    >>> winds = os.path.join(tephi.RESOURCES_DIR, 'barbs.txt')
+    >>> winds = os.path.join(tephi.DATA_DIR, 'barbs.txt')
     >>> columns = ('pressure', 'dewpoint', 'wind_speed', 'wind_direction')
     >>> barbs = tephi.loadtxt(winds, column_titles=columns)
     >>> barbs
@@ -107,7 +107,7 @@ The temperature profile of a single tephigram data set can easily be plotted.
 
    import tephi
 
-   dew_point = os.path.join(tephi.RESOURCES_DIR, 'dews.txt')
+   dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
    tpg = tephi.Tephigram()
@@ -129,8 +129,8 @@ Plotting more than one data set is achieved by over-plotting each data set indiv
 
     import tephi
 
-    dew_point = os.path.join(tephi.RESOURCES_DIR, 'dews.txt')
-    dry_bulb = os.path.join(tephi.RESOURCES_DIR, 'temps.txt')
+    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
+    dry_bulb = os.path.join(tephi.DATA_DIR, 'temps.txt')
     column_titles = [('pressure', 'dewpoint'), ('pressure', 'temperature')]
     dew_data, temp_data = tephi.loadtxt(dew_point, dry_bulb, column_titles=column_titles)
     dews = zip(dew_data.pressure, dew_data.dewpoint)
@@ -160,7 +160,7 @@ This transparency allows full control when plotting a temperature profile on the
 
    import tephi
 
-   dew_point = os.path.join(tephi.RESOURCES_DIR, 'dews.txt')
+   dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
    tpg = tephi.Tephigram()
@@ -184,7 +184,7 @@ However, fixed axis tick locations can easily be configured for either axis if r
 
    import tephi
 
-   dew_point = os.path.join(tephi.RESOURCES_DIR, 'dews.txt')
+   dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
    tpg = tephi.Tephigram(isotherm_locator=tephi.Locator(10), dry_adiabat_locator=tephi.Locator(20))
@@ -215,7 +215,7 @@ To fix the extent of a plot, simply specify an :term:`anchor` point to the tephi
 
    import tephi
 
-   dew_point = os.path.join(tephi.RESOURCES_DIR, 'dews.txt')
+   dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
    tpg = tephi.Tephigram(anchor=[(1000, 0), (300, 0)])
