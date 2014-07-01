@@ -1,5 +1,5 @@
 """
-The edson module provides tephigram plotting of pressure, temperature and wind
+The tephi module provides tephigram plotting of pressure, temperature and wind
 barb data.
 
 .. warning::
@@ -19,6 +19,9 @@ import os.path
 
 import isopleths
 import transforms
+
+
+__version__ = '0.1.0-alpha'
 
 
 #
@@ -53,8 +56,9 @@ MAX_WET_ADIABAT = 60  # degC
 MIN_TEMPERATURE = -50 # degC
 
 
-RESOURCES_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)),
-                             'resources')
+RESOURCES_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'etc')
+DATA_DIR = os.path.join(RESOURCES_DIR, 'test_data')
+RESULTS_DIR = os.path.join(RESOURCES_DIR, 'test_results')
 
 
 def loadtxt(*filenames, **kwargs):
@@ -72,11 +76,11 @@ def loadtxt(*filenames, **kwargs):
     For example:
 
     >>> import os.path
-    >>> import edson
+    >>> import tephi
 
-    >>> winds = os.path.join(edson.RESOURCES_DIR, 'tephigram', 'barbs.txt')
+    >>> winds = os.path.join(tephi.DATA_DIR, 'barbs.txt')
     >>> columns = ('pressure', 'dewpoint', 'wind_speed', 'wind_direction')
-    >>> data = edson.loadtxt(winds, column_titles=columns)
+    >>> data = tephi.loadtxt(winds, column_titles=columns)
     >>> pressure = data.pressure
     >>> dews = data.dewpoint
     >>> wind_speed = data.wind_speed
@@ -205,7 +209,7 @@ class Locator(object):
 
         For example:
 
-            >>> from edson import Locator
+            >>> from tephi import Locator
             >>> locator = Locator(10)
             >>> locator(-45, 23)
             (array([-50, -40, -30, -20, -10,   0,  10,  20]), 8, 1)
@@ -463,10 +467,10 @@ class Tephigram(object):
             tephigram plot. If a figure is not provided, a new figure will
             be created by default.
         * isotherm_locator:
-            A :class:`edson.Locator` instance or a numeric step size
+            A :class:`tephi.Locator` instance or a numeric step size
             for the isotherm lines.
         * dry_adiabat_locator:
-            A :class:`edson.Locator` instance or a numeric step size
+            A :class:`tephi.Locator` instance or a numeric step size
             for the dry adiabat lines.
         * anchor:
             A sequence of two pressure, temperature pairs specifying the extent
@@ -481,17 +485,17 @@ class Tephigram(object):
 
             import matplotlib.pyplot as plt
             import os.path
-            import edson
-            from edson import Tephigram
+            import tephi
+            from tephi import Tephigram
 
-            dew_point = os.path.join(edson.RESOURCES_DIR, 'tephigram', 'dews.txt')
-            dry_bulb = os.path.join(edson.RESOURCES_DIR, 'tephigram', 'temps.txt')
-            dew_data, temp_data = edson.loadtxt(dew_point, dry_bulb)
+            dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
+            dry_bulb = os.path.join(tephi.DATA_DIR, 'temps.txt')
+            dew_data, temp_data = tephi.loadtxt(dew_point, dry_bulb)
             dews = zip(dew_data.pressure, dew_data.temperature)
             temps = zip(temp_data.pressure, temp_data.temperature)
-            tephi = Tephigram()
-            tephi.plot(dews, label='Dew-point', color='blue', linewidth=2, marker='s')
-            tephi.plot(temps, label='Dry-bulb', color='red', linewidth=2, marker='o')
+            tpg = Tephigram()
+            tpg.plot(dews, label='Dew-point', color='blue', linewidth=2, marker='s')
+            tpg.plot(temps, label='Dry-bulb', color='red', linewidth=2, marker='o')
             plt.show()
 
         """
@@ -666,19 +670,19 @@ class Tephigram(object):
             :include-source:
 
             import matplotlib.pyplot as plt
-            from edson import Tephigram
+            from tephi import Tephigram
 
-            tephi = Tephigram()
+            tpg = Tephigram()
             data = [[1006, 26.4], [924, 20.3], [900, 19.8],
                     [850, 14.5], [800, 12.9], [755, 8.3]]
-            profile = tephi.plot(data, color='red', linestyle='--',
-                                 linewidth=2, marker='o')
+            profile = tpg.plot(data, color='red', linestyle='--',
+                               linewidth=2, marker='o')
             barbs = [(10, 45, 900), (20, 60, 850), (25, 90, 800)]
             profile.barbs(barbs)
             plt.show()
 
         For associating wind barbs with an environmental lapse rate profile,
-        see :meth:`~edson.isopleths.Profile.barbs`.
+        see :meth:`~tephi.isopleths.Profile.barbs`.
 
         """
         profile = isopleths.Profile(data, self.axes)

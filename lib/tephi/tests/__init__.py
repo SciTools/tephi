@@ -1,13 +1,13 @@
 """
 Provides enhanced testing capabilities.
 
-The primary class for this module is :class:`MontyTest`.
+The primary class for this module is :class:`TephiTest`.
 
 When importing this module, sys.argv is inspected to identify the flags
 ``-d`` and ``-sf`` which toggle displaying and saving image tests respectively.
 
 .. note:: The ``-d`` option sets the matplotlib backend to either agg or
-    tkagg. For this reason ``monty.tests`` **must** be imported before
+    tkagg. For this reason ``tephi.tests`` **must** be imported before
     ``matplotlib.pyplot``
 
 """
@@ -30,11 +30,13 @@ import matplotlib
 # import matplotlib.pyplot as plt
 import numpy
 
+from tephi import DATA_DIR, RESULTS_DIR
 
-_DATA_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data')
+
+_DATA_PATH = DATA_DIR
 """Basepath for test data."""
 
-_RESULT_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'results')
+_RESULT_PATH = RESULTS_DIR
 """Basepath for test results."""
 
 
@@ -59,7 +61,7 @@ else:
 # Imported now so that matplotlib.use can work 
 import matplotlib.pyplot as plt
 
-if '-sf' in sys.argv or os.environ.get('MONTY_TEST_SAVE_FIGURES', '') == '1':
+if '-sf' in sys.argv or os.environ.get('TEPHI_TEST_SAVE_FIGURES', '') == '1':
     if '-sf' in sys.argv:
         sys.argv.remove('-sf')
     _SAVE_FIGURES = True
@@ -84,7 +86,7 @@ def main():
         finally:
             sys.stdout = stdout
             lines = buff.getvalue().split('\n')
-            lines.insert(9, 'Monty-specific options:')
+            lines.insert(9, 'Tephi-specific options:')
             lines.insert(10, '  -d                   Display matplotlib figures (uses tkagg)')
             lines.insert(11, '  -sf                  Save matplotlib figures to subfolder "image_results"')
             print '\n'.join(lines)
@@ -114,10 +116,10 @@ def get_result_path(relative_path):
     return os.path.abspath(os.path.join(_RESULT_PATH, relative_path))
 
 
-class MontyTest(unittest.TestCase):
+class TephiTest(unittest.TestCase):
     """
     A subclass of unittest.TestCase which provides testing functionality
-    specific to Monty.
+    specific to tephi.
     
     """
 
@@ -155,7 +157,7 @@ class MontyTest(unittest.TestCase):
         #   python tests/test_brand.py
         #       => '__main__.TestBranding.test_combo'
         #   python -m unittest discover
-        #       => 'monty.tests.test_brand.TestBranding.test_combo'
+        #       => 'tephi.tests.test_brand.TestBranding.test_combo'
         bits = self.id().split('.')[-3:]
         if bits[0] == '__main__':
             file_name = os.path.basename(sys.modules['__main__'].__file__)
@@ -200,7 +202,7 @@ class MontyTest(unittest.TestCase):
         return numpy.testing.assert_array_almost_equal(a, b, *args, **kwargs)
 
 
-class GraphicsTest(MontyTest):
+class GraphicsTest(TephiTest):
     def tearDown(self):
         # If a plotting test bombs out it can leave the current figure in an
         # odd state, so we make sure it's been disposed of.
@@ -231,7 +233,8 @@ class GraphicsTest(MontyTest):
         try:
             suffix = '.png'
             if _SAVE_FIGURES:
-                file_path = os.path.join('image_results', unique_id) + suffix
+                file_path = get_result_path(('image_results',
+                                             unique_id + suffix))
                 dir_path = os.path.dirname(file_path)
                 if not os.path.isdir(dir_path):
                     os.makedirs(dir_path)

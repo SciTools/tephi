@@ -13,7 +13,6 @@ build/
 develop-eggs/
 dist/
 eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -46,6 +45,12 @@ coverage.xml
 .ropeproject
 
 # Django stuff:
+
+# Created by editiors
+*~
+\#*
+\.\#*
+*.swp
 *.log
 *.pot
 
