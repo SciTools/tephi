@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='tephi',
-    version='0.1.0-alpha',
+    version='0.2.0-alpha',
     url='https://github.com/SciTools/tephi',
     author='Bill Little',
     author_email='bill.james.little@gmail.com',
