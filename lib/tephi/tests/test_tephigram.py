@@ -150,13 +150,13 @@ class TestTephigramPlot(tests.GraphicsTest):
 
     def test_plot_temps_custom(self):
         tpg = Tephigram()
-        tpg.plot(self.temps, label='Dry-bulb emperature', linewidth=2, color='red', marker='o')
+        tpg.plot(self.temps, label='Dry-bulb temperature', linewidth=2, color='red', marker='o')
         self.check_graphic()
 
     def test_plot_dews_temps_custom(self):
         tpg = Tephigram()
         tpg.plot(self.dews, label='Dew-point temperature', linewidth=2, color='blue', marker='s')
-        tpg.plot(self.temps, label='Dry-bulb emperature', linewidth=2, color='red', marker='o')
+        tpg.plot(self.temps, label='Dry-bulb temperature', linewidth=2, color='red', marker='o')
         self.check_graphic()
 
     def test_plot_dews_locator_isotherm_numeric(self):
