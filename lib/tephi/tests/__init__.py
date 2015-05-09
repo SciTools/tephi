@@ -32,11 +32,11 @@ from __future__ import absolute_import, division, print_function
 import collections
 import contextlib
 import difflib
+import io
 import logging
 import os
 import os.path
 import platform
-import StringIO
 import sys
 import tempfile
 import unittest
@@ -95,7 +95,7 @@ def main():
     """
     if '-h' in sys.argv or '--help' in sys.argv:
         stdout = sys.stdout
-        buff = StringIO.StringIO()
+        buff = io.StringIO()
         # NB. unittest.main() raises an exception after it's shown the help text
         try:
             sys.stdout = buff
