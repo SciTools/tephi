@@ -24,8 +24,6 @@ from __future__ import absolute_import, division, print_function
 # before importing anything else.
 import tephi.tests as tests
 
-import cPickle
-
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -34,14 +32,14 @@ from tephi import Tephigram
 
 
 def _load_result(filename):
-    with open(tephi.tests.get_result_path(filename)) as f:
-        result = cPickle.load(f)
+    with np.load(tephi.tests.get_result_path(filename)) as f:
+        result = f['arr_0']
     return result
 
 
-_expected_dews = _load_result('dews.pkl')
-_expected_temps = _load_result('temps.pkl')
-_expected_barbs = _load_result('barbs.pkl')
+_expected_dews = _load_result('dews.npz')
+_expected_temps = _load_result('temps.npz')
+_expected_barbs = _load_result('barbs.npz')
 
 
 class TestTephigramLoadTxt(tests.TephiTest):
