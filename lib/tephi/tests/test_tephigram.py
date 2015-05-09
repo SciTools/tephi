@@ -114,10 +114,8 @@ class TestTephigramLoadTxt(tests.TephiTest):
 
 class TestTephigramPlot(tests.GraphicsTest):
     def setUp(self):
-        dew_data = _expected_dews
-        self.dews = zip(dew_data[0], dew_data[1])
-        temp_data = _expected_temps
-        self.temps = zip(temp_data[0], temp_data[1])
+        self.dews = _expected_dews.T
+        self.temps = _expected_temps.T
 
     def test_plot_dews(self):
         tpg = Tephigram()
@@ -200,9 +198,8 @@ class TestTephigramPlot(tests.GraphicsTest):
 
 class TestTephigramBarbs(tests.GraphicsTest):
     def setUp(self):
-        self.dews = zip(_expected_dews[0], _expected_dews[1])
-        temp_data = _expected_temps
-        self.temps = zip(_expected_temps[0], _expected_temps[1])
+        self.dews = _expected_dews.T
+        self.temps = _expected_temps.T
         magnitude = np.hstack(([0], np.arange(20) * 5 + 2, [102]))
         self.barbs = [(m, 45, 1000 - i*35) for i, m in enumerate(magnitude)]
 
@@ -232,8 +229,10 @@ class TestTephigramBarbs(tests.GraphicsTest):
 
     def test_barbs_from_file(self):
         tpg = Tephigram()
-        dews = zip(_expected_barbs[0], _expected_barbs[1])
-        barbs = zip(_expected_barbs[2], _expected_barbs[3], _expected_barbs[0])
+        dews = _expected_barbs.T[:, :2]
+        barbs = np.column_stack((_expected_barbs[2],
+                                 _expected_barbs[3],
+                                 _expected_barbs[0]))
         profile = tpg.plot(dews)
         profile.barbs(barbs, zorder=10)
         self.check_graphic()

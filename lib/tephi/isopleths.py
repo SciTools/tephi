@@ -315,8 +315,8 @@ class Barbs(object):
             ylim = self.axes.get_ylim()
             y = np.linspace(*ylim)[::-1]
             xdelta = xlim[1] - xlim[0]
-            x = np.asarray([xlim[1] - (xdelta * self._gutter)] * y.size)
-            points = self.axes.tephigram_inverse.transform(np.asarray(zip(x, y)))
+            x = np.ones(y.size) * (xlim[1] - (xdelta * self._gutter))
+            points = self.axes.tephigram_inverse.transform(np.column_stack((x, y)))
             temperature, theta = points[:, 0], points[:, 1]
             pressure, _ = transforms.temperature_theta_to_pressure_temperature(temperature,
                                                                                theta)
