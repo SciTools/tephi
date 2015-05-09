@@ -27,7 +27,7 @@ When importing this module, sys.argv is inspected to identify the flags
     ``matplotlib.pyplot``
 
 """
-from __future__ import print_function
+from __future__ import division, print_function
 
 import collections
 import contextlib

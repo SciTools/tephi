@@ -1,4 +1,4 @@
-# (C) British Crown Copyright 2014, Met Office
+# (C) British Crown Copyright 2014 - 2015, Met Office
 #
 # This file is part of tephi.
 #
@@ -18,6 +18,8 @@
 Tests the tephigram plotting capability provided by tephi.
 
 """
+from __future__ import division
+
 # Import tephi test package first so that some things can be initialised
 # before importing anything else.
 import tephi.tests as tests

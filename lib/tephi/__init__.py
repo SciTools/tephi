@@ -22,7 +22,7 @@ barb data.
     This is a beta release module and is liable to change.
 
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, division
 
 from collections import Iterable, namedtuple
 from functools import partial

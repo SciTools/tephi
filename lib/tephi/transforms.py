@@ -18,7 +18,7 @@
 Tephigram transform support.
 
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, division
 
 import matplotlib as mpl
 from matplotlib.transforms import Transform
