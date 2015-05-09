@@ -19,7 +19,7 @@ Tephigram isopleth support for generating and plotting tephigram lines,
 environment profiles and barbs.
 
 """
-from __future__ import absolute_import, division
+from __future__ import absolute_import, division, print_function
 
 import math
 from matplotlib.collections import PathCollection
