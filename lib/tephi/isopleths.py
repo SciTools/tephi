@@ -1,4 +1,4 @@
-# (C) British Crown Copyright 2014, Met Office
+# (C) British Crown Copyright 2014 - 2015, Met Office
 #
 # This file is part of tephi.
 #
@@ -19,6 +19,7 @@ Tephigram isopleth support for generating and plotting tephigram lines,
 environment profiles and barbs.
 
 """
+from __future__ import absolute_import
 
 import math
 from matplotlib.collections import PathCollection
@@ -28,8 +29,8 @@ from matplotlib.path import Path
 import numpy as np
 from scipy.interpolate import interp1d
 
-from _constants import CONST_CP, CONST_L, CONST_KELVIN, CONST_RD, CONST_RV
-import transforms
+from ._constants import CONST_CP, CONST_L, CONST_KELVIN, CONST_RD, CONST_RV
+from . import transforms
 
 
 # Wind barb speed (knots) ranges used since 1 January 1955.

@@ -1,4 +1,4 @@
-# (C) British Crown Copyright 2014, Met Office
+# (C) British Crown Copyright 2014 - 2015, Met Office
 #
 # This file is part of tephi.
 #
@@ -22,6 +22,7 @@ barb data.
     This is a beta release module and is liable to change.
 
 """
+from __future__ import absolute_import
 
 from collections import Iterable, namedtuple
 from functools import partial
@@ -33,8 +34,8 @@ import numbers
 import numpy as np
 import os.path
 
-import isopleths
-import transforms
+from . import isopleths
+from . import transforms
 
 
 __version__ = '0.2.0-alpha'
