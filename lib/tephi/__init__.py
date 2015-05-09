@@ -322,7 +322,7 @@ class _PlotGroup(dict):
             pairs.append((tag, [plot_func(tag), text]))
 
         dict.__init__(self, pairs)
-        for line, text in self.itervalues():
+        for line, text in self.values():
             line.set_visible(True)
             text.set_visible(True)
         self._visible = True
@@ -375,7 +375,7 @@ class _PlotGroup(dict):
         changed = False
         if zoom is None or self.zoom is None or zoom <= self.zoom:
             if not self._visible:
-                for line, text in self.itervalues():
+                for line, text in self.values():
                     line.set_visible(True)
                     text.set_visible(True)
                 changed = True
@@ -386,7 +386,7 @@ class _PlotGroup(dict):
         changed = False
         if self.zoom is not None and (zoom is None or zoom > self.zoom):
             if self._visible:
-                for tag, (line, text) in self.iteritems():
+                for tag, (line, text) in self.items():
                     if tag not in self.fixed:
                         line.set_visible(False)
                         text.set_visible(False)
@@ -466,7 +466,7 @@ class _PlotCollection(object):
         """
         changed = False
 
-        for group in self.groups.itervalues():
+        for group in self.groups.values():
             changed = group.refresh(zoom, xy_point) or changed
 
         return changed

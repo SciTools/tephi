@@ -361,7 +361,7 @@ class Barbs(object):
         self._kwargs.update(kwargs)
         self._custom_kwargs = dict(color=None, linewidth=1.5,
                                    zorder=self._kwargs['zorder'])
-        for key, values in self._custom.iteritems():
+        for key, values in self._custom.items():
             common = set(values).intersection(kwargs)
             if common:
                 self._custom_kwargs[key] = kwargs[sorted(common)[0]]
