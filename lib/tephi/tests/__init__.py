@@ -1,4 +1,4 @@
-# (C) British Crown Copyright 2014, Met Office
+# (C) British Crown Copyright 2014 - 2015, Met Office
 #
 # This file is part of tephi.
 #
@@ -27,6 +27,7 @@ When importing this module, sys.argv is inspected to identify the flags
     ``matplotlib.pyplot``
 
 """
+from __future__ import print_function
 
 import collections
 import contextlib
@@ -105,7 +106,7 @@ def main():
             lines.insert(9, 'Tephi-specific options:')
             lines.insert(10, '  -d                   Display matplotlib figures (uses tkagg)')
             lines.insert(11, '  -sf                  Save matplotlib figures to subfolder "image_results"')
-            print '\n'.join(lines)
+            print('\n'.join(lines))
     else:
         unittest.main()
 
@@ -267,7 +268,7 @@ class GraphicsTest(TephiTest):
 
             if _DISPLAY_FIGURES:
                 if resultant_checksum != checksum:
-                    print 'Test would have failed (new checksum: %s ; old checksum: %s)' % (resultant_checksum, checksum)
+                    print('Test would have failed (new checksum: %s ; old checksum: %s)' % (resultant_checksum, checksum))
                 plt.show()
             else:
                 self.assertEqual(resultant_checksum, checksum, 'Image checksums not equal for %s' % unique_id)
