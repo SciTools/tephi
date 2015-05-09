@@ -117,7 +117,7 @@ def get_data_path(relative_path):
     as a string, or sequence of strings.
     
     """
-    if not isinstance(relative_path, basestring):
+    if isinstance(relative_path, (list, tuple)):
         relative_path = os.path.join(*relative_path)
     return os.path.abspath(os.path.join(_DATA_PATH, relative_path))
 
@@ -128,7 +128,7 @@ def get_result_path(relative_path):
     as a string, or sequence of strings.
     
     """
-    if not isinstance(relative_path, basestring):
+    if isinstance(relative_path, (list, tuple)):
         relative_path = os.path.join(*relative_path)
     return os.path.abspath(os.path.join(_RESULT_PATH, relative_path))
 
