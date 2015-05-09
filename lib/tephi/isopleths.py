@@ -209,7 +209,7 @@ def wet_adiabat(max_pressure, min_temperature, axes,
     pressures = [max_pressure]
     dp = -5.0
 
-    for i in xrange(200):
+    for i in range(200):
         dp, dt = _wet_adiabat_gradient(min_temperature, pressures[i],
                                        temps[i], dp)
         temps.append(temps[i] + dt)
