@@ -1,4 +1,4 @@
-# (C) British Crown Copyright 2014, Met Office
+# (C) British Crown Copyright 2014 - 2015, Met Office
 #
 # This file is part of tephi.
 #
@@ -19,6 +19,7 @@ Tephigram isopleth support for generating and plotting tephigram lines,
 environment profiles and barbs.
 
 """
+from __future__ import absolute_import, division, print_function
 
 import math
 from matplotlib.collections import PathCollection
@@ -28,8 +29,8 @@ from matplotlib.path import Path
 import numpy as np
 from scipy.interpolate import interp1d
 
-from _constants import CONST_CP, CONST_L, CONST_KELVIN, CONST_RD, CONST_RV
-import transforms
+from ._constants import CONST_CP, CONST_L, CONST_KELVIN, CONST_RD, CONST_RV
+from . import transforms
 
 
 # Wind barb speed (knots) ranges used since 1 January 1955.
@@ -208,7 +209,7 @@ def wet_adiabat(max_pressure, min_temperature, axes,
     pressures = [max_pressure]
     dp = -5.0
 
-    for i in xrange(200):
+    for i in range(200):
         dp, dt = _wet_adiabat_gradient(min_temperature, pressures[i],
                                        temps[i], dp)
         temps.append(temps[i] + dt)
@@ -314,8 +315,8 @@ class Barbs(object):
             ylim = self.axes.get_ylim()
             y = np.linspace(*ylim)[::-1]
             xdelta = xlim[1] - xlim[0]
-            x = np.asarray([xlim[1] - (xdelta * self._gutter)] * y.size)
-            points = self.axes.tephigram_inverse.transform(np.asarray(zip(x, y)))
+            x = np.ones(y.size) * (xlim[1] - (xdelta * self._gutter))
+            points = self.axes.tephigram_inverse.transform(np.column_stack((x, y)))
             temperature, theta = points[:, 0], points[:, 1]
             pressure, _ = transforms.temperature_theta_to_pressure_temperature(temperature,
                                                                                theta)
@@ -360,7 +361,7 @@ class Barbs(object):
         self._kwargs.update(kwargs)
         self._custom_kwargs = dict(color=None, linewidth=1.5,
                                    zorder=self._kwargs['zorder'])
-        for key, values in self._custom.iteritems():
+        for key, values in self._custom.items():
             common = set(values).intersection(kwargs)
             if common:
                 self._custom_kwargs[key] = kwargs[sorted(common)[0]]

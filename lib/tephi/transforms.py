@@ -1,4 +1,4 @@
-# (C) British Crown Copyright 2014, Met Office
+# (C) British Crown Copyright 2014 - 2015, Met Office
 #
 # This file is part of tephi.
 #
@@ -18,13 +18,14 @@
 Tephigram transform support.
 
 """
+from __future__ import absolute_import, division, print_function
 
 import matplotlib as mpl
 from matplotlib.transforms import Transform
 import numpy as np
 import types
 
-from _constants import CONST_K, CONST_KELVIN, CONST_L, CONST_MA, CONST_RV
+from ._constants import CONST_K, CONST_KELVIN, CONST_L, CONST_MA, CONST_RV
 
 
 #

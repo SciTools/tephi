@@ -1,4 +1,4 @@
-# (C) British Crown Copyright 2014, Met Office
+# (C) British Crown Copyright 2014 - 2015, Met Office
 #
 # This file is part of tephi.
 #
@@ -27,15 +27,16 @@ When importing this module, sys.argv is inspected to identify the flags
     ``matplotlib.pyplot``
 
 """
+from __future__ import absolute_import, division, print_function
 
 import collections
 import contextlib
 import difflib
+import io
 import logging
 import os
 import os.path
 import platform
-import StringIO
 import sys
 import tempfile
 import unittest
@@ -94,7 +95,7 @@ def main():
     """
     if '-h' in sys.argv or '--help' in sys.argv:
         stdout = sys.stdout
-        buff = StringIO.StringIO()
+        buff = io.StringIO()
         # NB. unittest.main() raises an exception after it's shown the help text
         try:
             sys.stdout = buff
@@ -105,7 +106,7 @@ def main():
             lines.insert(9, 'Tephi-specific options:')
             lines.insert(10, '  -d                   Display matplotlib figures (uses tkagg)')
             lines.insert(11, '  -sf                  Save matplotlib figures to subfolder "image_results"')
-            print '\n'.join(lines)
+            print('\n'.join(lines))
     else:
         unittest.main()
 
@@ -116,7 +117,7 @@ def get_data_path(relative_path):
     as a string, or sequence of strings.
     
     """
-    if not isinstance(relative_path, basestring):
+    if isinstance(relative_path, (list, tuple)):
         relative_path = os.path.join(*relative_path)
     return os.path.abspath(os.path.join(_DATA_PATH, relative_path))
 
@@ -127,7 +128,7 @@ def get_result_path(relative_path):
     as a string, or sequence of strings.
     
     """
-    if not isinstance(relative_path, basestring):
+    if isinstance(relative_path, (list, tuple)):
         relative_path = os.path.join(*relative_path)
     return os.path.abspath(os.path.join(_RESULT_PATH, relative_path))
 
@@ -267,7 +268,7 @@ class GraphicsTest(TephiTest):
 
             if _DISPLAY_FIGURES:
                 if resultant_checksum != checksum:
-                    print 'Test would have failed (new checksum: %s ; old checksum: %s)' % (resultant_checksum, checksum)
+                    print('Test would have failed (new checksum: %s ; old checksum: %s)' % (resultant_checksum, checksum))
                 plt.show()
             else:
                 self.assertEqual(resultant_checksum, checksum, 'Image checksums not equal for %s' % unique_id)

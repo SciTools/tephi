@@ -1,4 +1,4 @@
-# (C) British Crown Copyright 2014, Met Office
+# (C) British Crown Copyright 2014 - 2015, Met Office
 #
 # This file is part of tephi.
 #
@@ -22,6 +22,7 @@ barb data.
     This is a beta release module and is liable to change.
 
 """
+from __future__ import absolute_import, division, print_function
 
 from collections import Iterable, namedtuple
 from functools import partial
@@ -32,9 +33,10 @@ from mpl_toolkits.axisartist import Subplot
 import numbers
 import numpy as np
 import os.path
+import sys
 
-import isopleths
-import transforms
+from . import isopleths
+from . import transforms
 
 
 __version__ = '0.2.0-alpha'
@@ -75,6 +77,11 @@ MIN_TEMPERATURE = -50 # degC
 RESOURCES_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'etc')
 DATA_DIR = os.path.join(RESOURCES_DIR, 'test_data')
 RESULTS_DIR = os.path.join(RESOURCES_DIR, 'test_results')
+
+if sys.version_info[0] >= 3:
+    _BASESTR = str
+else:
+    _BASESTR = (str, unicode)
 
 
 def loadtxt(*filenames, **kwargs):
@@ -155,16 +162,16 @@ def loadtxt(*filenames, **kwargs):
 
     if column_titles is not None:
         fields = column_titles[0]
-        if not isinstance(column_titles, basestring):
+        if not isinstance(column_titles, _BASESTR):
             if isinstance(fields, Iterable) and \
-                    not isinstance(fields, basestring):
+                    not isinstance(fields, _BASESTR):
                 # We've an iterable of iterables - multiple titles is True.
                 multiple_titles = True
                 if len(column_titles) > len(filenames):
                     msg = 'Received {} files but {} sets of column titles.'
                     raise ValueError(msg.format(len(column_titles),
                                      len(filenames)))
-            elif isinstance(fields, basestring):
+            elif isinstance(fields, _BASESTR):
                 # We've an iterable of title strings - use for namedtuple.
                 tephidata = namedtuple('tephidata', column_titles)
                 multiple_titles = False
@@ -182,7 +189,7 @@ def loadtxt(*filenames, **kwargs):
 
     data = []
     for ct, arg in enumerate(filenames):
-        if isinstance(arg, basestring):
+        if isinstance(arg, _BASESTR):
             if os.path.isfile(arg):
                 if multiple_titles:
                     tephidata = namedtuple('tephidata', column_titles[ct])
@@ -315,7 +322,7 @@ class _PlotGroup(dict):
             pairs.append((tag, [plot_func(tag), text]))
 
         dict.__init__(self, pairs)
-        for line, text in self.itervalues():
+        for line, text in self.values():
             line.set_visible(True)
             text.set_visible(True)
         self._visible = True
@@ -368,7 +375,7 @@ class _PlotGroup(dict):
         changed = False
         if zoom is None or self.zoom is None or zoom <= self.zoom:
             if not self._visible:
-                for line, text in self.itervalues():
+                for line, text in self.values():
                     line.set_visible(True)
                     text.set_visible(True)
                 changed = True
@@ -379,7 +386,7 @@ class _PlotGroup(dict):
         changed = False
         if self.zoom is not None and (zoom is None or zoom > self.zoom):
             if self._visible:
-                for tag, (line, text) in self.iteritems():
+                for tag, (line, text) in self.items():
                     if tag not in self.fixed:
                         line.set_visible(False)
                         text.set_visible(False)
@@ -459,7 +466,7 @@ class _PlotCollection(object):
         """
         changed = False
 
-        for group in self.groups.itervalues():
+        for group in self.groups.values():
             changed = group.refresh(zoom, xy_point) or changed
 
         return changed
@@ -507,8 +514,8 @@ class Tephigram(object):
             dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
             dry_bulb = os.path.join(tephi.DATA_DIR, 'temps.txt')
             dew_data, temp_data = tephi.loadtxt(dew_point, dry_bulb)
-            dews = zip(dew_data.pressure, dew_data.temperature)
-            temps = zip(temp_data.pressure, temp_data.temperature)
+            dews = np.column_stack((dew_data.pressure, dew_data.temperature))
+            temps = np.column_stack((temp_data.pressure, temp_data.temperature))
             tpg = Tephigram()
             tpg.plot(dews, label='Dew-point', color='blue', linewidth=2, marker='s')
             tpg.plot(temps, label='Dry-bulb', color='red', linewidth=2, marker='o')

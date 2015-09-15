@@ -1,4 +1,4 @@
-# (C) British Crown Copyright 2014, Met Office
+# (C) British Crown Copyright 2014 - 2015, Met Office
 #
 # This file is part of tephi.
 #
@@ -18,11 +18,11 @@
 Tests the tephigram plotting capability provided by tephi.
 
 """
+from __future__ import absolute_import, division, print_function
+
 # Import tephi test package first so that some things can be initialised
 # before importing anything else.
 import tephi.tests as tests
-
-import cPickle
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -32,14 +32,14 @@ from tephi import Tephigram
 
 
 def _load_result(filename):
-    with open(tephi.tests.get_result_path(filename)) as f:
-        result = cPickle.load(f)
+    with np.load(tephi.tests.get_result_path(filename)) as f:
+        result = f['arr_0']
     return result
 
 
-_expected_dews = _load_result('dews.pkl')
-_expected_temps = _load_result('temps.pkl')
-_expected_barbs = _load_result('barbs.pkl')
+_expected_dews = _load_result('dews.npz')
+_expected_temps = _load_result('temps.npz')
+_expected_barbs = _load_result('barbs.npz')
 
 
 class TestTephigramLoadTxt(tests.TephiTest):
@@ -114,10 +114,8 @@ class TestTephigramLoadTxt(tests.TephiTest):
 
 class TestTephigramPlot(tests.GraphicsTest):
     def setUp(self):
-        dew_data = _expected_dews
-        self.dews = zip(dew_data[0], dew_data[1])
-        temp_data = _expected_temps
-        self.temps = zip(temp_data[0], temp_data[1])
+        self.dews = _expected_dews.T
+        self.temps = _expected_temps.T
 
     def test_plot_dews(self):
         tpg = Tephigram()
@@ -152,13 +150,13 @@ class TestTephigramPlot(tests.GraphicsTest):
 
     def test_plot_temps_custom(self):
         tpg = Tephigram()
-        tpg.plot(self.temps, label='Dry-bulb emperature', linewidth=2, color='red', marker='o')
+        tpg.plot(self.temps, label='Dry-bulb temperature', linewidth=2, color='red', marker='o')
         self.check_graphic()
 
     def test_plot_dews_temps_custom(self):
         tpg = Tephigram()
         tpg.plot(self.dews, label='Dew-point temperature', linewidth=2, color='blue', marker='s')
-        tpg.plot(self.temps, label='Dry-bulb emperature', linewidth=2, color='red', marker='o')
+        tpg.plot(self.temps, label='Dry-bulb temperature', linewidth=2, color='red', marker='o')
         self.check_graphic()
 
     def test_plot_dews_locator_isotherm_numeric(self):
@@ -200,9 +198,8 @@ class TestTephigramPlot(tests.GraphicsTest):
 
 class TestTephigramBarbs(tests.GraphicsTest):
     def setUp(self):
-        self.dews = zip(_expected_dews[0], _expected_dews[1])
-        temp_data = _expected_temps
-        self.temps = zip(_expected_temps[0], _expected_temps[1])
+        self.dews = _expected_dews.T
+        self.temps = _expected_temps.T
         magnitude = np.hstack(([0], np.arange(20) * 5 + 2, [102]))
         self.barbs = [(m, 45, 1000 - i*35) for i, m in enumerate(magnitude)]
 
@@ -232,8 +229,10 @@ class TestTephigramBarbs(tests.GraphicsTest):
 
     def test_barbs_from_file(self):
         tpg = Tephigram()
-        dews = zip(_expected_barbs[0], _expected_barbs[1])
-        barbs = zip(_expected_barbs[2], _expected_barbs[3], _expected_barbs[0])
+        dews = _expected_barbs.T[:, :2]
+        barbs = np.column_stack((_expected_barbs[2],
+                                 _expected_barbs[3],
+                                 _expected_barbs[0]))
         profile = tpg.plot(dews)
         profile.barbs(barbs, zorder=10)
         self.check_graphic()
