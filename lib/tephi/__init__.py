@@ -1,4 +1,4 @@
-# (C) British Crown Copyright 2014 - 2015, Met Office
+# (C) British Crown Copyright 2014 - 2017, Met Office
 #
 # This file is part of tephi.
 #
@@ -425,18 +425,25 @@ class _PlotCollection(object):
     """
     def __init__(self, axes, spec, stop, plot_func, text_kwargs, fixed=None, minimum=None, xfocus=None):
         if isinstance(stop, Iterable):
-            if minimum and minimum > max(stop):
-                raise ValueError('Minimum value of %r exceeds all other values' % minimum)
+            if minimum is not None:
+                if minimum > max(stop):
+                    emsg = 'Minimum value of {} exceeds all other values'
+                    raise ValueError(emsg.format(minimum))
 
             items = [[step, zoom, set(stop[step - 1::step])] for step, zoom in sorted(spec, reverse=True)]
         else:
-            if minimum and minimum > stop:
-                raise ValueError('Minimum value of %r exceeds maximum threshold %r' % (minimum, stop))
-
-            items = [[step, zoom, set(range(step, stop + step, step))] for step, zoom in sorted(spec, reverse=True)]
+            if minimum is not None:
+                if minimum > stop:
+                    emsg = 'Minimum value of {} exceeds maximum threshold {}'
+                    raise ValueError(emsg.format(minimum, stop))
+                items = [[step, zoom, set(range(minimum, stop + step, step))]
+                         for step, zoom in sorted(spec, reverse=True)]
+            else:
+                items = [[step, zoom, set(range(step, stop + step, step))]
+                         for step, zoom in sorted(spec, reverse=True)]
 
         for index, item in enumerate(items):
-            if minimum:
+            if minimum is not None:
                 item[2] = set([value for value in item[2] if value >= minimum])
 
             for subitem in items[index + 1:]:
