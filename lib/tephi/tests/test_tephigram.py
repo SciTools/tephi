@@ -24,7 +24,6 @@ from __future__ import absolute_import, division, print_function
 # before importing anything else.
 import tephi.tests as tests
 
-import matplotlib.pyplot as plt
 import numpy as np
 
 import tephi
@@ -70,8 +69,8 @@ class TestTephigramLoadTxt(tests.TephiTest):
     def test_load_multiple_files_same_column_names(self):
         columns = ('foo', 'bar')
         dews, temps = tephi.loadtxt(self.filename_dews,
-                                        self.filename_temps,
-                                        column_titles=columns)
+                                    self.filename_temps,
+                                    column_titles=columns)
         self.assertEqual(dews._fields, columns)
         self.assertEqual(temps._fields, columns)
 
@@ -79,31 +78,28 @@ class TestTephigramLoadTxt(tests.TephiTest):
         columns = [('pressure', 'dewpoint'),
                    ('pressure', 'wind_speed', 'wind_direction')]
         with self.assertRaises(ValueError):
-            dews = tephi.loadtxt(self.filename_dews, column_titles=columns)
+            tephi.loadtxt(self.filename_dews, column_titles=columns)
 
     def test_number_of_columns_and_titles_not_equal(self):
         columns = ('pressure', 'dewpoint', 'wind_speed')
         with self.assertRaises(TypeError):
-            barbs = tephi.loadtxt(self.filename_barbs,
-                                      column_titles=columns)
+            tephi.loadtxt(self.filename_barbs, column_titles=columns)
 
     def test_invalid_column_titles(self):
         columns = ('pres-sure', 'dew+point', 5)
         with self.assertRaises(ValueError):
-            dews = tephi.loadtxt(self.filename_dews,
-                                     column_titles=columns)
+            tephi.loadtxt(self.filename_dews, column_titles=columns)
 
     def test_non_iterable_column_title(self):
         # For the case of column titles, strings are considered non-iterable.
         columns = 'pressure'
         with self.assertRaises(TypeError):
-            dews = tephi.loadtxt(self.filename_dews,
-                                     column_titles=columns)
+            tephi.loadtxt(self.filename_dews, column_titles=columns)
 
     def test_delimiter(self):
         columns = ('pressure', 'temperature', 'wind_direction', 'wind_speed')
         data = tephi.loadtxt(self.filename_comma, column_titles=columns,
-                                 delimiter=',')
+                             delimiter=',')
         self.assertEqual(data.pressure.shape, (2,))
 
     def test_dtype(self):
@@ -145,18 +141,22 @@ class TestTephigramPlot(tests.GraphicsTest):
 
     def test_plot_dews_custom(self):
         tpg = Tephigram()
-        tpg.plot(self.dews, label='Dew-point temperature', linewidth=2, color='blue', marker='s')
+        tpg.plot(self.dews, label='Dew-point temperature', linewidth=2,
+                 color='blue', marker='s')
         self.check_graphic()
 
     def test_plot_temps_custom(self):
         tpg = Tephigram()
-        tpg.plot(self.temps, label='Dry-bulb temperature', linewidth=2, color='red', marker='o')
+        tpg.plot(self.temps, label='Dry-bulb temperature', linewidth=2,
+                 color='red', marker='o')
         self.check_graphic()
 
     def test_plot_dews_temps_custom(self):
         tpg = Tephigram()
-        tpg.plot(self.dews, label='Dew-point temperature', linewidth=2, color='blue', marker='s')
-        tpg.plot(self.temps, label='Dry-bulb temperature', linewidth=2, color='red', marker='o')
+        tpg.plot(self.dews, label='Dew-point temperature', linewidth=2,
+                 color='blue', marker='s')
+        tpg.plot(self.temps, label='Dry-bulb temperature', linewidth=2,
+                 color='red', marker='o')
         self.check_graphic()
 
     def test_plot_dews_locator_isotherm_numeric(self):

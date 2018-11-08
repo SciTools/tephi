@@ -31,7 +31,6 @@ from __future__ import absolute_import, division, print_function
 
 import collections
 import contextlib
-import difflib
 import io
 import logging
 import os
@@ -84,19 +83,20 @@ if '-sf' in sys.argv or os.environ.get('TEPHI_TEST_SAVE_FIGURES', '') == '1':
     _SAVE_FIGURES = True
 
 
-_PLATFORM = '%s_%s' % (''.join(platform.dist()[:2]), platform.architecture()[0])
+_PLATFORM = '%s_%s' % (''.join(platform.dist()[:2]),
+                       platform.architecture()[0])
 
 
 def main():
     """
     A wrapper for unittest.main() which adds customised options to the
     help (-h) output.
-    
+
     """
     if '-h' in sys.argv or '--help' in sys.argv:
         stdout = sys.stdout
         buff = io.StringIO()
-        # NB. unittest.main() raises an exception after it's shown the help text
+        # unittest.main() raises an exception after it's shown the help text
         try:
             sys.stdout = buff
             unittest.main()

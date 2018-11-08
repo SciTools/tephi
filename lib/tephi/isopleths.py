@@ -79,10 +79,8 @@ def mixing_ratio(min_pressure, max_pressure, axes,
 
     """
     pressures = np.linspace(min_pressure, max_pressure, 100)
-    temps = transforms.pressure_mixing_ratio_to_temperature(pressures,
-                                                            mixing_ratio_value)
-    _, thetas = transforms.pressure_temperature_to_temperature_theta(pressures,
-                                                                     temps)
+    temps = transforms.convert_pw2T(pressures, mixing_ratio_value)
+    _, thetas = transforms.convert_pT2Tt(pressures, temps)
     line, = axes.plot(temps, thetas, transform=transform, **kwargs)
 
     return line
@@ -106,11 +104,12 @@ def isobar(min_theta, max_theta, axes, transform, kwargs, pressure):
         Tephigram plotting :class:`matplotlib.axes.AxesSubplot` instance.
 
     * transform:
-        Tephigram plotting transformation :class:`matplotlib.transforms.CompositeGenericTransform`
-        instance.
+        Tephigram plotting transformation
+        :class:`matplotlib.transforms.CompositeGenericTransform` instance.
 
     * kwargs:
-        Keyword arguments for the isobar :class:`matplotlib.lines.Line2D` instance.
+        Keyword arguments for the isobar :class:`matplotlib.lines.Line2D`
+        instance.
 
     * pressure:
         The isobar pressure value, in mb or hPa, to be plotted.
@@ -121,7 +120,7 @@ def isobar(min_theta, max_theta, axes, transform, kwargs, pressure):
     """
     steps = 100
     thetas = np.linspace(min_theta, max_theta, steps)
-    _, temps = transforms.pressure_theta_to_pressure_temperature([pressure] * steps, thetas)
+    _, temps = transforms.convert_pt2pT([pressure] * steps, thetas)
     line, = axes.plot(temps, thetas, transform=transform, **kwargs)
 
     return line
@@ -134,19 +133,20 @@ def _wet_adiabat_gradient(min_temperature, pressure, temperature, dp):
     Args:
 
     * min_temperature:
-        Minimum potential temperature, in degC, for the wet adiabat line extent.
+        Minimum potential temperature, in degC, for the wet adiabat line
+        extent.
 
     * pressure:
-        Pressure point value, in mb or hPa, from which to calculate the gradient
-        difference.
+        Pressure point value, in mb or hPa, from which to calculate the
+        gradient difference.
 
     * temperature:
         Potential temperature point value, in degC, from which to calculate
         the gradient difference.
 
     * dp:
-        The wet adiabat change in pressure, in mb or hPa, from which to calculate
-        the gradient difference.
+        The wet adiabat change in pressure, in mb or hPa, from which to
+        calculate the gradient difference.
 
     Returns:
         The gradient change as a pressure, potential temperature value pair.
@@ -185,7 +185,8 @@ def wet_adiabat(max_pressure, min_temperature, axes,
         Maximum pressure, in mb or hPa, for the wet adiabat line extent.
 
     * min_temperature:
-        Minimum potential temperature, in degC, for the wet adiabat line extent.
+        Minimum potential temperature, in degC, for the wet adiabat line
+        extent.
 
     * axes:
         Tephigram plotting :class:`matplotlib.axes.AxesSubplot` instance.
@@ -215,8 +216,7 @@ def wet_adiabat(max_pressure, min_temperature, axes,
         temps.append(temps[i] + dt)
         pressures.append(pressures[i] + dp)
 
-    _, thetas = transforms.pressure_temperature_to_temperature_theta(pressures,
-                                                                     temps)
+    _, thetas = transforms.convert_pT2Tt(pressures, temps)
     line, = axes.plot(temps, thetas, transform=transform, **kwargs)
 
     return line
@@ -241,7 +241,8 @@ class Barbs(object):
         self._transform = axes.tephigram_transform + axes.transData
         self._kwargs = None
         self._custom_kwargs = None
-        self._custom = dict(color=['barbcolor', 'color', 'edgecolor', 'facecolor'],
+        self._custom = dict(color=['barbcolor', 'color', 'edgecolor',
+                                   'facecolor'],
                             linewidth=['lw', 'linewidth'],
                             linestyle=['ls', 'linestyle'])
 
@@ -294,13 +295,15 @@ class Barbs(object):
             pivot = self._kwargs.get('pivot', 'tip')
             offset = pivot_points[pivot]
             verts = [(0.0, offset), (0.0, length + offset)]
-            verts = mtransforms.Affine2D().rotate(math.radians(-angle)).transform(verts)
+            rangle = math.radians(-angle)
+            verts = mtransforms.Affine2D().rotate(rangle).transform(verts)
             codes = [Path.MOVETO, Path.LINETO]
             path = Path(verts, codes)
             size = length ** 2 / 4
             xy = np.array([[temperature, theta]])
             barb = PathCollection([path], (size,), offsets=xy,
-                                  transOffset=self._transform, **self._custom_kwargs)
+                                  transOffset=self._transform,
+                                  **self._custom_kwargs)
             barb.set_transform(mtransforms.IdentityTransform())
             self.axes.add_collection(barb)
         else:
@@ -316,18 +319,21 @@ class Barbs(object):
             y = np.linspace(*ylim)[::-1]
             xdelta = xlim[1] - xlim[0]
             x = np.ones(y.size) * (xlim[1] - (xdelta * self._gutter))
-            points = self.axes.tephigram_inverse.transform(np.column_stack((x, y)))
+            xy = np.column_stack((x, y))
+            points = self.axes.tephigram_inverse.transform(xy)
             temperature, theta = points[:, 0], points[:, 1]
-            pressure, _ = transforms.temperature_theta_to_pressure_temperature(temperature,
-                                                                               theta)
+            pressure, _ = transforms.convert_Tt2pT(temperature, theta)
             min_pressure, max_pressure = np.min(pressure), np.max(pressure)
             func = interp1d(pressure, temperature)
             for i, (speed, angle, pressure, barb) in enumerate(self.barbs):
                 if min_pressure < pressure < max_pressure:
-                    temperature, theta = transforms.pressure_temperature_to_temperature_theta(pressure,
-                                                                                              func(pressure))
+                    p2T = func(pressure)
+                    temperature, theta = transforms.convert_pT2Tt(pressure,
+                                                                  p2T)
                     if barb is None:
-                        self.barbs[i]['barb'] = self._make_barb(temperature, theta, speed, angle)
+                        self.barbs[i]['barb'] = self._make_barb(temperature,
+                                                                theta, speed,
+                                                                angle)
                     else:
                         barb.set_offsets(np.array([[temperature, theta]]))
                         barb.set_visible(True)
@@ -403,8 +409,8 @@ class Profile(object):
         self._transform = axes.tephigram_transform + axes.transData
         self.pressure = self.data[:, 0]
         self.temperature = self.data[:, 1]
-        _, self.theta = transforms.pressure_temperature_to_temperature_theta(self.pressure,
-                                                                             self.temperature)
+        _, self.theta = transforms.convert_pT2Tt(self.pressure,
+                                                 self.temperature)
         self.line = None
         self._barbs = Barbs(axes)
 
@@ -420,8 +426,8 @@ class Profile(object):
             The profile :class:`matplotlib.lines.Line2D`
 
         """
-        if self.line is not None and line in self.axes.lines:
-            self.axes.lines.remove(line)
+        if self.line is not None and self.line in self.axes.lines:
+            self.axes.lines.remove(self.line)
 
         if 'zorder' not in kwargs:
             kwargs['zorder'] = 10
