@@ -216,14 +216,14 @@ class _FormatterTheta(object):
     """Dry adiabats potential temperature axis tick formatter."""
 
     def __call__(self, direction, factor, values):
-        return [r"$\theta=%s$" % str(value) for value in values]
+        return [r"$\theta={:.1f}$".format(value) for value in values]
 
 
 class _FormatterIsotherm(object):
     """Isotherms temperature axis tick formatter."""
 
     def __call__(self, direction, factor, values):
-        return [r"  $T=%s$" % str(value) for value in values]
+        return [r"  $T={:.1f}$".format(value) for value in values]
 
 
 class Locator(object):
@@ -446,7 +446,7 @@ class _PlotCollection(object):
                      for step, zoom in sorted(spec, reverse=True)]
         else:
             if minimum and minimum > stop:
-                emsg = 'Minimum value of %r exceeds maximum threshold {!r}'
+                emsg = 'Minimum value of {!r} exceeds maximum threshold {!r}'
                 raise ValueError(emsg.format(minimum, stop))
 
             items = [[step, zoom, set(range(step, stop + step, step))]
