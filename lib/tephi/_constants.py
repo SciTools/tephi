@@ -1,4 +1,4 @@
-# (C) British Crown Copyright 2014 - 2015, Met Office
+# (C) British Crown Copyright 2014 - 2018, Met Office
 #
 # This file is part of tephi.
 #
@@ -14,7 +14,10 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with tephi.  If not, see <http://www.gnu.org/licenses/>.
-"""Tephigram transform and isopleth constants."""
+"""
+Tephigram transform and isopleth constants.
+
+"""
 from __future__ import absolute_import, division, print_function
 
 # TODO: Discover the meaning of the magic constant numbers.
