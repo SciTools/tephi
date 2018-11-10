@@ -20,10 +20,8 @@ Tephigram transform support.
 """
 from __future__ import absolute_import, division, print_function
 
-import matplotlib as mpl
 from matplotlib.transforms import Transform
 import numpy as np
-import types
 
 from ._constants import CONST_K, CONST_KELVIN, CONST_L, CONST_MA, CONST_RV
 
@@ -33,7 +31,7 @@ from ._constants import CONST_K, CONST_KELVIN, CONST_L, CONST_MA, CONST_RV
 #
 
 
-def temperature_theta_to_pressure_temperature(temperature, theta):
+def convert_Tt2pT(temperature, theta):
     """
     Transform temperature and potential temperature into
     pressure and temperature.
@@ -63,7 +61,7 @@ def temperature_theta_to_pressure_temperature(temperature, theta):
     return pressure, temperature
 
 
-def pressure_temperature_to_temperature_theta(pressure, temperature):
+def convert_pT2Tt(pressure, temperature):
     """
     Transform pressure and temperature into temperature and
     potential temperature.
@@ -92,7 +90,7 @@ def pressure_temperature_to_temperature_theta(pressure, temperature):
     return temperature, theta - CONST_KELVIN
 
 
-def pressure_theta_to_pressure_temperature(pressure, theta):
+def convert_pt2pT(pressure, theta):
     """
     Transform pressure and potential temperature into pressure and temperature.
 
@@ -121,7 +119,7 @@ def pressure_theta_to_pressure_temperature(pressure, theta):
     return pressure, kelvin - CONST_KELVIN
 
 
-def temperature_theta_to_xy(temperature, theta):
+def convert_Tt2xy(temperature, theta):
     """
     Transform temperature and potential temperature to native display
     coordinates.
@@ -152,7 +150,7 @@ def temperature_theta_to_xy(temperature, theta):
     return x_data, y_data
 
 
-def xy_to_temperature_theta(x_data, y_data):
+def convert_xy2Tt(x_data, y_data):
     """
     Transform native display coordinates to temperature and
     potential temperature.
@@ -179,7 +177,7 @@ def xy_to_temperature_theta(x_data, y_data):
     return temperature, theta
 
 
-def pressure_mixing_ratio_to_temperature(pressure, mixing_ratio):
+def convert_pw2T(pressure, mixing_ratio):
     """
     Transform pressure and mixing ratios to temperature.
 
@@ -199,7 +197,8 @@ def pressure_mixing_ratio_to_temperature(pressure, mixing_ratio):
 
     # Calculate the dew-point.
     vapp = pressure * (8.0 / 5.0) * (mixing_ratio / 1000.0)
-    temp = 1.0 / ((1.0 / CONST_KELVIN) - ((CONST_RV / CONST_L) * np.log(vapp / 6.11)))
+    temp = 1.0 / ((1.0 / CONST_KELVIN) -
+                  ((CONST_RV / CONST_L) * np.log(vapp / 6.11)))
 
     return temp - CONST_KELVIN
 
@@ -226,7 +225,8 @@ class TephiTransform(Transform):
             Values to be transformed, with shape (N, 2).
 
         """
-        return np.concatenate(temperature_theta_to_xy(values[:, 0:1], values[:, 1:2]), axis=1)
+        return np.concatenate(convert_Tt2xy(values[:, 0:1], values[:, 1:2]),
+                              axis=1)
 
     def inverted(self):
         """Return the inverse transformation."""
@@ -256,7 +256,8 @@ class TephiTransformInverted(Transform):
            Values to be transformed, with shape (N, 2).
 
         """
-        return np.concatenate(xy_to_temperature_theta(values[:, 0:1], values[:, 1:2]), axis=1)
+        return np.concatenate(convert_xy2Tt(values[:, 0:1], values[:, 1:2]),
+                              axis=1)
 
     def inverted(self):
         """Return the inverse transformation."""

@@ -28,7 +28,8 @@ from collections import Iterable, namedtuple
 from functools import partial
 from matplotlib.font_manager import FontProperties
 import matplotlib.pyplot as plt
-from mpl_toolkits.axisartist.grid_helper_curvelinear import GridHelperCurveLinear
+from mpl_toolkits.axisartist.grid_helper_curvelinear \
+    import GridHelperCurveLinear
 from mpl_toolkits.axisartist import Subplot
 import numbers
 import numpy as np
@@ -48,30 +49,34 @@ __version__ = '0.2.0.dev0'
 DEFAULT_WIDTH = 700    # in pixels
 
 ISOBAR_SPEC = [(25, .03), (50, .10), (100, .25), (200, 1.5)]
-ISOBAR_LINE = {'color':'blue', 'linewidth':0.5, 'clip_on':True}
-ISOBAR_TEXT = {'size':8, 'color':'blue', 'clip_on':True, 'va':'bottom', 'ha':'right'}
+ISOBAR_LINE = {'color': 'blue', 'linewidth': 0.5, 'clip_on': True}
+ISOBAR_TEXT = {'size': 8, 'color': 'blue', 'clip_on': True, 'va': 'bottom',
+               'ha': 'right'}
 ISOBAR_FIXED = [50, 1000]
 
 WET_ADIABAT_SPEC = [(1, .05), (2, .15), (4, 1.5)]
-WET_ADIABAT_LINE = {'color':'orange', 'linewidth':0.5, 'clip_on':True}
-WET_ADIABAT_TEXT = {'size':8, 'color':'orange', 'clip_on':True, 'va':'bottom', 'ha':'left'}
+WET_ADIABAT_LINE = {'color': 'orange', 'linewidth': 0.5, 'clip_on': True}
+WET_ADIABAT_TEXT = {'size': 8, 'color': 'orange', 'clip_on': True,
+                    'va': 'bottom', 'ha': 'left'}
 WET_ADIABAT_FIXED = None
 
 MIXING_RATIO_SPEC = [(1, .05), (2, .18), (4, .3), (8, 1.5)]
-MIXING_RATIO_LINE = {'color':'green', 'linewidth':0.5, 'clip_on':True}
-MIXING_RATIO_TEXT = {'size':8, 'color':'green', 'clip_on':True, 'va':'bottom', 'ha':'right'}
-MIXING_RATIOS = [.001, .002, .005, .01, .02, .03, .05, .1, .15, .2, .3, .4, .5, .6, .8,
-                  1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 12.0, 14.0, 16.0,
-                  18.0, 20.0, 24.0, 28.0, 32.0, 36.0, 40.0, 44.0, 48.0, 52.0, 56.0, 60.0, 68.0, 80.0]
+MIXING_RATIO_LINE = {'color': 'green', 'linewidth': 0.5, 'clip_on': True}
+MIXING_RATIO_TEXT = {'size': 8, 'color': 'green', 'clip_on': True,
+                     'va': 'bottom', 'ha': 'right'}
+MIXING_RATIOS = [.001, .002, .005, .01, .02, .03, .05, .1, .15, .2, .3, .4, .5,
+                 .6, .8, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0,
+                 10.0, 12.0, 14.0, 16.0, 18.0, 20.0, 24.0, 28.0, 32.0, 36.0,
+                 40.0, 44.0, 48.0, 52.0, 56.0, 60.0, 68.0, 80.0]
 MIXING_RATIO_FIXED = None
 
-MIN_PRESSURE = 50     # mb = hPa
-MAX_PRESSURE = 1000   # mb = hPa
-MIN_THETA = 0         # degC
-MAX_THETA = 250       # degC
-MIN_WET_ADIABAT = 1   # degC
-MAX_WET_ADIABAT = 60  # degC
-MIN_TEMPERATURE = -50 # degC
+MIN_PRESSURE = 50      # mb = hPa
+MAX_PRESSURE = 1000    # mb = hPa
+MIN_THETA = 0          # degC
+MAX_THETA = 250        # degC
+MIN_WET_ADIABAT = 1    # degC
+MAX_WET_ADIABAT = 60   # degC
+MIN_TEMPERATURE = -50  # degC
 
 
 RESOURCES_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'etc')
@@ -222,8 +227,10 @@ class _FormatterIsotherm(object):
 
 
 class Locator(object):
-    """Determine the fixed step axis tick locations when called with a tick range."""
+    """
+    Determine the fixed step axis tick locations when called with a tick range.
 
+    """
     def __init__(self, step):
         """
         Set the fixed step value for the axis tick locations.
@@ -280,7 +287,8 @@ def _refresh_isopleths(axes):
     # Determine the display mid-point.
     x_point = xlim[0] + delta_xlim * 0.5
     y_point = ylim[0] + (ylim[1] - ylim[0]) * 0.5
-    xy_point = axes.tephigram_inverse.transform(np.array([[x_point, y_point]]))[0]
+    xy = np.array([[x_point, y_point]])
+    xy_point = axes.tephigram_inverse.transform(xy)[0]
 
     for profile in axes.tephigram_profiles:
         profile.refresh()
@@ -307,7 +315,8 @@ class _PlotGroup(dict):
     Manages the creation and plotting of all isopleths within the group.
 
     """
-    def __init__(self, axes, plot_func, text_kwargs, step, zoom, tags, fixed=None, xfocus=None):
+    def __init__(self, axes, plot_func, text_kwargs, step, zoom, tags,
+                 fixed=None, xfocus=None):
         self.axes = axes
         self.text_kwargs = text_kwargs
         self.step = step
@@ -341,11 +350,13 @@ class _PlotGroup(dict):
         self.xfocus = xfocus
 
     def __setitem__(self, tag, item):
-        raise ValueError('Cannot add or set an item into the plot group %r' % self.step)
+        emsg = 'Cannot add or set an item into the plot group {!r}'
+        raise ValueError(emsg.format(self.step))
 
     def __getitem__(self, tag):
         if tag not in self.keys():
-            raise KeyError('Tag item %r is not a member of the plot group %r' % (tag, self.step))
+            emsg = 'Tag item {!r} is not a member of the plot group {!r}'
+            raise KeyError(emsg.format(tag, self.step))
         return dict.__getitem__(self, tag)
 
     def refresh(self, zoom, xy_point):
@@ -402,7 +413,8 @@ class _PlotGroup(dict):
         if self.xfocus:
             delta = np.power(x_data - xy_point[0], 2)
         else:
-            delta = np.power(x_data - xy_point[0], 2) + np.power(y_data - xy_point[1], 2)
+            delta = np.power(x_data - xy_point[0], 2) + \
+                    np.power(y_data - xy_point[1], 2)
         index = np.argmin(delta)
         text.set_position((x_data[index], y_data[index]))
 
@@ -423,17 +435,22 @@ class _PlotCollection(object):
     lines and pseudo saturated wet adiabats.
 
     """
-    def __init__(self, axes, spec, stop, plot_func, text_kwargs, fixed=None, minimum=None, xfocus=None):
+    def __init__(self, axes, spec, stop, plot_func, text_kwargs, fixed=None,
+                 minimum=None, xfocus=None):
         if isinstance(stop, Iterable):
             if minimum and minimum > max(stop):
-                raise ValueError('Minimum value of %r exceeds all other values' % minimum)
+                emsg = 'Minimum value of {!r} exceeds all other values'
+                raise ValueError(emsg.format(minimum))
 
-            items = [[step, zoom, set(stop[step - 1::step])] for step, zoom in sorted(spec, reverse=True)]
+            items = [[step, zoom, set(stop[step - 1::step])]
+                     for step, zoom in sorted(spec, reverse=True)]
         else:
             if minimum and minimum > stop:
-                raise ValueError('Minimum value of %r exceeds maximum threshold %r' % (minimum, stop))
+                emsg = 'Minimum value of %r exceeds maximum threshold {!r}'
+                raise ValueError(emsg.format(minimum, stop))
 
-            items = [[step, zoom, set(range(step, stop + step, step))] for step, zoom in sorted(spec, reverse=True)]
+            items = [[step, zoom, set(range(step, stop + step, step))]
+                     for step, zoom in sorted(spec, reverse=True)]
 
         for index, item in enumerate(items):
             if minimum:
@@ -443,10 +460,13 @@ class _PlotCollection(object):
                 subitem[2] -= item[2]
 
         self.groups = {item[0]:
-                       _PlotGroup(axes, plot_func, text_kwargs, *item, fixed=fixed, xfocus=xfocus) for item in items if item[2]}
+                       _PlotGroup(axes, plot_func, text_kwargs, *item,
+                                  fixed=fixed, xfocus=xfocus)
+                       for item in items if item[2]}
 
         if not self.groups:
-            raise ValueError('The plot collection failed to generate any plot groups')
+            emsg = 'The plot collection failed to generate any plot groups'
+            raise ValueError(emsg)
 
     def refresh(self, zoom, xy_point):
         """
@@ -507,6 +527,7 @@ class Tephigram(object):
             :include-source:
 
             import matplotlib.pyplot as plt
+            from numpy import column_stack
             import os.path
             import tephi
             from tephi import Tephigram
@@ -514,11 +535,11 @@ class Tephigram(object):
             dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
             dry_bulb = os.path.join(tephi.DATA_DIR, 'temps.txt')
             dew_data, temp_data = tephi.loadtxt(dew_point, dry_bulb)
-            dews = np.column_stack((dew_data.pressure, dew_data.temperature))
-            temps = np.column_stack((temp_data.pressure, temp_data.temperature))
+            dews = column_stack((dew_data.pressure, dew_data.temperature))
+            temps = column_stack((temp_data.pressure, temp_data.temperature))
             tpg = Tephigram()
-            tpg.plot(dews, label='Dew-point', color='blue', linewidth=2, marker='s')
-            tpg.plot(temps, label='Dry-bulb', color='red', linewidth=2, marker='o')
+            tpg.plot(dews, label='Dew-point', color='blue', linewidth=2)
+            tpg.plot(temps, label='Dry-bulb', color='red', linewidth=2)
             plt.show()
 
         """
@@ -536,7 +557,8 @@ class Tephigram(object):
         else:
             locator_isotherm = isotherm_locator
 
-        if dry_adiabat_locator and not isinstance(dry_adiabat_locator, Locator):
+        if dry_adiabat_locator and not isinstance(dry_adiabat_locator,
+                                                  Locator):
             if not isinstance(dry_adiabat_locator, numbers.Number):
                 raise ValueError('Invalid dry adiabat locator')
             locator_theta = Locator(dry_adiabat_locator)
@@ -545,12 +567,12 @@ class Tephigram(object):
 
         # Define the tephigram coordinate-system transformation.
         self.tephi_transform = transforms.TephiTransform()
-        grid_helper1 = GridHelperCurveLinear(self.tephi_transform,
-                                             tick_formatter1=_FormatterIsotherm(),
-                                             grid_locator1=locator_isotherm,
-                                             tick_formatter2=_FormatterTheta(),
-                                             grid_locator2=locator_theta)
-        self.axes = Subplot(self.figure, 1, 1, 1, grid_helper=grid_helper1)
+        ghelper = GridHelperCurveLinear(self.tephi_transform,
+                                        tick_formatter1=_FormatterIsotherm(),
+                                        grid_locator1=locator_isotherm,
+                                        tick_formatter2=_FormatterTheta(),
+                                        grid_locator2=locator_theta)
+        self.axes = Subplot(self.figure, 1, 1, 1, grid_helper=ghelper)
         self.transform = self.tephi_transform + self.axes.transData
         self.axes.axis['isotherm'] = self.axes.new_floating_axis(1, 0)
         self.axes.axis['theta'] = self.axes.new_floating_axis(0, 0)
@@ -616,27 +638,39 @@ class Tephigram(object):
         MIXING_RATIO_TEXT['transform'] = self.transform
 
         # Create plot collections for the tephigram isopleths.
-        func = partial(isopleths.isobar, MIN_THETA, MAX_THETA, self.axes, self.transform, ISOBAR_LINE)
-        self._isobars = _PlotCollection(self.axes, ISOBAR_SPEC, MAX_PRESSURE, func, ISOBAR_TEXT,
-                                        fixed=ISOBAR_FIXED, minimum=MIN_PRESSURE)
+        func = partial(isopleths.isobar, MIN_THETA, MAX_THETA, self.axes,
+                       self.transform, ISOBAR_LINE)
+        self._isobars = _PlotCollection(self.axes, ISOBAR_SPEC, MAX_PRESSURE,
+                                        func, ISOBAR_TEXT, fixed=ISOBAR_FIXED,
+                                        minimum=MIN_PRESSURE)
 
-        func = partial(isopleths.wet_adiabat, MAX_PRESSURE, MIN_TEMPERATURE, self.axes, self.transform, WET_ADIABAT_LINE)
-        self._wet_adiabats = _PlotCollection(self.axes, WET_ADIABAT_SPEC, MAX_WET_ADIABAT, func, WET_ADIABAT_TEXT,
-                                             fixed=WET_ADIABAT_FIXED, minimum=MIN_WET_ADIABAT, xfocus=True)
+        func = partial(isopleths.wet_adiabat, MAX_PRESSURE, MIN_TEMPERATURE,
+                       self.axes, self.transform, WET_ADIABAT_LINE)
+        self._wet_adiabats = _PlotCollection(self.axes, WET_ADIABAT_SPEC,
+                                             MAX_WET_ADIABAT, func,
+                                             WET_ADIABAT_TEXT,
+                                             fixed=WET_ADIABAT_FIXED,
+                                             minimum=MIN_WET_ADIABAT,
+                                             xfocus=True)
 
-        func = partial(isopleths.mixing_ratio, MIN_PRESSURE, MAX_PRESSURE, self.axes, self.transform, MIXING_RATIO_LINE)
-        self._mixing_ratios = _PlotCollection(self.axes, MIXING_RATIO_SPEC, MIXING_RATIOS, func, MIXING_RATIO_TEXT,
+        func = partial(isopleths.mixing_ratio, MIN_PRESSURE, MAX_PRESSURE,
+                       self.axes, self.transform, MIXING_RATIO_LINE)
+        self._mixing_ratios = _PlotCollection(self.axes, MIXING_RATIO_SPEC,
+                                              MIXING_RATIOS, func,
+                                              MIXING_RATIO_TEXT,
                                               fixed=MIXING_RATIO_FIXED)
 
         # Initialise for the tephigram plot event handler.
         plt.connect('motion_notify_event', _handler)
         self.axes.tephigram = True
-        self.axes.tephigram_original_delta_xlim = self.original_delta_xlim = DEFAULT_WIDTH
+        self.axes.tephigram_original_delta_xlim = DEFAULT_WIDTH
+        self.original_delta_xlim = DEFAULT_WIDTH
         self.axes.tephigram_transform = self.tephi_transform
         self.axes.tephigram_inverse = self.tephi_transform.inverted()
-        self.axes.tephigram_isopleths = [self._isobars, self._wet_adiabats, self._mixing_ratios]
+        self.axes.tephigram_isopleths = [self._isobars, self._wet_adiabats,
+                                         self._mixing_ratios]
 
-       # The tephigram profiles.
+        # The tephigram profiles.
         self._profiles = []
         self.axes.tephigram_profiles = self._profiles
 
@@ -645,13 +679,13 @@ class Tephigram(object):
         if self._anchor is not None:
             self._anchor = np.asarray(anchor)
             if self._anchor.ndim != 2 or self._anchor.shape[-1] != 2 or \
-              len(self._anchor) != 2:
+               len(self._anchor) != 2:
                 msg = 'Invalid anchor, expecting [(bottom-left-pressure, ' \
-                'bottom-left-temperature), (top-right-pressure, ' \
-                'top-right-temperature)]'
+                      'bottom-left-temperature), (top-right-pressure, ' \
+                      'top-right-temperature)]'
                 raise ValueError(msg)
             (bottom_pressure, bottom_temp), \
-              (top_pressure, top_temp) = self._anchor
+                (top_pressure, top_temp) = self._anchor
 
             if (bottom_pressure - top_pressure) < 0:
                 raise ValueError('Invalid anchor pressure range')
@@ -724,18 +758,21 @@ class Tephigram(object):
         # Show the plot legend.
         if 'label' in kwargs:
             font_properties = FontProperties(size='x-small')
-            plt.legend(loc='upper left', fancybox=True, shadow=True, prop=font_properties)
+            plt.legend(loc='upper left', fancybox=True, shadow=True,
+                       prop=font_properties)
 
         return profile
 
     def _status_bar(self, x_point, y_point):
         """Generate text for the interactive backend navigation status bar."""
 
-        temperature, theta = transforms.xy_to_temperature_theta(x_point, y_point)
-        pressure, _ = transforms.temperature_theta_to_pressure_temperature(temperature, theta)
+        temperature, theta = transforms.convert_xy2Tt(x_point, y_point)
+        pressure, _ = transforms.convert_Tt2pT(temperature, theta)
         xlim = self.axes.get_xlim()
         zoom = (xlim[1] - xlim[0]) / self.original_delta_xlim
-        text = "T:%.2f, theta:%.2f, phi:%.2f (zoom:%.3f)" % (float(temperature), float(theta), float(pressure), zoom)
+        msg = "T:{:.2f}, theta:{:.2f}, phi:{:.2f} (zoom:{:.3f})"
+        text = msg.format(float(temperature), float(theta),
+                          float(pressure), zoom)
 
         return text
 
@@ -743,18 +780,22 @@ class Tephigram(object):
         min_x = min_y = 1e10
         max_x = max_y = -1e-10
         profiles = self._profiles
+        transform = self.tephi_transform.transform
 
         if self._anchor is not None:
             profiles = [self._anchor]
 
         for profile in profiles:
-            xy_points = self.tephi_transform.transform(np.concatenate((profile.temperature.reshape(-1, 1),
-                                                                       profile.theta.reshape(-1, 1)),
-                                                                       axis=1))
+            temperature = profile.temperature.reshape(-1, 1)
+            theta = profile.theta.reshape(-1, 1)
+            xy_points = transform(np.concatenate((temperature, theta),
+                                                 axis=1))
             x_points = xy_points[:, 0]
             y_points = xy_points[:, 1]
-            min_x, min_y = np.min([min_x, np.min(x_points)]), np.min([min_y, np.min(y_points)])
-            max_x, max_y = np.max([max_x, np.max(x_points)]), np.max([max_y, np.max(y_points)])
+            min_x = np.min([min_x, np.min(x_points)])
+            min_y = np.min([min_y, np.min(y_points)])
+            max_x = np.max([max_x, np.max(x_points)])
+            max_y = np.max([max_y, np.max(y_points)])
 
         if xfactor is not None:
             delta_x = max_x - min_x
