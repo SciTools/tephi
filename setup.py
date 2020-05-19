@@ -11,12 +11,11 @@ from setuptools import find_packages, setup
 
 NAME = 'tephi'
 DIR = os.path.abspath(os.path.dirname(__file__))
-BASE = os.path.join(DIR, 'lib')
 
 
 def extract_version():
     version = None
-    fname = os.path.join(BASE, NAME, '__init__.py')
+    fname = os.path.join(DIR, NAME, '__init__.py')
     with open(fname, 'r') as fi:
         for line in fi:
             if (line.startswith('__version__')):
@@ -24,6 +23,13 @@ def extract_version():
                 version = version.strip()[1:-1]  # Remove quotation characters
                 break
     return version
+
+
+def load(fname):
+    result = []
+    with open(fname, 'r') as fi:
+        result = [package.strip() for package in fi.readlines()]
+    return result
 
 
 def long_description():
@@ -36,8 +42,7 @@ args = dict(
     name=NAME,
     version=extract_version(),
     author='UK Met Office',
-    packages=find_packages(where=BASE),
-    package_dir={'': 'lib'},
+    packages=find_packages(),
     package_data={'tephi': ['etc/test_data/*.txt',
                             'tests/results/*.npz',
                             'tests/results/*.json']},
@@ -51,9 +56,9 @@ args = dict(
     description='Tephigram plotting in Python',
     long_description=long_description(),
     long_description_content_type='text/x-rst',
-    test_suite='{}.tests'.format(NAME),
     setup_requires=['pytest-runner'],
-    tests_require=['pytest'],
+    tests_require=load("requirements-dev.txt"),
+    test_suite=f"{NAME}.tests",
 )
 
 

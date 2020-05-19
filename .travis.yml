@@ -44,6 +44,6 @@ install:
   - pip install -e .
 
 script:
-  - coverage run setup.py test
+  - pytest --cov 
 
 after_success: coveralls

@@ -5,11 +5,11 @@
 [run]
 branch = True
 include =
-    lib/tephi/*
+    tephi/*
 omit =
     setup.py
     docs/*
-    lib/tephi/tests/*
+    tephi/tests/*
     .eggs
 
 [report]
@@ -17,4 +17,3 @@ exclude_lines =
     pragma: no cover
     def __repr__
     if __name__ == .__main__.:
-
