@@ -196,8 +196,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'tephi.tex', u'tephi Documentation',
-   u'British Crown Copyright 2020, Met Office', 'manual'),
+    ('index', 'tephi.tex', u'tephi Documentation',
+     u'British Crown Copyright 2020, Met Office', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -257,7 +257,7 @@ texinfo_documents = [
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-   'python': ('http://docs.python.org/3.8', None),
-   'numpy': ('http://docs.scipy.org/doc/numpy/', None),
-   'matplotlib': ('http://matplotlib.sourceforge.net/', None),
+    'python': ('http://docs.python.org/3.8', None),
+    'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+    'matplotlib': ('http://matplotlib.sourceforge.net/', None),
 }
