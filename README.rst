@@ -1,7 +1,7 @@
 tephi
 =====
 
-|Travis|_
+|Travis|_ |Coveralls|_
 
 Tephigram plotting in Python.
 
@@ -39,3 +39,5 @@ These data structures can then be used to plot a tephigram::
 
 .. |Travis| image:: https://travis-ci.org/SciTools/tephi.svg?branch=master
 .. _Travis: https://travis-ci.org/SciTools/tephi
+.. |Coveralls| image:: https://coveralls.io/repos/github/SciTools/tephi/badge.svg?branch=master
+.. _Coveralls: https://coveralls.io/github/SciTools/tephi?branch=master
