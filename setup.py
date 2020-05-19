@@ -54,6 +54,7 @@ args = dict(
     test_suite='{}.tests'.format(NAME),
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
+    test_suite=f"{NAME}.tests",
 )
 
 
