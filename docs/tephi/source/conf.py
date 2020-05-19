@@ -241,8 +241,8 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'tephi', u'tephi Documentation',
-   u'British Crown Copyright 2020, Met Office', 'tephi', 'One line description of project.',
-   'Miscellaneous'),
+   u'British Crown Copyright 2020, Met Office', 'tephi',
+   'One line description of project.', 'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.

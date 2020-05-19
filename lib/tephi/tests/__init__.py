@@ -37,7 +37,6 @@ import os
 import sys
 import unittest
 
-import imagehash
 import filelock
 import matplotlib
 import numpy as np

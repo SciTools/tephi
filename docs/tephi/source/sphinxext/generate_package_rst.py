@@ -1,4 +1,4 @@
-# (C) British Crown Copyright 2010 - 2012, Met Office
+# (C) British Crown Copyright 2010 - 2020, Met Office
 #
 # This file is part of Iris.
 #
@@ -186,7 +186,7 @@ def do_package(package_name):
 
         sub_packages = (spackage for spackage, spackage_path in package_folder if spackage != package and spackage.startswith(package))
         paths = [os.path.join(*spackage.rsplit('.', 2)[-2:None])+'.rst' for spackage in sub_packages]
-        paths.extend( [os.path.join(os.path.basename(os.path.dirname(path)), os.path.splitext(os.path.basename(path))[0]) for imp_name, path in module_folders.get(package, [])])
+        paths.extend([os.path.join(os.path.basename(os.path.dirname(path)), os.path.splitext(os.path.basename(path))[0]) for imp_name, path in module_folders.get(package, [])])
         paths.sort()
         doc = auto_doc_package(package_path, package, root_package, paths)
 
