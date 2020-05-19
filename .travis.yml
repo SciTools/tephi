@@ -45,5 +45,6 @@ install:
 
 script:
   - coverage run setup.py test
+  - ls -lRa
 
 after_success: coveralls
