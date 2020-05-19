@@ -34,16 +34,21 @@ args = dict(
     packages=find_packages(where=BASE),
     package_dir={'': 'lib'},
     package_data={'tephi': ['etc/test_data/*.txt',
-                            'etc/test_results/*.pkl']},
+                            'tests/results/*.npz',
+                            'tests/results/*.json']},
     classifiers=['License :: OSI Approved :: '
                  'GNU Lesser General Public License v3 or later (LGPLv3+)',
                  'Programming Language :: Python',
-                 'Programming Language :: Python :: 2',
-                 'Programming Language :: Python :: 2.7'],
+                 'Programming Language :: Python :: 3',
+                 'Programming Language :: Python :: 3.6',
+                 'Programming Language :: Python :: 3.7',
+                 'Programming Language :: Python :: 3.8'],
     description='Tephigram plotting in Python',
     long_description=long_description(),
     long_description_content_type='text/x-rst',
     test_suite='{}.tests'.format(NAME),
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
 )
 
 

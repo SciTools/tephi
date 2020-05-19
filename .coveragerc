@@ -1,0 +1,20 @@
+#
+# .coveragerc to control coverage.py
+#
+
+[run]
+branch = True
+include =
+    lib/tephi/*
+omit =
+    setup.py
+    docs/*
+    lib/tephi/tests/*
+    .eggs
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if __name__ == .__main__.:
+

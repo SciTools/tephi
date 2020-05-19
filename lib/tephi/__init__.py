@@ -24,7 +24,8 @@ barb data.
 """
 from __future__ import absolute_import, division, print_function
 
-from collections import Iterable, namedtuple
+from collections import namedtuple
+from collections.abc import Iterable
 from functools import partial
 from matplotlib.font_manager import FontProperties
 import matplotlib.pyplot as plt
@@ -81,7 +82,6 @@ MIN_TEMPERATURE = -50  # degC
 
 RESOURCES_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'etc')
 DATA_DIR = os.path.join(RESOURCES_DIR, 'test_data')
-RESULTS_DIR = os.path.join(RESOURCES_DIR, 'test_results')
 
 if sys.version_info[0] >= 3:
     _BASESTR = str
@@ -212,21 +212,21 @@ def loadtxt(*filenames, **kwargs):
     return data
 
 
-class _FormatterTheta(object):
+class _FormatterTheta:
     """Dry adiabats potential temperature axis tick formatter."""
 
     def __call__(self, direction, factor, values):
         return [r"$\theta={:.1f}$".format(value) for value in values]
 
 
-class _FormatterIsotherm(object):
+class _FormatterIsotherm:
     """Isotherms temperature axis tick formatter."""
 
     def __call__(self, direction, factor, values):
         return [r"  $T={:.1f}$".format(value) for value in values]
 
 
-class Locator(object):
+class Locator:
     """
     Determine the fixed step axis tick locations when called with a tick range.
 
@@ -427,7 +427,7 @@ class _PlotGroup(dict):
                 self._generate_text(tag, xy_point)
 
 
-class _PlotCollection(object):
+class _PlotCollection:
     """
     Container for tephigram isopleths.
 
@@ -492,7 +492,7 @@ class _PlotCollection(object):
         return changed
 
 
-class Tephigram(object):
+class Tephigram:
     """
     Generate a tephigram of one or more pressure and temperature data sets.
 

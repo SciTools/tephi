@@ -181,30 +181,32 @@ def do_package(package_name):
         os.makedirs(out_dir)
         
     for package, package_path in package_folder:
-       if '._' in package or 'test' in package:
+        if '._' in package or 'test' in package:
             continue
 
-       sub_packages = (spackage for spackage, spackage_path in package_folder if spackage != package and spackage.startswith(package))
-       paths = [os.path.join(*spackage.rsplit('.', 2)[-2:None])+'.rst' for spackage in sub_packages]
-       paths.extend( [os.path.join(os.path.basename(os.path.dirname(path)), os.path.splitext(os.path.basename(path))[0]) for imp_name, path in module_folders.get(package, [])])
-       paths.sort()
-       doc = auto_doc_package(package_path, package, root_package, paths)
+        sub_packages = (spackage for spackage, spackage_path in package_folder if spackage != package and spackage.startswith(package))
+        paths = [os.path.join(*spackage.rsplit('.', 2)[-2:None])+'.rst' for spackage in sub_packages]
+        paths.extend( [os.path.join(os.path.basename(os.path.dirname(path)), os.path.splitext(os.path.basename(path))[0]) for imp_name, path in module_folders.get(package, [])])
+        paths.sort()
+        doc = auto_doc_package(package_path, package, root_package, paths)
 
-       package_dir = out_dir + package.replace('.', os.path.sep)
-       if not os.path.exists(package_dir):
-           os.makedirs(out_dir + package.replace('.', os.path.sep))
+        package_dir = out_dir + package.replace('.', os.path.sep)
+        if not os.path.exists(package_dir):
+            os.makedirs(out_dir + package.replace('.', os.path.sep))
            
-       out_path = package_dir + '.rst'
-       if not os.path.exists(out_path) or doc != ''.join(file(out_path, 'r').readlines()):
-            print 'creating out of date/non-existant document %s' % out_path
-            file(out_path, 'w').write(doc)
+        out_path = package_dir + '.rst'
+        if not os.path.exists(out_path) or doc != ''.join(open(out_path, 'r').readlines()):
+            print(f'creating out of date/non-existant document {out_path}')
+            with open(out_path, 'w') as fo:
+                fo.write(doc)
 
-       for import_name, module_path in module_folders.get(package, []):
-         doc = auto_doc_module(module_path, import_name, root_package)
-         out_path = out_dir + import_name.replace('.', os.path.sep) + '.rst'
-         if not os.path.exists(out_path) or doc != ''.join(file(out_path, 'r').readlines()):
-            print 'creating out of date/non-existant document %s' % out_path
-            file(out_path, 'w').write(doc)
+        for import_name, module_path in module_folders.get(package, []):
+            doc = auto_doc_module(module_path, import_name, root_package)
+            out_path = out_dir + import_name.replace('.', os.path.sep) + '.rst'
+            if not os.path.exists(out_path) or doc != ''.join(open(out_path, 'r').readlines()):
+                print(f'creating out of date/non-existant document {out_path}')
+                with open(out_path, 'w') as fo:
+                    fo.write(doc)
 
 
 def setup(app):
