@@ -371,6 +371,8 @@ class Barbs(object):
             common = set(values).intersection(kwargs)
             if common:
                 self._custom_kwargs[key] = kwargs[sorted(common)[0]]
+        if hasattr(barbs, "__next__"):
+            barbs = list(barbs)
         barbs = np.asarray(barbs)
         if barbs.ndim != 2 or barbs.shape[-1] != 3:
             msg = 'The barbs require to be a sequence of wind speed, ' \
@@ -400,6 +402,8 @@ class Profile(object):
             The axes on which to plot the profile.
 
         """
+        if hasattr(data, "__next__"):
+            data = list(data)
         self.data = np.asarray(data)
         if self.data.ndim != 2 or self.data.shape[-1] != 2:
             msg = 'The environment profile data requires to be a sequence ' \

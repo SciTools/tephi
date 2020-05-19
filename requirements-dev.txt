@@ -1,0 +1,9 @@
+coveralls
+filelock
+flake8
+pillow<7
+imagehash
+pytest
+pytest-cov
+pytest-xdist
+sphinx

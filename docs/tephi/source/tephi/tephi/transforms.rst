@@ -12,39 +12,39 @@ tephi.transforms
 
 In this module:
 
- * :py:obj:`pressure_mixing_ratio_to_temperature`
- * :py:obj:`pressure_temperature_to_temperature_theta`
- * :py:obj:`pressure_theta_to_pressure_temperature`
- * :py:obj:`temperature_theta_to_pressure_temperature`
- * :py:obj:`temperature_theta_to_xy`
- * :py:obj:`xy_to_temperature_theta`
+ * :py:obj:`convert_Tt2pT`
+ * :py:obj:`convert_Tt2xy`
+ * :py:obj:`convert_pT2Tt`
+ * :py:obj:`convert_pt2pT`
+ * :py:obj:`convert_pw2T`
+ * :py:obj:`convert_xy2Tt`
  * :py:obj:`TephiTransform`
  * :py:obj:`TephiTransformInverted`
 
 
 ----------
 
-.. autofunction:: tephi.transforms.pressure_mixing_ratio_to_temperature
+.. autofunction:: tephi.transforms.convert_Tt2pT
 
 ----------
 
-.. autofunction:: tephi.transforms.pressure_temperature_to_temperature_theta
+.. autofunction:: tephi.transforms.convert_Tt2xy
 
 ----------
 
-.. autofunction:: tephi.transforms.pressure_theta_to_pressure_temperature
+.. autofunction:: tephi.transforms.convert_pT2Tt
 
 ----------
 
-.. autofunction:: tephi.transforms.temperature_theta_to_pressure_temperature
+.. autofunction:: tephi.transforms.convert_pt2pT
 
 ----------
 
-.. autofunction:: tephi.transforms.temperature_theta_to_xy
+.. autofunction:: tephi.transforms.convert_pw2T
 
 ----------
 
-.. autofunction:: tephi.transforms.xy_to_temperature_theta
+.. autofunction:: tephi.transforms.convert_xy2Tt
 
 ----------
 

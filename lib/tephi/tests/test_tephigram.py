@@ -20,6 +20,8 @@ Tests the tephigram plotting capability provided by tephi.
 """
 from __future__ import absolute_import, division, print_function
 
+import unittest
+
 # Import tephi test package first so that some things can be initialised
 # before importing anything else.
 import tephi.tests as tests
@@ -265,4 +267,4 @@ class TestTephigramBarbs(tests.GraphicsTest):
 
 
 if __name__ == '__main__':
-    tests.main()
+    unittest.main()

@@ -27,12 +27,11 @@ sys.path.append(os.path.abspath('sphinxext'))
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc',
-              'sphinx.ext.doctest',
-              'sphinx.ext.intersphinx',
-              'sphinx.ext.todo',
               'sphinx.ext.coverage',
-              'sphinx.ext.pngmath',
-              'sphinx.ext.ifconfig',
+              'sphinx.ext.doctest',
+              'sphinx.ext.imgmath',
+              'sphinx.ext.intersphinx',
+              'matplotlib.sphinxext.mathmpl',
               'matplotlib.sphinxext.plot_directive',
               'custom_class_autodoc',
               'generate_package_rst',              
@@ -55,7 +54,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'tephi'
-copyright = u'2014, British Crown Copyright 2014, Met Office'
+copyright = u'2020, British Crown Copyright 2020, Met Office'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -197,8 +196,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'tephi.tex', u'tephi Documentation',
-   u'British Crown Copyright 2014, Met Office', 'manual'),
+    ('index', 'tephi.tex', u'tephi Documentation',
+     u'British Crown Copyright 2020, Met Office', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -228,7 +227,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'tephi', u'tephi Documentation',
-     [u'British Crown Copyright 2014, Met Office'], 1)
+     [u'British Crown Copyright 2020, Met Office'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -242,8 +241,8 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'tephi', u'tephi Documentation',
-   u'British Crown Copyright 2014, Met Office', 'tephi', 'One line description of project.',
-   'Miscellaneous'),
+   u'British Crown Copyright 2020, Met Office', 'tephi',
+   'One line description of project.', 'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
@@ -258,7 +257,7 @@ texinfo_documents = [
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-   'python': ('http://docs.python.org/2.7', None),
-   'numpy': ('http://docs.scipy.org/doc/numpy/', None),
-   'matplotlib': ('http://matplotlib.sourceforge.net/', None),
+    'python': ('http://docs.python.org/3.8', None),
+    'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+    'matplotlib': ('http://matplotlib.sourceforge.net/', None),
 }
