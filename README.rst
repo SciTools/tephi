@@ -1,6 +1,8 @@
 tephi
 =====
 
+|Travis|_
+
 Tephigram plotting in Python.
 
 The tephi module provides plotting of tephigrams from ASCII text files. 
@@ -33,3 +35,7 @@ These data structures can then be used to plot a tephigram::
     >>> profile = tpg.plot(dews)
     >>> profile.barbs(barb_vals)
     >>> plt.show()
+
+
+.. |Travis| image:: https://travis-ci.org/SciTools/tephi.svg?branch=master
+.. _Travis: https://travis-ci.org/SciTools/tephi
