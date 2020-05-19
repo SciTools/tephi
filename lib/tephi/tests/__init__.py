@@ -38,8 +38,10 @@ import unittest
 import filelock
 import matplotlib
 import numpy as np
+import requests
 
 from tephi import DATA_DIR
+
 
 #: Basepath for test data.
 _DATA_PATH = DATA_DIR
@@ -55,6 +57,22 @@ _HAMMING_DISTANCE = 2
 
 # Whether to display matplotlib output to the screen.
 _DISPLAY_FIGURES = False
+
+
+try:
+    # Added a timeout to stop the call to requests.get hanging when running
+    # on a platform which has restricted/no internet access.
+    requests.get("https://github.com/SciTools/tephi", timeout=5.0)
+    INET_AVAILABLE = True
+except requests.exceptions.ConnectionError:
+    INET_AVAILABLE = False
+
+
+skip_inet = unittest.skipIf(
+    not INET_AVAILABLE,
+    ('Test(s) require an "internet connection", which is not available.'),
+)
+
 
 if '-d' in sys.argv:
     sys.argv.remove('-d')
