@@ -27,8 +27,6 @@ switched to "tkagg" to allow the interactive visual inspection of
 graphical test results.
 
 """
-from __future__ import absolute_import, division, print_function
-
 import codecs
 import collections
 import io
