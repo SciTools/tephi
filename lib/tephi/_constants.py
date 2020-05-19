@@ -18,7 +18,6 @@
 Tephigram transform and isopleth constants.
 
 """
-from __future__ import absolute_import, division, print_function
 
 # TODO: Discover the meaning of the magic constant numbers.
 

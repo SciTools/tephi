@@ -18,8 +18,6 @@
 Tests the tephigram plotting capability provided by tephi.
 
 """
-from __future__ import absolute_import, division, print_function
-
 import unittest
 
 # Import tephi test package first so that some things can be initialised

@@ -22,8 +22,6 @@ barb data.
     This is a beta release module and is liable to change.
 
 """
-from __future__ import absolute_import, division, print_function
-
 from collections import namedtuple
 from collections.abc import Iterable
 from functools import partial
