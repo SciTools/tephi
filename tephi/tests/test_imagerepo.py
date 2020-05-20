@@ -3,8 +3,11 @@
 # This file is part of Tephi and is released under the LGPL license.
 # See COPYING and COPYING.LESSER in the root of the repository for full
 # licensing details.
+"""
+Test that imagerepo.json reconciles with the images registered in the
+test-tephi-imagehash repository.
 
-
+"""
 # Import tephi tests first so that some things can be initialised before
 # importing anything else
 import tephi.tests as tests

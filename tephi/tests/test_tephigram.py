@@ -7,11 +7,11 @@
 Tests the tephigram plotting capability provided by tephi.
 
 """
-import unittest
-
 # Import tephi test package first so that some things can be initialised
 # before importing anything else.
 import tephi.tests as tests
+
+import unittest
 
 import numpy as np
 
