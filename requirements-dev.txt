@@ -1,3 +1,5 @@
+black
+pre-commit
 coveralls
 filelock
 flake8

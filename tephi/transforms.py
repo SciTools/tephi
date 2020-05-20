@@ -157,7 +157,7 @@ def convert_xy2Tt(x_data, y_data):
     x_data, y_data = np.asarray(x_data), np.asarray(y_data)
 
     phi = (x_data + y_data) / (2 * CONST_MA)
-    temperature = (x_data - y_data) / 2.
+    temperature = (x_data - y_data) / 2.0
 
     theta = np.exp(phi) - CONST_KELVIN
 
@@ -184,8 +184,9 @@ def convert_pw2T(pressure, mixing_ratio):
 
     # Calculate the dew-point.
     vapp = pressure * (8.0 / 5.0) * (mixing_ratio / 1000.0)
-    temp = 1.0 / ((1.0 / CONST_KELVIN) -
-                  ((CONST_RV / CONST_L) * np.log(vapp / 6.11)))
+    temp = 1.0 / (
+        (1.0 / CONST_KELVIN) - ((CONST_RV / CONST_L) * np.log(vapp / 6.11))
+    )
 
     return temp - CONST_KELVIN
 
@@ -196,6 +197,7 @@ class TephiTransform(Transform):
     potential temperature to native plotting device coordinates.
 
     """
+
     input_dims = 2
     output_dims = 2
     is_separable = False
@@ -212,8 +214,9 @@ class TephiTransform(Transform):
             Values to be transformed, with shape (N, 2).
 
         """
-        return np.concatenate(convert_Tt2xy(values[:, 0:1], values[:, 1:2]),
-                              axis=1)
+        return np.concatenate(
+            convert_Tt2xy(values[:, 0:1], values[:, 1:2]), axis=1
+        )
 
     def inverted(self):
         """Return the inverse transformation."""
@@ -227,6 +230,7 @@ class TephiTransformInverted(Transform):
     potential temperature.
 
     """
+
     input_dims = 2
     output_dims = 2
     is_separable = False
@@ -243,8 +247,9 @@ class TephiTransformInverted(Transform):
            Values to be transformed, with shape (N, 2).
 
         """
-        return np.concatenate(convert_xy2Tt(values[:, 0:1], values[:, 1:2]),
-                              axis=1)
+        return np.concatenate(
+            convert_xy2Tt(values[:, 0:1], values[:, 1:2]), axis=1
+        )
 
     def inverted(self):
         """Return the inverse transformation."""

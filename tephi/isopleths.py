@@ -23,16 +23,21 @@ from . import transforms
 # Wind barb speed (knots) ranges used since 1 January 1955.
 _BARB_BINS = np.arange(20) * 5 + 3
 _BARB_GUTTER = 0.1
-_BARB_DTYPE = np.dtype(dict(names=('speed', 'angle', 'pressure', 'barb'),
-                            formats=('f4', 'f4', 'f4', np.object)))
+_BARB_DTYPE = np.dtype(
+    dict(
+        names=("speed", "angle", "pressure", "barb"),
+        formats=("f4", "f4", "f4", np.object),
+    )
+)
 
 #
 # Reference: http://www-nwp/~hadaa/tephigram/tephi_plot.html
 #
 
 
-def mixing_ratio(min_pressure, max_pressure, axes,
-                 transform, kwargs, mixing_ratio_value):
+def mixing_ratio(
+    min_pressure, max_pressure, axes, transform, kwargs, mixing_ratio_value
+):
     """
     Generate and plot a humidity mixing ratio line.
 
@@ -68,7 +73,7 @@ def mixing_ratio(min_pressure, max_pressure, axes,
     pressures = np.linspace(min_pressure, max_pressure, 100)
     temps = transforms.convert_pw2T(pressures, mixing_ratio_value)
     _, thetas = transforms.convert_pT2Tt(pressures, temps)
-    line, = axes.plot(temps, thetas, transform=transform, **kwargs)
+    (line,) = axes.plot(temps, thetas, transform=transform, **kwargs)
 
     return line
 
@@ -108,7 +113,7 @@ def isobar(min_theta, max_theta, axes, transform, kwargs, pressure):
     steps = 100
     thetas = np.linspace(min_theta, max_theta, steps)
     _, temps = transforms.convert_pt2pT([pressure] * steps, thetas)
-    line, = axes.plot(temps, thetas, transform=transform, **kwargs)
+    (line,) = axes.plot(temps, thetas, transform=transform, **kwargs)
 
     return line
 
@@ -158,8 +163,9 @@ def _wet_adiabat_gradient(min_temperature, pressure, temperature, dp):
     return dp, dt
 
 
-def wet_adiabat(max_pressure, min_temperature, axes,
-                transform, kwargs, temperature):
+def wet_adiabat(
+    max_pressure, min_temperature, axes, transform, kwargs, temperature
+):
     """
     Generate and plot a pseudo saturated wet adiabat line.
 
@@ -198,13 +204,14 @@ def wet_adiabat(max_pressure, min_temperature, axes,
     dp = -5.0
 
     for i in range(200):
-        dp, dt = _wet_adiabat_gradient(min_temperature, pressures[i],
-                                       temps[i], dp)
+        dp, dt = _wet_adiabat_gradient(
+            min_temperature, pressures[i], temps[i], dp
+        )
         temps.append(temps[i] + dt)
         pressures.append(pressures[i] + dp)
 
     _, thetas = transforms.convert_pT2Tt(pressures, temps)
-    line, = axes.plot(temps, thetas, transform=transform, **kwargs)
+    (line,) = axes.plot(temps, thetas, transform=transform, **kwargs)
 
     return line
 
@@ -228,10 +235,11 @@ class Barbs(object):
         self._transform = axes.tephigram_transform + axes.transData
         self._kwargs = None
         self._custom_kwargs = None
-        self._custom = dict(color=['barbcolor', 'color', 'edgecolor',
-                                   'facecolor'],
-                            linewidth=['lw', 'linewidth'],
-                            linestyle=['ls', 'linestyle'])
+        self._custom = dict(
+            color=["barbcolor", "color", "edgecolor", "facecolor"],
+            linewidth=["lw", "linewidth"],
+            linestyle=["ls", "linestyle"],
+        )
 
     @staticmethod
     def _uv(magnitude, angle):
@@ -245,7 +253,7 @@ class Barbs(object):
         # Snap the magnitude of the barb vector to fall into one of the
         # _BARB_BINS ensuring it's a multiple of five. Five is the increment
         # step size for decorating with barb with flags.
-        magnitude = np.searchsorted(_BARB_BINS, magnitude, side='right') * 5
+        magnitude = np.searchsorted(_BARB_BINS, magnitude, side="right") * 5
         modulus = angle % 90
         if modulus:
             quadrant = int(angle / 90)
@@ -277,9 +285,9 @@ class Barbs(object):
         u, v = self._uv(speed, angle)
         if 0 < speed < _BARB_BINS[0]:
             # Plot the missing barbless 1-2 knots line.
-            length = self._kwargs['length']
-            pivot_points = dict(tip=0.0, middle=-length / 2.)
-            pivot = self._kwargs.get('pivot', 'tip')
+            length = self._kwargs["length"]
+            pivot_points = dict(tip=0.0, middle=-length / 2.0)
+            pivot = self._kwargs.get("pivot", "tip")
             offset = pivot_points[pivot]
             verts = [(0.0, offset), (0.0, length + offset)]
             rangle = math.radians(-angle)
@@ -288,14 +296,24 @@ class Barbs(object):
             path = Path(verts, codes)
             size = length ** 2 / 4
             xy = np.array([[temperature, theta]])
-            barb = PathCollection([path], (size,), offsets=xy,
-                                  transOffset=self._transform,
-                                  **self._custom_kwargs)
+            barb = PathCollection(
+                [path],
+                (size,),
+                offsets=xy,
+                transOffset=self._transform,
+                **self._custom_kwargs,
+            )
             barb.set_transform(mtransforms.IdentityTransform())
             self.axes.add_collection(barb)
         else:
-            barb = plt.barbs(temperature, theta, u, v,
-                             transform=self._transform, **self._kwargs)
+            barb = plt.barbs(
+                temperature,
+                theta,
+                u,
+                v,
+                transform=self._transform,
+                **self._kwargs,
+            )
         return barb
 
     def refresh(self):
@@ -315,12 +333,13 @@ class Barbs(object):
             for i, (speed, angle, pressure, barb) in enumerate(self.barbs):
                 if min_pressure < pressure < max_pressure:
                     p2T = func(pressure)
-                    temperature, theta = transforms.convert_pT2Tt(pressure,
-                                                                  p2T)
+                    temperature, theta = transforms.convert_pT2Tt(
+                        pressure, p2T
+                    )
                     if barb is None:
-                        self.barbs[i]['barb'] = self._make_barb(temperature,
-                                                                theta, speed,
-                                                                angle)
+                        self.barbs[i]["barb"] = self._make_barb(
+                            temperature, theta, speed, angle
+                        )
                     else:
                         barb.set_offsets(np.array([[temperature, theta]]))
                         barb.set_visible(True)
@@ -349,11 +368,12 @@ class Barbs(object):
             Also see :func:`matplotlib.pyplot.barbs`
 
         """
-        self._gutter = kwargs.pop('gutter', _BARB_GUTTER)
+        self._gutter = kwargs.pop("gutter", _BARB_GUTTER)
         self._kwargs = dict(length=7, zorder=10)
         self._kwargs.update(kwargs)
-        self._custom_kwargs = dict(color=None, linewidth=1.5,
-                                   zorder=self._kwargs['zorder'])
+        self._custom_kwargs = dict(
+            color=None, linewidth=1.5, zorder=self._kwargs["zorder"]
+        )
         for key, values in self._custom.items():
             common = set(values).intersection(kwargs)
             if common:
@@ -362,8 +382,10 @@ class Barbs(object):
             barbs = list(barbs)
         barbs = np.asarray(barbs)
         if barbs.ndim != 2 or barbs.shape[-1] != 3:
-            msg = 'The barbs require to be a sequence of wind speed, ' \
-                  'wind direction and pressure value triples.'
+            msg = (
+                "The barbs require to be a sequence of wind speed, "
+                "wind direction and pressure value triples."
+            )
             raise ValueError(msg)
         self.barbs = np.empty(barbs.shape[0], dtype=_BARB_DTYPE)
         for i, barb in enumerate(barbs):
@@ -393,15 +415,18 @@ class Profile(object):
             data = list(data)
         self.data = np.asarray(data)
         if self.data.ndim != 2 or self.data.shape[-1] != 2:
-            msg = 'The environment profile data requires to be a sequence ' \
-                  'of pressure, temperature value pairs.'
+            msg = (
+                "The environment profile data requires to be a sequence "
+                "of pressure, temperature value pairs."
+            )
             raise ValueError(msg)
         self.axes = axes
         self._transform = axes.tephigram_transform + axes.transData
         self.pressure = self.data[:, 0]
         self.temperature = self.data[:, 1]
-        _, self.theta = transforms.convert_pT2Tt(self.pressure,
-                                                 self.temperature)
+        _, self.theta = transforms.convert_pT2Tt(
+            self.pressure, self.temperature
+        )
         self.line = None
         self._barbs = Barbs(axes)
 
@@ -420,11 +445,12 @@ class Profile(object):
         if self.line is not None and self.line in self.axes.lines:
             self.axes.lines.remove(self.line)
 
-        if 'zorder' not in kwargs:
-            kwargs['zorder'] = 10
+        if "zorder" not in kwargs:
+            kwargs["zorder"] = 10
 
-        self.line, = self.axes.plot(self.temperature, self.theta,
-                                    transform=self._transform, **kwargs)
+        (self.line,) = self.axes.plot(
+            self.temperature, self.theta, transform=self._transform, **kwargs
+        )
         return self.line
 
     def refresh(self):
@@ -448,7 +474,7 @@ class Profile(object):
             See :func:`matplotlib.pyplot.barbs`
 
         """
-        colors = ['color', 'barbcolor', 'edgecolor', 'facecolor']
+        colors = ["color", "barbcolor", "edgecolor", "facecolor"]
         if not set(colors).intersection(kwargs):
-            kwargs['color'] = self.line.get_color()
+            kwargs["color"] = self.line.get_color()
         self._barbs.plot(barbs, **kwargs)
