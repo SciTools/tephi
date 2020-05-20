@@ -18,7 +18,6 @@ import unittest
 import requests
 
 
-BASE_URL = "https://scitools.github.io/test-tephi-imagehash/images"
 IMAGE_MANIFEST = ("https://raw.githubusercontent.com/SciTools/"
                   "test-tephi-imagehash/gh-pages/image_manifest.txt")
 
@@ -34,7 +33,7 @@ class TestImageRepoJSON(tests.TephiTest):
         image_manifest = response.content.decode("utf-8")
         image_manifest = [line.strip() for line in image_manifest.split("\n")]
         image_manifest_uris = set(
-            os.path.join(BASE_URL, fname) for fname in image_manifest
+            os.path.join(tests.BASE_URL, fname) for fname in image_manifest
         )
 
         imagerepo_fname = os.path.join(
