@@ -47,6 +47,9 @@ _HAMMING_DISTANCE = 2
 # Whether to display matplotlib output to the screen.
 _DISPLAY_FIGURES = False
 
+# Test images URL.
+BASE_URL = "https://scitools.github.io/test-tephi-imagehash/images"
+
 
 try:
     # Added a timeout to stop the call to requests.get hanging when running
@@ -205,14 +208,12 @@ class GraphicsTest(TephiTest):
                         raise
 
             def _create_missing():
-                fname = '{}.png'.format(phash)
-                base_uri = ('https://scitools.github.io/test-tephi-imagehash/'
-                            'images/{}')
-                uri = base_uri.format(fname)
+                fname = f'{phash}.png'
+                uri = os.path.join(BASE_URL, fname)
                 hash_fname = os.path.join(image_output_directory, fname)
                 uris = repo.setdefault(unique_id, [])
                 uris.append(uri)
-                print('Creating image file: {}'.format(hash_fname))
+                print(f'Creating image file: {hash_fname}')
                 figure.savefig(hash_fname)
                 msg = 'Creating imagerepo entry: {} -> {}'
                 print(msg.format(unique_id, uri))
