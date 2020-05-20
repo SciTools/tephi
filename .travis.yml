@@ -47,7 +47,7 @@ script:
   - export INSTALL_DIR=$(pwd)
 
   - >
-    if [ "${TEST_BLACK}" == "true" ]]; then
+    if [[ "${TEST_BLACK}" == "true" ]]; then
       echo $(black --version);
       rm ${INSTALL_DIR}/.gitignore;
       black --check ${INSTALL_DIR};
