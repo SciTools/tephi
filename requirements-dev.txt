@@ -1,4 +1,4 @@
-black=19.10b0
+black
 pre-commit
 coveralls
 filelock
