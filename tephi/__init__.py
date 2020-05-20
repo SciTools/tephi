@@ -16,8 +16,9 @@ from collections.abc import Iterable
 from functools import partial
 from matplotlib.font_manager import FontProperties
 import matplotlib.pyplot as plt
-from mpl_toolkits.axisartist.grid_helper_curvelinear \
-    import GridHelperCurveLinear
+from mpl_toolkits.axisartist.grid_helper_curvelinear import (
+    GridHelperCurveLinear,
+)
 from mpl_toolkits.axisartist import Subplot
 import numbers
 import numpy as np
@@ -27,47 +28,104 @@ from . import isopleths
 from . import transforms
 
 
-__version__ = '0.2.0.dev0'
+__version__ = "0.2.0.dev0"
 
 
 #
 # Miscellaneous constants.
 #
-DEFAULT_WIDTH = 700    # in pixels
+DEFAULT_WIDTH = 700  # in pixels
 
-ISOBAR_SPEC = [(25, .03), (50, .10), (100, .25), (200, 1.5)]
-ISOBAR_LINE = {'color': 'blue', 'linewidth': 0.5, 'clip_on': True}
-ISOBAR_TEXT = {'size': 8, 'color': 'blue', 'clip_on': True, 'va': 'bottom',
-               'ha': 'right'}
+ISOBAR_SPEC = [(25, 0.03), (50, 0.10), (100, 0.25), (200, 1.5)]
+ISOBAR_LINE = {"color": "blue", "linewidth": 0.5, "clip_on": True}
+ISOBAR_TEXT = {
+    "size": 8,
+    "color": "blue",
+    "clip_on": True,
+    "va": "bottom",
+    "ha": "right",
+}
 ISOBAR_FIXED = [50, 1000]
 
-WET_ADIABAT_SPEC = [(1, .05), (2, .15), (4, 1.5)]
-WET_ADIABAT_LINE = {'color': 'orange', 'linewidth': 0.5, 'clip_on': True}
-WET_ADIABAT_TEXT = {'size': 8, 'color': 'orange', 'clip_on': True,
-                    'va': 'bottom', 'ha': 'left'}
+WET_ADIABAT_SPEC = [(1, 0.05), (2, 0.15), (4, 1.5)]
+WET_ADIABAT_LINE = {"color": "orange", "linewidth": 0.5, "clip_on": True}
+WET_ADIABAT_TEXT = {
+    "size": 8,
+    "color": "orange",
+    "clip_on": True,
+    "va": "bottom",
+    "ha": "left",
+}
 WET_ADIABAT_FIXED = None
 
-MIXING_RATIO_SPEC = [(1, .05), (2, .18), (4, .3), (8, 1.5)]
-MIXING_RATIO_LINE = {'color': 'green', 'linewidth': 0.5, 'clip_on': True}
-MIXING_RATIO_TEXT = {'size': 8, 'color': 'green', 'clip_on': True,
-                     'va': 'bottom', 'ha': 'right'}
-MIXING_RATIOS = [.001, .002, .005, .01, .02, .03, .05, .1, .15, .2, .3, .4, .5,
-                 .6, .8, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0,
-                 10.0, 12.0, 14.0, 16.0, 18.0, 20.0, 24.0, 28.0, 32.0, 36.0,
-                 40.0, 44.0, 48.0, 52.0, 56.0, 60.0, 68.0, 80.0]
+MIXING_RATIO_SPEC = [(1, 0.05), (2, 0.18), (4, 0.3), (8, 1.5)]
+MIXING_RATIO_LINE = {"color": "green", "linewidth": 0.5, "clip_on": True}
+MIXING_RATIO_TEXT = {
+    "size": 8,
+    "color": "green",
+    "clip_on": True,
+    "va": "bottom",
+    "ha": "right",
+}
+MIXING_RATIOS = [
+    0.001,
+    0.002,
+    0.005,
+    0.01,
+    0.02,
+    0.03,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.8,
+    1.0,
+    1.5,
+    2.0,
+    2.5,
+    3.0,
+    4.0,
+    5.0,
+    6.0,
+    7.0,
+    8.0,
+    9.0,
+    10.0,
+    12.0,
+    14.0,
+    16.0,
+    18.0,
+    20.0,
+    24.0,
+    28.0,
+    32.0,
+    36.0,
+    40.0,
+    44.0,
+    48.0,
+    52.0,
+    56.0,
+    60.0,
+    68.0,
+    80.0,
+]
 MIXING_RATIO_FIXED = None
 
-MIN_PRESSURE = 50      # mb = hPa
-MAX_PRESSURE = 1000    # mb = hPa
-MIN_THETA = 0          # degC
-MAX_THETA = 250        # degC
-MIN_WET_ADIABAT = 1    # degC
-MAX_WET_ADIABAT = 60   # degC
+MIN_PRESSURE = 50  # mb = hPa
+MAX_PRESSURE = 1000  # mb = hPa
+MIN_THETA = 0  # degC
+MAX_THETA = 250  # degC
+MIN_WET_ADIABAT = 1  # degC
+MAX_WET_ADIABAT = 60  # degC
 MIN_TEMPERATURE = -50  # degC
 
 
-RESOURCES_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'etc')
-DATA_DIR = os.path.join(RESOURCES_DIR, 'test_data')
+RESOURCES_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "etc")
+DATA_DIR = os.path.join(RESOURCES_DIR, "test_data")
 
 
 def loadtxt(*filenames, **kwargs):
@@ -125,52 +183,53 @@ def loadtxt(*filenames, **kwargs):
         of namedtuples is returned.
 
     """
+
     def _repr(nt):
         """An improved representation of namedtuples over the default."""
 
         typename = nt.__class__.__name__
         fields = nt._fields
         n_fields = len(fields)
-        return_str = '{}(\n'.format(typename)
+        return_str = "{}(\n".format(typename)
         for i, t in enumerate(fields):
-            gap = ' ' * 4
+            gap = " " * 4
             if i == n_fields - 1:
-                ender = ''
+                ender = ""
             else:
-                ender = '\n'
-            return_str += '{}{}={!r}{}'.format(gap, t, getattr(nt, t), ender)
-        return_str += ')'
+                ender = "\n"
+            return_str += "{}{}={!r}{}".format(gap, t, getattr(nt, t), ender)
+        return_str += ")"
         return return_str
 
-    column_titles = kwargs.pop('column_titles', None)
-    delimiter = kwargs.pop('delimiter', None)
-    dtype = kwargs.pop('dtype', 'f4')
+    column_titles = kwargs.pop("column_titles", None)
+    delimiter = kwargs.pop("delimiter", None)
+    dtype = kwargs.pop("dtype", "f4")
 
     if column_titles is not None:
         fields = column_titles[0]
         if not isinstance(column_titles, str):
-            if isinstance(fields, Iterable) and \
-                    not isinstance(fields, str):
+            if isinstance(fields, Iterable) and not isinstance(fields, str):
                 # We've an iterable of iterables - multiple titles is True.
                 multiple_titles = True
                 if len(column_titles) > len(filenames):
-                    msg = 'Received {} files but {} sets of column titles.'
-                    raise ValueError(msg.format(len(column_titles),
-                                     len(filenames)))
+                    msg = "Received {} files but {} sets of column titles."
+                    raise ValueError(
+                        msg.format(len(column_titles), len(filenames))
+                    )
             elif isinstance(fields, str):
                 # We've an iterable of title strings - use for namedtuple.
-                tephidata = namedtuple('tephidata', column_titles)
+                tephidata = namedtuple("tephidata", column_titles)
                 multiple_titles = False
             else:
                 # Whatever we've got it isn't iterable, so raise TypeError.
-                msg = 'Expected title to be string, got {!r}.'
+                msg = "Expected title to be string, got {!r}."
                 raise TypeError(msg.format(type(column_titles)))
         else:
-            msg = 'Expected column_titles to be iterable, got {!r}.'
+            msg = "Expected column_titles to be iterable, got {!r}."
             raise TypeError(msg.format(type(column_titles)))
 
     else:
-        tephidata = namedtuple('tephidata', ('pressure', 'temperature'))
+        tephidata = namedtuple("tephidata", ("pressure", "temperature"))
         multiple_titles = False
 
     data = []
@@ -178,13 +237,13 @@ def loadtxt(*filenames, **kwargs):
         if isinstance(arg, str):
             if os.path.isfile(arg):
                 if multiple_titles:
-                    tephidata = namedtuple('tephidata', column_titles[ct])
+                    tephidata = namedtuple("tephidata", column_titles[ct])
                 tephidata.__repr__ = _repr
                 payload = np.loadtxt(arg, dtype=dtype, delimiter=delimiter)
                 item = tephidata(*payload.T)
                 data.append(item)
             else:
-                msg = 'Item {} is either not a file or does not exist.'
+                msg = "Item {} is either not a file or does not exist."
                 raise OSError(msg.format(arg))
 
     if len(data) == 1:
@@ -212,6 +271,7 @@ class Locator:
     Determine the fixed step axis tick locations when called with a tick range.
 
     """
+
     def __init__(self, step):
         """
         Set the fixed step value for the axis tick locations.
@@ -284,7 +344,7 @@ def _handler(event):
     """Matplotlib event handler."""
 
     for axes in event.canvas.figure.axes:
-        if hasattr(axes, 'tephigram'):
+        if hasattr(axes, "tephigram"):
             if _refresh_isopleths(axes):
                 event.canvas.figure.show()
 
@@ -296,8 +356,18 @@ class _PlotGroup(dict):
     Manages the creation and plotting of all isopleths within the group.
 
     """
-    def __init__(self, axes, plot_func, text_kwargs, step, zoom, tags,
-                 fixed=None, xfocus=None):
+
+    def __init__(
+        self,
+        axes,
+        plot_func,
+        text_kwargs,
+        step,
+        zoom,
+        tags,
+        fixed=None,
+        xfocus=None,
+    ):
         self.axes = axes
         self.text_kwargs = text_kwargs
         self.step = step
@@ -306,9 +376,16 @@ class _PlotGroup(dict):
         pairs = []
         for tag in tags:
             text = plt.text(0, 0, str(tag), **text_kwargs)
-            text.set_bbox(dict(boxstyle='Round,pad=0.3', facecolor='white',
-                               edgecolor='white', alpha=0.5, clip_on=True,
-                               clip_box=self.axes.bbox))
+            text.set_bbox(
+                dict(
+                    boxstyle="Round,pad=0.3",
+                    facecolor="white",
+                    edgecolor="white",
+                    alpha=0.5,
+                    clip_on=True,
+                    clip_box=self.axes.bbox,
+                )
+            )
             pairs.append((tag, [plot_func(tag), text]))
 
         dict.__init__(self, pairs)
@@ -331,12 +408,12 @@ class _PlotGroup(dict):
         self.xfocus = xfocus
 
     def __setitem__(self, tag, item):
-        emsg = 'Cannot add or set an item into the plot group {!r}'
+        emsg = "Cannot add or set an item into the plot group {!r}"
         raise ValueError(emsg.format(self.step))
 
     def __getitem__(self, tag):
         if tag not in self.keys():
-            emsg = 'Tag item {!r} is not a member of the plot group {!r}'
+            emsg = "Tag item {!r} is not a member of the plot group {!r}"
             raise KeyError(emsg.format(tag, self.step))
         return dict.__getitem__(self, tag)
 
@@ -394,8 +471,9 @@ class _PlotGroup(dict):
         if self.xfocus:
             delta = np.power(x_data - xy_point[0], 2)
         else:
-            delta = (np.power(x_data - xy_point[0], 2) +
-                     np.power(y_data - xy_point[1], 2))
+            delta = np.power(x_data - xy_point[0], 2) + np.power(
+                y_data - xy_point[1], 2
+            )
         index = np.argmin(delta)
         text.set_position((x_data[index], y_data[index]))
 
@@ -416,37 +494,54 @@ class _PlotCollection:
     lines and pseudo saturated wet adiabats.
 
     """
-    def __init__(self, axes, spec, stop, plot_func, text_kwargs, fixed=None,
-                 minimum=None, xfocus=None):
+
+    def __init__(
+        self,
+        axes,
+        spec,
+        stop,
+        plot_func,
+        text_kwargs,
+        fixed=None,
+        minimum=None,
+        xfocus=None,
+    ):
         if isinstance(stop, Iterable):
             if minimum and minimum > max(stop):
-                emsg = 'Minimum value of {!r} exceeds all other values'
+                emsg = "Minimum value of {!r} exceeds all other values"
                 raise ValueError(emsg.format(minimum))
 
-            items = [[step, zoom, set(stop[step - 1::step])]
-                     for step, zoom in sorted(spec, reverse=True)]
+            items = [
+                [step, zoom, set(stop[step - 1 :: step])]
+                for step, zoom in sorted(spec, reverse=True)
+            ]
         else:
             if minimum and minimum > stop:
-                emsg = 'Minimum value of {!r} exceeds maximum threshold {!r}'
+                emsg = "Minimum value of {!r} exceeds maximum threshold {!r}"
                 raise ValueError(emsg.format(minimum, stop))
 
-            items = [[step, zoom, set(range(step, stop + step, step))]
-                     for step, zoom in sorted(spec, reverse=True)]
+            items = [
+                [step, zoom, set(range(step, stop + step, step))]
+                for step, zoom in sorted(spec, reverse=True)
+            ]
 
         for index, item in enumerate(items):
             if minimum:
                 item[2] = set([value for value in item[2] if value >= minimum])
 
-            for subitem in items[index + 1:]:
+            for subitem in items[index + 1 :]:
                 subitem[2] -= item[2]
 
-        self.groups = {item[0]:
-                       _PlotGroup(axes, plot_func, text_kwargs, *item,
-                                  fixed=fixed, xfocus=xfocus)
-                       for item in items if item[2]}
+        self.groups = {
+            item[0]: _PlotGroup(
+                axes, plot_func, text_kwargs, *item, fixed=fixed, xfocus=xfocus
+            )
+            for item in items
+            if item[2]
+        }
 
         if not self.groups:
-            emsg = 'The plot collection failed to generate any plot groups'
+            emsg = "The plot collection failed to generate any plot groups"
             raise ValueError(emsg)
 
     def refresh(self, zoom, xy_point):
@@ -479,8 +574,13 @@ class Tephigram:
 
     """
 
-    def __init__(self, figure=None, isotherm_locator=None,
-                 dry_adiabat_locator=None, anchor=None):
+    def __init__(
+        self,
+        figure=None,
+        isotherm_locator=None,
+        dry_adiabat_locator=None,
+        anchor=None,
+    ):
         """
         Initialise the tephigram transformation and plot axes.
 
@@ -533,123 +633,161 @@ class Tephigram:
         # Configure the locators.
         if isotherm_locator and not isinstance(isotherm_locator, Locator):
             if not isinstance(isotherm_locator, numbers.Number):
-                raise ValueError('Invalid isotherm locator')
+                raise ValueError("Invalid isotherm locator")
             locator_isotherm = Locator(isotherm_locator)
         else:
             locator_isotherm = isotherm_locator
 
-        if dry_adiabat_locator and not isinstance(dry_adiabat_locator,
-                                                  Locator):
+        if dry_adiabat_locator and not isinstance(
+            dry_adiabat_locator, Locator
+        ):
             if not isinstance(dry_adiabat_locator, numbers.Number):
-                raise ValueError('Invalid dry adiabat locator')
+                raise ValueError("Invalid dry adiabat locator")
             locator_theta = Locator(dry_adiabat_locator)
         else:
             locator_theta = dry_adiabat_locator
 
         # Define the tephigram coordinate-system transformation.
         self.tephi_transform = transforms.TephiTransform()
-        ghelper = GridHelperCurveLinear(self.tephi_transform,
-                                        tick_formatter1=_FormatterIsotherm(),
-                                        grid_locator1=locator_isotherm,
-                                        tick_formatter2=_FormatterTheta(),
-                                        grid_locator2=locator_theta)
+        ghelper = GridHelperCurveLinear(
+            self.tephi_transform,
+            tick_formatter1=_FormatterIsotherm(),
+            grid_locator1=locator_isotherm,
+            tick_formatter2=_FormatterTheta(),
+            grid_locator2=locator_theta,
+        )
         self.axes = Subplot(self.figure, 1, 1, 1, grid_helper=ghelper)
         self.transform = self.tephi_transform + self.axes.transData
-        self.axes.axis['isotherm'] = self.axes.new_floating_axis(1, 0)
-        self.axes.axis['theta'] = self.axes.new_floating_axis(0, 0)
-        self.axes.axis['left'].get_helper().nth_coord_ticks = 0
-        self.axes.axis['left'].toggle(all=True)
-        self.axes.axis['bottom'].get_helper().nth_coord_ticks = 1
-        self.axes.axis['bottom'].toggle(all=True)
-        self.axes.axis['top'].get_helper().nth_coord_ticks = 0
-        self.axes.axis['top'].toggle(all=False)
-        self.axes.axis['right'].get_helper().nth_coord_ticks = 1
-        self.axes.axis['right'].toggle(all=True)
-        self.axes.gridlines.set_linestyle('solid')
+        self.axes.axis["isotherm"] = self.axes.new_floating_axis(1, 0)
+        self.axes.axis["theta"] = self.axes.new_floating_axis(0, 0)
+        self.axes.axis["left"].get_helper().nth_coord_ticks = 0
+        self.axes.axis["left"].toggle(all=True)
+        self.axes.axis["bottom"].get_helper().nth_coord_ticks = 1
+        self.axes.axis["bottom"].toggle(all=True)
+        self.axes.axis["top"].get_helper().nth_coord_ticks = 0
+        self.axes.axis["top"].toggle(all=False)
+        self.axes.axis["right"].get_helper().nth_coord_ticks = 1
+        self.axes.axis["right"].toggle(all=True)
+        self.axes.gridlines.set_linestyle("solid")
 
         self.figure.add_subplot(self.axes)
 
         # Configure default axes.
-        axis = self.axes.axis['left']
+        axis = self.axes.axis["left"]
         axis.major_ticklabels.set_fontsize(10)
-        axis.major_ticklabels.set_va('baseline')
+        axis.major_ticklabels.set_va("baseline")
         axis.major_ticklabels.set_rotation(135)
-        axis = self.axes.axis['right']
+        axis = self.axes.axis["right"]
         axis.major_ticklabels.set_fontsize(10)
-        axis.major_ticklabels.set_va('baseline')
+        axis.major_ticklabels.set_va("baseline")
         axis.major_ticklabels.set_rotation(-135)
-        self.axes.axis['top'].major_ticklabels.set_fontsize(10)
-        axis = self.axes.axis['bottom']
+        self.axes.axis["top"].major_ticklabels.set_fontsize(10)
+        axis = self.axes.axis["bottom"]
         axis.major_ticklabels.set_fontsize(10)
-        axis.major_ticklabels.set_ha('left')
-        axis.major_ticklabels.set_va('top')
+        axis.major_ticklabels.set_ha("left")
+        axis.major_ticklabels.set_va("top")
         axis.major_ticklabels.set_rotation(-45)
 
         # Isotherms: lines of constant temperature (degC).
-        axis = self.axes.axis['isotherm']
-        axis.set_axis_direction('right')
-        axis.set_axislabel_direction('-')
+        axis = self.axes.axis["isotherm"]
+        axis.set_axis_direction("right")
+        axis.set_axislabel_direction("-")
         axis.major_ticklabels.set_rotation(90)
         axis.major_ticklabels.set_fontsize(10)
-        axis.major_ticklabels.set_va('bottom')
-        axis.major_ticklabels.set_color('grey')
+        axis.major_ticklabels.set_va("bottom")
+        axis.major_ticklabels.set_color("grey")
         axis.major_ticklabels.set_visible(False)  # turned-off
 
         # Dry adiabats: lines of constant potential temperature (degC).
-        axis = self.axes.axis['theta']
-        axis.set_axis_direction('right')
-        axis.set_axislabel_direction('+')
+        axis = self.axes.axis["theta"]
+        axis.set_axis_direction("right")
+        axis.set_axislabel_direction("+")
         axis.major_ticklabels.set_fontsize(10)
-        axis.major_ticklabels.set_va('bottom')
-        axis.major_ticklabels.set_color('grey')
+        axis.major_ticklabels.set_va("bottom")
+        axis.major_ticklabels.set_color("grey")
         axis.major_ticklabels.set_visible(False)  # turned-off
         axis.line.set_linewidth(3)
-        axis.line.set_linestyle('--')
+        axis.line.set_linestyle("--")
 
         # Lock down the aspect ratio.
-        self.axes.set_aspect(1.)
+        self.axes.set_aspect(1.0)
         self.axes.grid(True)
 
         # Initialise the text formatter for the navigation status bar.
         self.axes.format_coord = self._status_bar
 
         # Factor in the tephigram transform.
-        ISOBAR_TEXT['transform'] = self.transform
-        WET_ADIABAT_TEXT['transform'] = self.transform
-        MIXING_RATIO_TEXT['transform'] = self.transform
+        ISOBAR_TEXT["transform"] = self.transform
+        WET_ADIABAT_TEXT["transform"] = self.transform
+        MIXING_RATIO_TEXT["transform"] = self.transform
 
         # Create plot collections for the tephigram isopleths.
-        func = partial(isopleths.isobar, MIN_THETA, MAX_THETA, self.axes,
-                       self.transform, ISOBAR_LINE)
-        self._isobars = _PlotCollection(self.axes, ISOBAR_SPEC, MAX_PRESSURE,
-                                        func, ISOBAR_TEXT, fixed=ISOBAR_FIXED,
-                                        minimum=MIN_PRESSURE)
+        func = partial(
+            isopleths.isobar,
+            MIN_THETA,
+            MAX_THETA,
+            self.axes,
+            self.transform,
+            ISOBAR_LINE,
+        )
+        self._isobars = _PlotCollection(
+            self.axes,
+            ISOBAR_SPEC,
+            MAX_PRESSURE,
+            func,
+            ISOBAR_TEXT,
+            fixed=ISOBAR_FIXED,
+            minimum=MIN_PRESSURE,
+        )
 
-        func = partial(isopleths.wet_adiabat, MAX_PRESSURE, MIN_TEMPERATURE,
-                       self.axes, self.transform, WET_ADIABAT_LINE)
-        self._wet_adiabats = _PlotCollection(self.axes, WET_ADIABAT_SPEC,
-                                             MAX_WET_ADIABAT, func,
-                                             WET_ADIABAT_TEXT,
-                                             fixed=WET_ADIABAT_FIXED,
-                                             minimum=MIN_WET_ADIABAT,
-                                             xfocus=True)
+        func = partial(
+            isopleths.wet_adiabat,
+            MAX_PRESSURE,
+            MIN_TEMPERATURE,
+            self.axes,
+            self.transform,
+            WET_ADIABAT_LINE,
+        )
+        self._wet_adiabats = _PlotCollection(
+            self.axes,
+            WET_ADIABAT_SPEC,
+            MAX_WET_ADIABAT,
+            func,
+            WET_ADIABAT_TEXT,
+            fixed=WET_ADIABAT_FIXED,
+            minimum=MIN_WET_ADIABAT,
+            xfocus=True,
+        )
 
-        func = partial(isopleths.mixing_ratio, MIN_PRESSURE, MAX_PRESSURE,
-                       self.axes, self.transform, MIXING_RATIO_LINE)
-        self._mixing_ratios = _PlotCollection(self.axes, MIXING_RATIO_SPEC,
-                                              MIXING_RATIOS, func,
-                                              MIXING_RATIO_TEXT,
-                                              fixed=MIXING_RATIO_FIXED)
+        func = partial(
+            isopleths.mixing_ratio,
+            MIN_PRESSURE,
+            MAX_PRESSURE,
+            self.axes,
+            self.transform,
+            MIXING_RATIO_LINE,
+        )
+        self._mixing_ratios = _PlotCollection(
+            self.axes,
+            MIXING_RATIO_SPEC,
+            MIXING_RATIOS,
+            func,
+            MIXING_RATIO_TEXT,
+            fixed=MIXING_RATIO_FIXED,
+        )
 
         # Initialise for the tephigram plot event handler.
-        plt.connect('motion_notify_event', _handler)
+        plt.connect("motion_notify_event", _handler)
         self.axes.tephigram = True
         self.axes.tephigram_original_delta_xlim = DEFAULT_WIDTH
         self.original_delta_xlim = DEFAULT_WIDTH
         self.axes.tephigram_transform = self.tephi_transform
         self.axes.tephigram_inverse = self.tephi_transform.inverted()
-        self.axes.tephigram_isopleths = [self._isobars, self._wet_adiabats,
-                                         self._mixing_ratios]
+        self.axes.tephigram_isopleths = [
+            self._isobars,
+            self._wet_adiabats,
+            self._mixing_ratios,
+        ]
 
         # The tephigram profiles.
         self._profiles = []
@@ -659,19 +797,26 @@ class Tephigram:
         self._anchor = anchor
         if self._anchor is not None:
             self._anchor = np.asarray(anchor)
-            if self._anchor.ndim != 2 or self._anchor.shape[-1] != 2 or \
-               len(self._anchor) != 2:
-                msg = 'Invalid anchor, expecting [(bottom-left-pressure, ' \
-                      'bottom-left-temperature), (top-right-pressure, ' \
-                      'top-right-temperature)]'
+            if (
+                self._anchor.ndim != 2
+                or self._anchor.shape[-1] != 2
+                or len(self._anchor) != 2
+            ):
+                msg = (
+                    "Invalid anchor, expecting [(bottom-left-pressure, "
+                    "bottom-left-temperature), (top-right-pressure, "
+                    "top-right-temperature)]"
+                )
                 raise ValueError(msg)
-            (bottom_pressure, bottom_temp), \
-                (top_pressure, top_temp) = self._anchor
+            (
+                (bottom_pressure, bottom_temp),
+                (top_pressure, top_temp),
+            ) = self._anchor
 
             if (bottom_pressure - top_pressure) < 0:
-                raise ValueError('Invalid anchor pressure range')
+                raise ValueError("Invalid anchor pressure range")
             if (bottom_temp - top_temp) < 0:
-                raise ValueError('Invalid anchor temperature range')
+                raise ValueError("Invalid anchor temperature range")
 
             self._anchor = isopleths.Profile(anchor, self.axes)
             self._anchor.plot(visible=False)
@@ -729,7 +874,7 @@ class Tephigram:
 
         # Center the tephigram plot around all the profiles.
         if self._anchor is None:
-            xlim, ylim = self._calculate_extents(xfactor=.25, yfactor=.05)
+            xlim, ylim = self._calculate_extents(xfactor=0.25, yfactor=0.05)
             self.axes.set_xlim(xlim)
             self.axes.set_ylim(ylim)
 
@@ -737,10 +882,14 @@ class Tephigram:
         _refresh_isopleths(self.axes)
 
         # Show the plot legend.
-        if 'label' in kwargs:
-            font_properties = FontProperties(size='x-small')
-            plt.legend(loc='upper left', fancybox=True, shadow=True,
-                       prop=font_properties)
+        if "label" in kwargs:
+            font_properties = FontProperties(size="x-small")
+            plt.legend(
+                loc="upper left",
+                fancybox=True,
+                shadow=True,
+                prop=font_properties,
+            )
 
         return profile
 
@@ -752,8 +901,9 @@ class Tephigram:
         xlim = self.axes.get_xlim()
         zoom = (xlim[1] - xlim[0]) / self.original_delta_xlim
         msg = "T:{:.2f}, theta:{:.2f}, phi:{:.2f} (zoom:{:.3f})"
-        text = msg.format(float(temperature), float(theta),
-                          float(pressure), zoom)
+        text = msg.format(
+            float(temperature), float(theta), float(pressure), zoom
+        )
 
         return text
 
@@ -769,8 +919,7 @@ class Tephigram:
         for profile in profiles:
             temperature = profile.temperature.reshape(-1, 1)
             theta = profile.theta.reshape(-1, 1)
-            xy_points = transform(np.concatenate((temperature, theta),
-                                                 axis=1))
+            xy_points = transform(np.concatenate((temperature, theta), axis=1))
             x_points = xy_points[:, 0]
             y_points = xy_points[:, 1]
             min_x = np.min([min_x, np.min(x_points)])

@@ -21,8 +21,10 @@ import unittest
 import requests
 
 
-IMAGE_MANIFEST = ("https://raw.githubusercontent.com/SciTools/"
-                  "test-tephi-imagehash/gh-pages/image_manifest.txt")
+IMAGE_MANIFEST = (
+    "https://raw.githubusercontent.com/SciTools/"
+    "test-tephi-imagehash/gh-pages/image_manifest.txt"
+)
 
 
 @tests.skip_inet

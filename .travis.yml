@@ -5,7 +5,7 @@ env:
   matrix:
     - PYTHON_VERSION="3.6"
     - PYTHON_VERSION="3.7"
-    - PYTHON_VERSION="3.8"
+    - PYTHON_VERSION="3.8" TEST_BLACK=true
 
 install:
   # Install miniconda
@@ -44,6 +44,15 @@ install:
   - pip install -e .
 
 script:
+  - export INSTALL_DIR=$(pwd)
+
+  - >
+    if [ "${TEST_BLACK}" == "true" ]]; then
+      echo $(black --version);
+      rm ${INSTALL_DIR}/.gitignore;
+      black --check ${INSTALL_DIR};
+    fi
+
   - pytest --cov 
 
 after_success: coveralls

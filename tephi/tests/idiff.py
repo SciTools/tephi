@@ -295,7 +295,9 @@ if __name__ == "__main__":
     )
     help = "path to tephi tests result image directory (default: %(default)s)"
     parser.add_argument("--resultdir", "-r", default=default, help=help)
-    help = 'force "tephi.tests" to use the tkagg backend (default: %(default)s)'
+    help = (
+        'force "tephi.tests" to use the tkagg backend (default: %(default)s)'
+    )
     parser.add_argument("-d", action="store_true", default=True, help=help)
     help = """
 first     - compare result image with first (oldest) expected image
