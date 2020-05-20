@@ -70,11 +70,6 @@ MIN_TEMPERATURE = -50  # degC
 RESOURCES_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'etc')
 DATA_DIR = os.path.join(RESOURCES_DIR, 'test_data')
 
-if sys.version_info[0] >= 3:
-    _BASESTR = str
-else:
-    _BASESTR = (str, unicode)
-
 
 def loadtxt(*filenames, **kwargs):
     """
@@ -154,16 +149,16 @@ def loadtxt(*filenames, **kwargs):
 
     if column_titles is not None:
         fields = column_titles[0]
-        if not isinstance(column_titles, _BASESTR):
+        if not isinstance(column_titles, str):
             if isinstance(fields, Iterable) and \
-                    not isinstance(fields, _BASESTR):
+                    not isinstance(fields, str):
                 # We've an iterable of iterables - multiple titles is True.
                 multiple_titles = True
                 if len(column_titles) > len(filenames):
                     msg = 'Received {} files but {} sets of column titles.'
                     raise ValueError(msg.format(len(column_titles),
                                      len(filenames)))
-            elif isinstance(fields, _BASESTR):
+            elif isinstance(fields, str):
                 # We've an iterable of title strings - use for namedtuple.
                 tephidata = namedtuple('tephidata', column_titles)
                 multiple_titles = False
@@ -181,7 +176,7 @@ def loadtxt(*filenames, **kwargs):
 
     data = []
     for ct, arg in enumerate(filenames):
-        if isinstance(arg, _BASESTR):
+        if isinstance(arg, str):
             if os.path.isfile(arg):
                 if multiple_titles:
                     tephidata = namedtuple('tephidata', column_titles[ct])
