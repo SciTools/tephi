@@ -34,7 +34,7 @@ delta = 0.3
 plt.barbs(lsx, ly, 0, 0, **kwargs)
 plt.text(lsx + delta, ly, 'Calm')
 
-plt.plot([lsx - 0.36, lsx], [ly - 2, ly -2], linewidth=2, color=color)
+plt.plot([lsx - 0.36, lsx], [ly - 2, ly - 2], linewidth=2, color=color)
 plt.text(lsx + delta, ly - 2, knots[0])
 
 for i, u in enumerate(range(5, 50, 5)):

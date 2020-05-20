@@ -22,7 +22,6 @@ from mpl_toolkits.axisartist import Subplot
 import numbers
 import numpy as np
 import os.path
-import sys
 
 from . import isopleths
 from . import transforms
@@ -395,8 +394,8 @@ class _PlotGroup(dict):
         if self.xfocus:
             delta = np.power(x_data - xy_point[0], 2)
         else:
-            delta = np.power(x_data - xy_point[0], 2) + \
-                    np.power(y_data - xy_point[1], 2)
+            delta = (np.power(x_data - xy_point[0], 2) +
+                     np.power(y_data - xy_point[1], 2))
         index = np.argmin(delta)
         text.set_position((x_data[index], y_data[index]))
 

@@ -363,7 +363,7 @@ class Barbs(object):
         barbs = np.asarray(barbs)
         if barbs.ndim != 2 or barbs.shape[-1] != 3:
             msg = 'The barbs require to be a sequence of wind speed, ' \
-              'wind direction and pressure value triples.'
+                  'wind direction and pressure value triples.'
             raise ValueError(msg)
         self.barbs = np.empty(barbs.shape[0], dtype=_BARB_DTYPE)
         for i, barb in enumerate(barbs):
@@ -394,7 +394,7 @@ class Profile(object):
         self.data = np.asarray(data)
         if self.data.ndim != 2 or self.data.shape[-1] != 2:
             msg = 'The environment profile data requires to be a sequence ' \
-              'of pressure, temperature value pairs.'
+                  'of pressure, temperature value pairs.'
             raise ValueError(msg)
         self.axes = axes
         self._transform = axes.tephigram_transform + axes.transData

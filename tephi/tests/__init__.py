@@ -73,7 +73,7 @@ if '-d' in sys.argv:
 else:
     matplotlib.use('agg')
 
-# Imported now so that matplotlib.use can work 
+# Imported now so that matplotlib.use can work
 import matplotlib.pyplot as plt
 
 
@@ -81,7 +81,7 @@ def get_data_path(relative_path):
     """
     Returns the absolute path to a data file when given the relative path
     as a string, or sequence of strings.
-    
+
     """
     if isinstance(relative_path, (list, tuple)):
         relative_path = os.path.join(*relative_path)
@@ -92,7 +92,7 @@ def get_result_path(relative_path):
     """
     Returns the absolute path to a result file when given the relative path
     as a string, or sequence of strings.
-    
+
     """
     if isinstance(relative_path, (list, tuple)):
         relative_path = os.path.join(*relative_path)
@@ -103,7 +103,7 @@ class TephiTest(unittest.TestCase):
     """
     A subclass of unittest.TestCase which provides testing functionality
     specific to tephi.
-    
+
     """
     _assertion_counts = collections.defaultdict(int)
 
@@ -125,7 +125,7 @@ class TephiTest(unittest.TestCase):
 
         """
         # Obtain a consistent ID for the current test.
-        
+
         # NB. unittest.TestCase.id() returns different values depending on
         # whether the test has been run explicitly, or via test discovery.
         # For example:
@@ -142,9 +142,9 @@ class TephiTest(unittest.TestCase):
         # Derive the sequential assertion ID within the test
         assertion_id = self._assertion_counts[test_id]
         self._assertion_counts[test_id] += 1
-        
+
         return '{}.{}'.format(test_id, assertion_id)
-    
+
     def assertArrayEqual(self, a, b):
         return np.testing.assert_array_equal(a, b)
 
