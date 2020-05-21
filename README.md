@@ -21,6 +21,10 @@
     <img src="https://coveralls.io/repos/github/SciTools/tephi/badge.svg?branch=master"
          alt="Coverage Status" />
 </a>
+<a href="https://github.com/SciTools/tephi/releases">
+    <img src="https://img.shields.io/github/v/tag/scitools/tephi?color=orange"
+         alt="GitHub tag (latest by date)" />
+</a>
 <a href="https://github.com/SciTools/tephi/commits/master">
     <img src="https://img.shields.io/github/commits-since/scitools/tephi/latest/master"
          alt="GitHub commits since tagged version" />
