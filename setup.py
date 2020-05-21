@@ -62,7 +62,8 @@ args = dict(
     description="Tephigram plotting in Python",
     long_description=long_description(),
     long_description_content_type="text/x-rst",
-    setup_requires=["pytest-runner"],
+    setup_requires=["setuptools>=40.8.0"],
+    install_requires=load("requirements.txt"),
     tests_require=load("requirements-dev.txt"),
     test_suite=f"{NAME}.tests",
 )
