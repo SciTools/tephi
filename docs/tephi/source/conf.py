@@ -13,7 +13,13 @@
 
 from datetime import datetime
 import os
+import pathlib
 import sys
+
+# ensure tephi is discoverable by rtd build environment
+root = pathlib.Path(__file__).absolute().parent.parent.parent.parent
+os.environ["PYTHONPATH"] = str(root)
+sys.path.insert(0, str(root))
 
 import tephi
 
