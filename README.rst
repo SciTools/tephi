@@ -1,7 +1,7 @@
 tephi
 =====
 
-|Travis|_ |Coveralls|_ |Black|_ |Docs|_
+|Travis|_ |Docs|_ |Coveralls|_ |Black|_
 
 Tephigram plotting in Python.
 
