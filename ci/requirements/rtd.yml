@@ -1,0 +1,10 @@
+name: tephi-docs
+channels:
+  - conda-forge
+dependencies:
+  - python=3.8
+  - matplotlib
+  - numpy
+  - scipy
+  - sphinx
+  - sphinx_rtd_theme
