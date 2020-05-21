@@ -33,7 +33,7 @@ def load(fname):
 
 
 def long_description():
-    with open(os.path.join(DIR, "README.rst"), "r") as fi:
+    with open(os.path.join(DIR, "README.md"), "r") as fi:
         long_description = "".join(fi.readlines())
     return long_description
 
@@ -61,7 +61,7 @@ args = dict(
     ],
     description="Tephigram plotting in Python",
     long_description=long_description(),
-    long_description_content_type="text/x-rst",
+    long_description_content_type="text/markdown",
     setup_requires=["setuptools>=40.8.0"],
     install_requires=load("requirements.txt"),
     tests_require=load("requirements-dev.txt"),
