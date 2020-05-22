@@ -1,6 +1,6 @@
 <h1 align="center">
   <a href="https://tephi.readthedocs.io/en/latest/" style="display: block; margin: 0 auto;">
-   <img src="docs/tephi/source/_static/tephi-logo-200-142.png"
+   <img src="docs/tephi/source/_static/tephi-logo-250-180.png"
         style="max-width: 40%;" alt="Tephi"></a><br>
 </h1>
 
