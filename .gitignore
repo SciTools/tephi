@@ -53,6 +53,7 @@ coverage.xml
 *.swp
 *.log
 *.pot
+.ipynb_checkpoints
 
 # Sphinx documentation
 docs/_build/
