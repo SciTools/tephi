@@ -42,6 +42,9 @@ args = dict(
     name=NAME,
     version=extract_version(),
     author="UK Met Office",
+    url="https://github.com/SciTools/tephi",
+    license="LGPLv3+",
+    keywords=["tephigram", "radiosonde", "meteorology",],
     packages=find_packages(),
     package_data={
         "tephi": [
@@ -62,10 +65,11 @@ args = dict(
     description="Tephigram plotting in Python",
     long_description=long_description(),
     long_description_content_type="text/markdown",
-    setup_requires=["setuptools>=40.8.0"],
+    setup_requires=["setuptools>=40.8.0", "pytest-runner"],
     install_requires=load("requirements.txt"),
     tests_require=load("requirements-dev.txt"),
     test_suite=f"{NAME}.tests",
+    python_requires=">=3.6",
 )
 
 
