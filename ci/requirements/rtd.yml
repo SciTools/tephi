@@ -7,4 +7,5 @@ dependencies:
   - numpy
   - scipy
   - sphinx
+  - sphinx-copybutton
   - sphinx_rtd_theme
