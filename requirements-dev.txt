@@ -9,4 +9,5 @@ pytest
 pytest-cov
 pytest-xdist
 sphinx
+sphinx-copybutton
 sphinx_rtd_theme

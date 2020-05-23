@@ -44,6 +44,7 @@ extensions = ['sphinx.ext.autodoc',
               'matplotlib.sphinxext.plot_directive',
               'custom_class_autodoc',
               'generate_package_rst',
+              'sphinx_copybutton',
               ]
 
 # List of packages to document
@@ -269,3 +270,6 @@ intersphinx_mapping = {
     'numpy': ('http://docs.scipy.org/doc/numpy/', None),
     'matplotlib': ('http://matplotlib.sourceforge.net/', None),
 }
+
+# Define Python input prompt to copybutton.
+copybutton_prompt_text = ">>> "
