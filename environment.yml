@@ -1,0 +1,10 @@
+name: binder-tephi
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - matplotlib
+  - numpy
+  - pip
+  - pip:
+    - tephi
