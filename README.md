@@ -1,12 +1,10 @@
-<h1 align="center">
-  <a href="https://tephi.readthedocs.io/en/latest/" style="display: block; margin: 0 auto;">
-   <img src="https://scitools.github.io/tephi/tephi-logo-200-137.png"
-        style="max-width: 40%;" alt="Tephi"></a><br>
-</h1>
+<p align="center">
+<a href="https://tephi.readthedocs.io/en/latest/">
+    <img src="https://scitools.github.io/tephi/tephi-logo-200-137.png" alt="Tephi">
+</a>
+</p>
 
-<h4 align="center">
-    Tephigram plotting in Python 
-</h4>
+<p align="center"><strong>Tephigram plotting in Python</strong></p>
 
 <p align="center">
 <a href="https://travis-ci.org/github/SciTools/tephi/branches">
