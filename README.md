@@ -27,6 +27,10 @@
     <img src="https://img.shields.io/github/commits-since/scitools/tephi/latest/master"
         alt="GitHub commits since tagged version" />
 </a>
+<a href="https://pypi.org/project/tephi/">
+    <img src="https://img.shields.io/pypi/v/tephi"
+        alt="PyPI" />
+</a>
 <a href="https://mybinder.org/v2/gh/SciTools/tephi/master?filepath=index.ipynb">
     <img src="https://mybinder.org/badge_logo.svg"
         alt="Launch MyBinderk" />
