@@ -28,4 +28,4 @@ exclude = '''
 # Defined by PEP 518
 requires = ["setuptools>=40.8.0", "wheel"]
 # Defined by PEP 517
-build-backend = "setuptools.build_meta:__legacy__"
+build-backend = "setuptools.build_meta"
