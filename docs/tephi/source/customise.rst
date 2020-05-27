@@ -8,6 +8,7 @@ This section discusses how finer control of the tephigram isobars, saturated adi
 .. testsetup::
 
    import tephi
+   from pprint import pprint
 
 
 Isobar control
@@ -18,7 +19,7 @@ Isobar lines
 
 The default behaviour of the tephigram *isobar line* is controlled by the :data:`tephi.ISOBAR_LINE` dictionary:
 
-   >>> print tephi.ISOBAR_LINE
+   >>> print(tephi.ISOBAR_LINE)
    {'color': 'blue', 'linewidth': 0.5, 'clip_on': True}
 
 This is a dictionary of *key* and *value* pairs that are passed through as keyword arguments to :func:`matplotlib.pyplot.plot`.
@@ -53,8 +54,13 @@ Isobar text
 
 Similarly, the default behaviour of the tephigram *isobar text* is controlled by the :data:`tephi.ISOBAR_TEXT` dictionary:
 
-   >>> print tephi.ISOBAR_TEXT
-   {'color': 'blue', 'va': 'bottom', 'ha': 'right', 'clip_on': True, 'size': 8}
+   >>> pprint(tephi.ISOBAR_TEXT)
+   {'clip_on': True,
+     'color': 'blue',
+     'ha': 'right',
+     'size': 8,
+     'transform': <...>,
+     'va': 'bottom'}
 
 This is a dictionary of *key* and *value* pairs that are passed through as keyword arguments to :func:`matplotlib.pyplot.text`.
 
@@ -88,7 +94,7 @@ Isobar frequency
 
 The *frequency* at which isobar lines are plotted on the tephigram is controlled by the :data:`tephi.ISOBAR_SPEC` list:
 
-   >>> print tephi.ISOBAR_SPEC
+   >>> print(tephi.ISOBAR_SPEC)
    [(25, 0.03), (50, 0.1), (100, 0.25), (200, 1.5)]
 
 This :term:`line specification` is a sequence of one or more tuple pairs that contain an isobar pressure :term:`line step` and a :term:`zoom level`.
@@ -99,9 +105,9 @@ below ``0.03``.
 The *overall range* of isobar pressure levels that may be plotted is controlled by the :data:`tephi.MIN_PRESSURE` and
 :data:`tephi.MAX_PRESSURE` variables:
 
-   >>> print tephi.MIN_PRESSURE
+   >>> print(tephi.MIN_PRESSURE)
    50
-   >>> print tephi.MAX_PRESSURE
+   >>> print(tephi.MAX_PRESSURE)
    1000
 
 Note that, it is possible to set a *fixed* isobar pressure :term:`line step` for a tephigram plot by setting the associated :term:`zoom level` to ``None``.
@@ -133,7 +139,7 @@ For example, to **always** show isobar lines that are a multiple of 50 mb, irres
 
 It is also possible to control which *individual* isobar lines should be *fixed* via the :data:`tephi.ISOBAR_FIXED` list:
 
-   >>> print tephi.ISOBAR_FIXED
+   >>> print(tephi.ISOBAR_FIXED)
    [50, 1000]
 
 By default, the isobar lines at 50 mb and 1000 mb will **always** be plotted.
@@ -145,9 +151,9 @@ Isobar line extent
 The extent of each tephigram *isobar line* is controlled by the :data:`tephi.MIN_THETA` and 
 :data:`tephi.MAX_THETA` variables:
 
-   >>> print tephi.MIN_THETA
+   >>> print(tephi.MIN_THETA)
    0
-   >>> print tephi.MAX_THETA
+   >>> print(tephi.MAX_THETA)
    250
 
 For example, to change the isobar line extent behaviour to be between 15 :sup:`o`\ C and 60 :sup:`o`\ C,
@@ -185,7 +191,7 @@ Saturated adiabat lines
 
 The default behaviour of the tephigram *pseudo saturated wet adiabat line* is controlled by the :data:`tephi.WET_ADIABAT_LINE` dictionary:
 
-   >>> print .WET_ADIABAT_LINE
+   >>> print(tephi.WET_ADIABAT_LINE)
    {'color': 'orange', 'linewidth': 0.5, 'clip_on': True}
 
 This is a dictionary of *key* and *value* pairs that are passed through as keyword arguments to :func:`matplotlib.pyplot.plot`.
@@ -220,8 +226,13 @@ Saturated adiabat text
 
 The default behavour of the tephigram *saturated adiabat text* is controlled by the :data:`tephi.WET_ADIABAT_TEXT` dictionary:
 
-   >>> print .WET_ADIABAT_TEXT
-   {'color': 'orange', 'va': 'bottom', 'ha': 'left', 'clip_on': True, 'size': 8}
+   >>> pprint(tephi.WET_ADIABAT_TEXT)
+   {'clip_on': True,
+     'color': 'orange',
+     'ha': 'left',
+     'size': 8,
+     'transform': <...>,
+     'va': 'bottom'}
 
 This is a dictionary of *key* and *value* pairs that are passed through as keyword arguments to :func:`matplotlib.pyplot.text`.
 
@@ -255,7 +266,7 @@ Saturated adiabat line frequency
 
 The *frequency* at which saturated adiabat lines are plotted on the tephigram is controlled by the :data:`tephi.WET_ADIABAT_SPEC` list:
 
-   >>> print .WET_ADIABAT_SPEC
+   >>> print(tephi.WET_ADIABAT_SPEC)
    [(1, 0.05), (2, 0.15), (4, 1.5)]
 
 This :term:`line specification` is a sequence of one or more tuple pairs that contain a saturated adiabat temperature :term:`line step` and a 
@@ -267,9 +278,9 @@ when the :term:`zoom level` is at or below ``0.15``.
 The *overall range* of saturated adiabat levels that may be plotted is controlled by the :data:`tephi.MIN_WET_ADIABAT` and
 :data:`tephi.MAX_WET_ADIABAT` variables:
 
-   >>> print tephi.MIN_WET_ADIABAT
+   >>> print(tephi.MIN_WET_ADIABAT)
    1
-   >>> print tephi.MAX_WET_ADIABAT
+   >>> print(tephi.MAX_WET_ADIABAT)
    60
 
 Note that, it is possible to set a *fixed* saturated adiabat temperature :term:`line step` for a tephigram plot by setting the 
@@ -301,7 +312,7 @@ For example, to **always** show saturated adiabat lines that are a multiple of 5
    
 It is also possible to control which *individual* saturated adiabat lines should be *fixed* via the :data:`tephi.WET_ADIABAT_FIXED` variable:
 
-   >>> print tephi.WET_ADIABAT_FIXED
+   >>> print(tephi.WET_ADIABAT_FIXED)
    None
 
 By default, no saturated adiabat lines are fixed. To force saturated adiabat lines with a temperature of ``15`` :sup:`o`\ C and ``17`` :sup:`o`\ C
@@ -338,7 +349,7 @@ Humidity mixing ratio lines
 
 The default behaviour of the tephigram *humidity mixing ratio line* is controlled by the :data:`tephi.MIXING_RATIO_LINE` dictionary:
 
-   >>> print tephi.MIXING_RATIO_LINE
+   >>> print(tephi.MIXING_RATIO_LINE)
    {'color': 'green', 'linewidth': 0.5, 'clip_on': True}
 
 This is a dictionary of *key* and *value* pairs that are passed through as keyword arguments to :func:`matplotlib.pyplot.plot`.
@@ -373,8 +384,13 @@ Humidity mixing ratio text
 
 The default behaviour of the tephigram *humidity mixing ratio text* is controlled by the :data:`tephi.MIXING_RATIO_TEXT` dictionary:
 
-   >>> print tephi.MIXING_RATIO_TEXT
-   {'color': 'green', 'va': 'bottom', 'ha': 'right', 'clip_on': True, 'size': 8}
+   >>> pprint(tephi.MIXING_RATIO_TEXT)
+   {'clip_on': True,
+     'color': 'green',
+     'ha': 'right',
+     'size': 8,
+     'transform': <...>,
+     'va': 'bottom'}
 
 This is a dictionary of *key* and *value* pairs that are passed through as keyword arguments to :func:`matplotlib.pyplot.text`.
 
@@ -408,7 +424,7 @@ Humidity mixing ratio line frequency
 
 The *frequency* at which humidity mixing ratio lines are plotted on the tephigram is controlled by the :data:`tephi.MIXING_RATIO_SPEC` list:
 
-   >>> print tephi.MIXING_RATIO_SPEC
+   >>> print(tephi.MIXING_RATIO_SPEC)
    [(1, 0.05), (2, 0.18), (4, 0.3), (8, 1.5)]
 
 This :term:`line specification` is a sequence of one or more tuple pairs that contain a humidity mixing ratio :term:`line step` and a
@@ -419,12 +435,12 @@ is at or below ``0.3``.
 
 The *overall range* of humidity mixing ratio levels that may be plotted is controlled by the :data:`tephi.MIXING_RATIOS` list:
 
-   >>> print tephi.MIXING_RATIOS
+   >>> print(tephi.MIXING_RATIOS)
    [0.001, 0.002, 0.005, 0.01, 0.02, 0.03, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0, 24.0, 28.0, 32.0, 36.0, 40.0, 44.0, 48.0, 52.0, 56.0, 60.0, 68.0, 80.0]
 
 Note that, it is possible to control which *individual* humidity mixing ratio lines should be *fixed* i.e. **always** visible, via the :data:`tephi.MIXING_RATIO_FIXED` variable:
 
-   >>> print tephi.MIXING_RATIO_FIXED
+   >>> print(tephi.MIXING_RATIO_FIXED)
    None
 
 By default, no humidity mixing ratio lines are fixed. To force humidity mixing ratio lines ``4.0`` g kg\ :sup:`-1`\  and ``6.0`` g kg\ :sup:`-1`\ 
