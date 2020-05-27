@@ -38,27 +38,24 @@ If not specified, the names default to *(pressure, temperature)*.
 
 For our example tephigram data sets we have a 2-dimensional *dew-point* data set:
 
-    >>> print dews
+    >>> print(dews)
     tephidata(
-        pressure=array([ 1006.,   924.,   900.,   850.,   800.,   755.,   710.,   700.,
-             600.,   500.,   470.,   459.,   400.,   300.,   250.], dtype=float32)
-        temperature=array([ 26.39999962,  20.29999924,  19.79999924,  14.5       ,
-            12.89999962,   8.30000019,  -5.        ,  -5.0999999 ,
-           -11.19999981,  -8.30000019, -12.10000038, -12.5       ,
-           -32.90000153, -46.        , -53.        ], dtype=float32))
+        pressure=array([1006.,  924.,  900.,  850.,  800.,  755.,  710.,  700.,  600.,
+            500.,  470.,  459.,  400.,  300.,  250.], dtype=float32)
+        temperature=array([ 26.4,  20.3,  19.8,  14.5,  12.9,   8.3,  -5. ,  -5.1, -11.2,
+            -8.3, -12.1, -12.5, -32.9, -46. , -53. ], dtype=float32))
 
 And a 2-dimensional *dry-bulb* data set, with each named tuple printed individually:
 
-   >>> print temps.pressure
-   [ 1006.   924.   900.   850.   800.   755.   710.   700.   600.   500.
-      470.   459.   400.   300.   250.   210.   200.   186.   178.   159.
-      151.   150.   129.   117.   107.   100.    82.    80.    60.    54.
-       50.]
+   >>> print(temps.pressure)
+   [1006.  924.  900.  850.  800.  755.  710.  700.  600.  500.  470.  459.
+     400.  300.  250.  210.  200.  186.  178.  159.  151.  150.  129.  117.
+     107.  100.   82.   80.   60.   54.   50.]
 
-   >>> print temps.temperature
-   [ 30.  22.  21.  18.  16.  12.  12.  11.   4.  -4.  -7.  -7. -13. -29. -38.
-    -47. -51. -56. -57. -63. -63. -64. -69. -77. -79. -77. -78. -78. -72. -71.
-    -69.]
+   >>> print(temps.temperature)
+   [ 30.  22.  21.  18.  16.  12.  12.  11.   4.  -4.  -7.  -7. -13. -29.
+    -38. -47. -51. -56. -57. -63. -63. -64. -69. -77. -79. -77. -78. -78.
+    -72. -71. -69.]
 
 A convenience function, as introduced above, has been provided to assist with loading one or more text files of pressure, temperature, wind speed and wind direction data; see :func:`tephi.loadtxt`. 
 Here it is used to load the third example data set that contains four columns of data, being *pressure*, *temperature*, *wind speed* and *wind direction*::
