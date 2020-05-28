@@ -27,6 +27,10 @@
     <img src="https://img.shields.io/github/commits-since/scitools/tephi/latest/master"
         alt="GitHub commits since tagged version" />
 </a>
+<a href="https://anaconda.org/conda-forge/tephi">
+    <img src="https://img.shields.io/conda/vn/conda-forge/tephi"
+        alt="conda-forge" />
+</a>
 <a href="https://pypi.org/project/tephi/">
     <img src="https://img.shields.io/pypi/v/tephi"
         alt="PyPI" />
