@@ -26,6 +26,7 @@ import os.path
 
 from . import isopleths
 from . import transforms
+from .utils.report import Report  # noqa
 
 
 __version__ = "0.3.0.dev0"
