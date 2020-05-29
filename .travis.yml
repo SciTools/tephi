@@ -30,7 +30,8 @@ install:
   # Customise the testing environment
   # ---------------------------------
   - echo "Install tephi dependencies"
-  - conda install --quiet -n ${ENV_NAME} --file requirements.txt --file requirements-dev.txt
+  - CI_BASE="ci/requirements"
+  - conda install --quiet -n ${ENV_NAME} --file ${CI_BASE}/requirements.txt --file ${CI_BASE}/requirements-dev.txt
   - pip install coveralls
 
   # Output debug info
