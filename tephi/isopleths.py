@@ -216,7 +216,7 @@ def wet_adiabat(
     return line
 
 
-class Barbs(object):
+class Barbs:
     """Generate a wind arrow barb."""
 
     def __init__(self, axes):
@@ -393,7 +393,7 @@ class Barbs(object):
         self.refresh()
 
 
-class Profile(object):
+class Profile:
     """Generate an environmental lapse rate profile."""
 
     def __init__(self, data, axes):

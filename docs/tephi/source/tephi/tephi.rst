@@ -15,6 +15,7 @@ Tephi reference documentation
       tephi/isopleths
       tephi/tests.rst
       tephi/transforms
+      tephi/utils.rst
 
    
 
