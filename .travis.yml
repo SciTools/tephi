@@ -3,9 +3,9 @@ dist: xenial
 
 env:
   matrix:
-    - PYTHON_VERSION="3.6"
-    - PYTHON_VERSION="3.7"
-    - PYTHON_VERSION="3.8" TEST_BLACK=true
+    - PYTHON_VERSION="36"
+    - PYTHON_VERSION="37"
+    - PYTHON_VERSION="38" TEST_BLACK=true
 
 install:
   # Install miniconda
@@ -16,23 +16,16 @@ install:
   - bash miniconda.sh -b -p ${HOME}/miniconda
   - export PATH="${HOME}/miniconda/bin:$PATH"
 
-  # Create the testing environment
-  # ------------------------------
-  - echo "Configure conda and create test environment"
+  # Configure conda
+  # ---------------
+  - echo "Configure conda"
   - conda config --set always_yes yes --set changeps1 no
   - conda config --set show_channel_urls True
   - conda config --add channels conda-forge
   - conda update --quiet conda
-  - ENV_NAME="test-environment"
-  - conda create --quiet -n ${ENV_NAME} python=${PYTHON_VERSION} pip
+  - ENV_NAME="tephi-dev"
+  - conda env create --quiet --file="ci/requirements/py3/py${PYTHON_VERSION}.yml"
   - source activate ${ENV_NAME}
-
-  # Customise the testing environment
-  # ---------------------------------
-  - echo "Install tephi dependencies"
-  - CI_BASE="ci/requirements"
-  - conda install --quiet -n ${ENV_NAME} --file ${CI_BASE}/requirements.txt --file ${CI_BASE}/requirements-dev.txt
-  - pip install coveralls
 
   # Output debug info
   # -----------------
