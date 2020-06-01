@@ -1,4 +1,4 @@
-name: binder-tephi
+name: tephi-binder
 channels:
   - conda-forge
 dependencies:
