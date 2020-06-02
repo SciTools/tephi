@@ -11,8 +11,7 @@ import pytest
 
 @pytest.fixture
 def close_plot():
-    """
-    This fixture closes the matplotlib plot for a graphical test.
+    """This fixture closes the current matplotlib plot associated with the graphical test.
 
     """
     yield
@@ -21,8 +20,21 @@ def close_plot():
 
 @pytest.fixture
 def nodeid(request):
-    """
-    This fixture returns the unique test name.
+    """This fixture returns the unique test name for the method.
+
+    Constructs the nodeid, which is composed of the test module name,
+    class name, and method name.
+
+    Parameters
+    ----------
+    request : fixure
+        pytest built-in fixture providing information of the requesting
+        test function.
+
+    Returns
+    -------
+    str
+        The test nodeid consisting of the module, class and test name.
 
     """
     root = request.fspath.basename.split(".")[0]

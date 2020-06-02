@@ -119,6 +119,22 @@ class GraphicsTest(TephiTest):
     _assertion_count = collections.defaultdict(int)
 
     def _unique_id(self, nodeid):
+        """Create a hashable key to represent the unique test invocation.
+
+        Construct the hashable key from the provided nodeid and a sequential
+        counter specific to the current test, that is incremented on each call.
+
+        Parameters
+        ----------
+        nodeid : str
+            Unique identifier for the current test. See :func:`nodeid` fixture.
+
+        Returns
+        -------
+        str
+            The nodeid with sequential counter.
+
+        """
         count = self._assertion_count[nodeid]
         self._assertion_count[nodeid] += 1
         return f"{nodeid}.{count}"
