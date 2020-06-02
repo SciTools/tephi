@@ -7,8 +7,12 @@
 
 import os
 from subprocess import check_output, CalledProcessError
+import warnings
 
-import scooby
+try:
+    import scooby
+except ImportError:
+    scooby = None
 
 
 class CondaInfo:
@@ -74,43 +78,60 @@ class CondaInfo:
         )
 
 
-class Report(scooby.Report):
-    """
-    Generate a :class:`scooby.Report` of platform and package dependencies.
+if scooby is not None:
 
-    Parameters
-    ----------
-    additional : list of ModuleType, list of str, optional
-        List of packages or package names to add to output information.
-    ncol : int, optional
-        Number of package-columns in HTML table. Has no effect in text-version
-        (default is 3).
-    text_width : int, optional
-        The text width for non-HTML display modes (default is 80).
-    sort : bool, optional
-        Sort the packages when the report is shown (default is False).
-    conda : bool, optional
-        Gather information about conda (default is False).
+    class Report(scooby.Report):
+        """
+        Generate a :class:`scooby.Report` of platform and package dependencies.
 
-    """
+        Parameters
+        ----------
+        additional : list of ModuleType, list of str, optional
+            List of packages or package names to add to output information.
+        ncol : int, optional
+            Number of package-columns in HTML table. Has no effect in text-version
+            (default is 3).
+        text_width : int, optional
+            The text width for non-HTML display modes (default is 80).
+        sort : bool, optional
+            Sort the packages when the report is shown (default is False).
+        conda : bool, optional
+            Gather information about conda (default is False).
 
-    def __init__(
-        self, additional=None, ncol=3, text_width=80, sort=False, conda=False
-    ):
-        # Mandatory packages.
-        core = ["tephi", "matplotlib", "numpy", "scipy"]
+        """
 
-        # Gather conda information.
-        if conda:
-            extra_meta = CondaInfo().get_info()
-        else:
-            extra_meta = None
+        def __init__(
+            self,
+            additional=None,
+            ncol=3,
+            text_width=80,
+            sort=False,
+            conda=False,
+        ):
+            # Mandatory packages.
+            core = ["tephi", "matplotlib", "numpy", "scipy"]
 
-        super().__init__(
-            additional=additional,
-            core=core,
-            ncol=ncol,
-            text_width=text_width,
-            sort=sort,
-            extra_meta=extra_meta,
+            # Gather conda information.
+            if conda:
+                extra_meta = CondaInfo().get_info()
+            else:
+                extra_meta = None
+
+            super().__init__(
+                additional=additional,
+                core=core,
+                ncol=ncol,
+                text_width=text_width,
+                sort=sort,
+                extra_meta=extra_meta,
+            )
+
+
+else:
+
+    def Report(*args, **kwargs):
+        wmsg = (
+            'Cannot generate a report. Please first install the "scooby" '
+            "package from either conda-forge or PyPI."
         )
+        warnings.warn(wmsg)
