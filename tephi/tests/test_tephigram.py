@@ -100,6 +100,7 @@ class TestTephigramLoadTxt(tests.TephiTest):
         assert dews.temperature[0].dtype == np.int32
 
 
+@pytest.mark.graphical
 @pytest.mark.usefixtures("close_plot", "nodeid")
 class TestTephigramPlot(tests.GraphicsTest):
     @pytest.fixture(autouse=True)
@@ -212,6 +213,7 @@ class TestTephigramPlot(tests.GraphicsTest):
         self.check_graphic(nodeid)
 
 
+@pytest.mark.graphical
 @pytest.mark.usefixtures("close_plot", "nodeid")
 class TestTephigramBarbs(tests.GraphicsTest):
     @pytest.fixture(autouse=True)
