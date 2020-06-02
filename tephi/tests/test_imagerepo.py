@@ -16,7 +16,7 @@ import codecs
 import itertools
 import json
 import os
-import unittest
+import pytest
 
 import requests
 
@@ -27,13 +27,13 @@ IMAGE_MANIFEST = (
 )
 
 
-@tests.skip_inet
-class TestImageRepoJSON(tests.TephiTest):
+@tests.requires_inet
+class TestImageRepoJSON:
     def test(self):
         response = requests.get(IMAGE_MANIFEST)
 
         emsg = 'Failed to download "image_manifest.txt"'
-        self.assertEqual(response.status_code, requests.codes.ok, msg=emsg)
+        assert response.status_code == requests.codes.ok, emsg
 
         image_manifest = response.content.decode("utf-8")
         image_manifest = [line.strip() for line in image_manifest.split("\n")]
@@ -59,9 +59,4 @@ class TestImageRepoJSON(tests.TephiTest):
             )
             emsg = emsg.format(count, IMAGE_MANIFEST)
             emsg += "\t".join(uri for uri in missing)
-            # Always fails when we get here: report the problem.
-            self.assertEqual(count, 0, msg=emsg)
-
-
-if __name__ == "__main__":
-    unittest.main()
+            pytest.fail(emsg)
