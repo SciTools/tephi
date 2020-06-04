@@ -27,7 +27,7 @@ def nodeid(request):
 
     Parameters
     ----------
-    request : fixure
+    request : fixture
         pytest built-in fixture providing information of the requesting
         test function.
 
@@ -40,4 +40,4 @@ def nodeid(request):
     root = request.fspath.basename.split(".")[0]
     klass = request.cls.__name__
     func = request.node.name
-    return f"{root}.{klass}.{func}"
+    return ".".join([root, klass, func])
