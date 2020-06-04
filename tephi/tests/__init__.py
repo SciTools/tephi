@@ -22,11 +22,11 @@ import io
 import json
 import os
 import sys
-import unittest
 
 import filelock
 import matplotlib
 import numpy as np
+import pytest
 import requests
 
 from tephi import DATA_DIR
@@ -60,9 +60,9 @@ except requests.exceptions.ConnectionError:
     INET_AVAILABLE = False
 
 
-skip_inet = unittest.skipIf(
+requires_inet = pytest.mark.skipif(
     not INET_AVAILABLE,
-    ('Test(s) require an "internet connection", which is not available.'),
+    reason=('Test requires an "internet connection", which is not available.'),
 )
 
 
@@ -99,67 +99,47 @@ def get_result_path(relative_path):
     return os.path.abspath(os.path.join(_RESULT_PATH, relative_path))
 
 
-class TephiTest(unittest.TestCase):
+class TephiTest:
     """
-    A subclass of unittest.TestCase which provides testing functionality
-    specific to tephi.
+    Utility class containing common testing framework functionality.
 
     """
-
-    _assertion_counts = collections.defaultdict(int)
-
-    def _unique_id(self):
-        """
-        Returns the unique ID for the current assertion.
-
-        The ID is composed of two parts: a unique ID for the current test
-        (which is itself composed of the module, class, and test names), and
-        a sequential counter (specific to the current test) that is incremented
-        on each call.
-
-        For example, calls from a "test_tx" routine followed by a "test_ty"
-        routine might result in::
-            test_plot.TestContourf.test_tx.0
-            test_plot.TestContourf.test_tx.1
-            test_plot.TestContourf.test_tx.2
-            test_plot.TestContourf.test_ty.0
-
-        """
-        # Obtain a consistent ID for the current test.
-
-        # NB. unittest.TestCase.id() returns different values depending on
-        # whether the test has been run explicitly, or via test discovery.
-        # For example:
-        #   python tests/test_brand.py
-        #       => '__main__.TestBranding.test_combo'
-        #   python -m unittest discover
-        #       => 'tephi.tests.test_brand.TestBranding.test_combo'
-        bits = self.id().split(".")[-3:]
-        if bits[0] == "__main__":
-            file_name = os.path.basename(sys.modules["__main__"].__file__)
-            bits[0] = os.path.splitext(file_name)[0]
-        test_id = ".".join(bits)
-
-        # Derive the sequential assertion ID within the test
-        assertion_id = self._assertion_counts[test_id]
-        self._assertion_counts[test_id] += 1
-
-        return "{}.{}".format(test_id, assertion_id)
 
     def assertArrayEqual(self, a, b):
+        __tracebackhide__ = True
         return np.testing.assert_array_equal(a, b)
 
     def assertArrayAlmostEqual(self, a, b, *args, **kwargs):
+        __tracebackhide__ = True
         return np.testing.assert_array_almost_equal(a, b, *args, **kwargs)
 
 
 class GraphicsTest(TephiTest):
-    def tearDown(self):
-        # If a plotting test bombs out it can leave the current figure in an
-        # odd state, so we make sure it's been disposed of.
-        plt.close()
 
-    def check_graphic(self):
+    _assertion_count = collections.defaultdict(int)
+
+    def _unique_id(self, nodeid):
+        """Create a hashable key to represent the unique test invocation.
+
+        Construct the hashable key from the provided nodeid and a sequential
+        counter specific to the current test, that is incremented on each call.
+
+        Parameters
+        ----------
+        nodeid : str
+            Unique identifier for the current test. See :func:`nodeid` fixture.
+
+        Returns
+        -------
+        str
+            The nodeid with sequential counter.
+
+        """
+        count = self._assertion_count[nodeid]
+        self._assertion_count[nodeid] += 1
+        return f"{nodeid}.{count}"
+
+    def check_graphic(self, nodeid):
         """
         Check the hash of the current matplotlib figure matches the expected
         image hash for the current graphic test.
@@ -170,11 +150,12 @@ class GraphicsTest(TephiTest):
         output directory, and the imagerepo.json file being updated.
 
         """
+        __tracebackhide__ = True
         import imagehash
         from PIL import Image
 
         dev_mode = os.environ.get("TEPHI_TEST_CREATE_MISSING")
-        unique_id = self._unique_id()
+        unique_id = self._unique_id(nodeid)
         repo_fname = os.path.join(_RESULT_PATH, "imagerepo.json")
         repo = {}
         if os.path.isfile(repo_fname):
