@@ -20,8 +20,5 @@ jobs:
         path: |
           .tox
 
-    - name: Install tox
-      run: pip3 install --user tox
-
     - name: Run tox
-      run: tox
+      run: pipx run tox
