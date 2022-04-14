@@ -126,7 +126,6 @@ if scooby is not None:
                 extra_meta=extra_meta,
             )
 
-
 else:
 
     def Report(*args, **kwargs):
