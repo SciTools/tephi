@@ -15,11 +15,19 @@ User guide table of contents
 ----------------------------
 
 .. toctree::
+   :caption: Getting Started
    :maxdepth: 3
-   :numbered: 
+   :numbered:
 
    introduction.rst
    plotting.rst
    customise.rst
    barbs.rst
    glossary.rst
+
+
+.. toctree::
+   :caption: API
+   :maxdepth: 2
+
+   api/modules
