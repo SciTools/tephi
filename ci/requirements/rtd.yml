@@ -6,7 +6,6 @@ dependencies:
   - matplotlib
   - numpy
   - scipy
-  - scooby
   - sphinx
   - sphinx-copybutton
   - sphinx_rtd_theme
