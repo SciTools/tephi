@@ -1,0 +1,8 @@
+name: tephi-dev
+channels:
+  - conda-forge
+dependencies:
+  - matplotlib
+  - numpy
+  - scipy
+  - scooby
