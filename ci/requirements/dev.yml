@@ -1,4 +1,4 @@
-name: tephi-docs
+name: tephi-dev
 channels:
   - conda-forge
 dependencies:
