@@ -42,7 +42,7 @@ _RESULT_PATH = os.path.join(os.path.dirname(__file__), "results")
 _HASH_SIZE = 16
 
 #: Default maximum perceptual hash hamming distance.
-_HAMMING_DISTANCE = 2
+_HAMMING_DISTANCE = 4
 
 # Whether to display matplotlib output to the screen.
 _DISPLAY_FIGURES = False
