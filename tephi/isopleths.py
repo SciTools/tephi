@@ -294,7 +294,7 @@ class Barbs:
             verts = mtransforms.Affine2D().rotate(rangle).transform(verts)
             codes = [Path.MOVETO, Path.LINETO]
             path = Path(verts, codes)
-            size = length ** 2 / 4
+            size = length**2 / 4
             xy = np.array([[temperature, theta]])
             barb = PathCollection(
                 [path],

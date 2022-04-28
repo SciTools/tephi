@@ -11,9 +11,7 @@ import pytest
 
 @pytest.fixture
 def close_plot():
-    """This fixture closes the current matplotlib plot associated with the graphical test.
-
-    """
+    """This fixture closes the current matplotlib plot associated with the graphical test."""
     yield
     plt.close()
 
