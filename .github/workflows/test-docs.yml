@@ -1,4 +1,4 @@
-name: Test tephi
+name: Check tephi docs build
 
 on:
   push:
@@ -21,4 +21,4 @@ jobs:
           .tox
 
     - name: Run tox
-      run: pipx run tox
+      run: pipx run tox -e doctests
