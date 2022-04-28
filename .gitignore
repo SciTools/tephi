@@ -61,3 +61,5 @@ docs/_build/
 docs/tephi/source/api
 # misc
 *.lock
+
+tephi_image_test_output
