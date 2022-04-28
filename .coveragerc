@@ -10,7 +10,6 @@ omit =
     setup.py
     docs/*
     tephi/tests/*
-    tephi/utils/*
     .eggs
 
 [report]
