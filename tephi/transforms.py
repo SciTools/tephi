@@ -100,7 +100,7 @@ def convert_pt2pT(pressure, theta):
 
     # Calculate the temperature given the pressure and
     # potential temperature.
-    kelvin = theta * (pressure ** CONST_K) / (1000.0 ** CONST_K)
+    kelvin = theta * (pressure**CONST_K) / (1000.0**CONST_K)
 
     # Convert temperature from kelvin to degC.
     return pressure, kelvin - CONST_KELVIN
