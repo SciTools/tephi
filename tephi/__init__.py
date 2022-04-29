@@ -256,14 +256,14 @@ class _FormatterTheta:
     """Dry adiabats potential temperature axis tick formatter."""
 
     def __call__(self, direction, factor, values):
-        return [r"$\theta={}$".format(int(value)) for value in values]
+        return [r"$\theta={:.1f}$".format(value) for value in values]
 
 
 class _FormatterIsotherm:
     """Isotherms temperature axis tick formatter."""
 
     def __call__(self, direction, factor, values):
-        return [r"  $T={}$".format(int(value)) for value in values]
+        return [r"  $T={:.1f}$".format(value) for value in values]
 
 
 class Locator:
