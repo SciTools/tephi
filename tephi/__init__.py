@@ -283,7 +283,7 @@ class Locator:
             >>> from tephi import Locator
             >>> locator = Locator(10)
             >>> locator(-45, 23)
-            (array([-45., -35., -25., -15.,  -5.,   5.,  15.,  25.]), 8, 1)
+            (array([-50, -40, -30, -20, -10,   0,  10,  20]), 8, 1)
 
         Args:
 
@@ -296,10 +296,9 @@ class Locator:
         """Calculate the axis ticks given the provided tick range."""
 
         step = self.step
-        start = (int(start) / step) * step
-        stop = (int(stop) / step) * step
-        ticks = np.arange(start, stop + step, step)
-
+        start = (int(start) // step) * step
+        stop = (int(stop) // step) * step
+        ticks = np.arange(start, stop + step, step, dtype=int)
         return ticks, len(ticks), 1
 
 
