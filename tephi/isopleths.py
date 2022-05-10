@@ -26,7 +26,7 @@ _BARB_GUTTER = 0.1
 _BARB_DTYPE = np.dtype(
     dict(
         names=("speed", "angle", "pressure", "barb"),
-        formats=("f4", "f4", "f4", np.object),
+        formats=("f4", "f4", "f4", object),
     )
 )
 
