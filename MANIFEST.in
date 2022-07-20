@@ -1,2 +1,15 @@
-# Top-level files
-include COPYING COPYING.LESSER README.md
+exclude .coveragerc
+exclude .flake8
+exclude .git-blame-ignore-revs
+prune .github
+exclude .gitignore
+exclude .pre-commit-config.yaml
+exclude .readthedocs.yml
+include COPYING
+prune ci
+prune docs
+exclude environment.yml
+exclude index.ipynb
+prune tephi/etc
+prune tephi/tests
+exclude tox.ini
