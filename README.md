@@ -49,6 +49,3 @@
 </p>
 
 <br>
-
-© British Crown Copyright 2014-2022, Met Office
-

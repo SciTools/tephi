@@ -1,5 +1,5 @@
 prune .github
-include COPYING
+include LICENSE
 include *.ipynb
 include *.yaml
 include *.yml
