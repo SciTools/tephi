@@ -140,7 +140,7 @@ def _wet_adiabat_gradient(min_temperature, pressure, temperature, dp):
         calculate the gradient difference.
 
     Returns:
-        The gradient change as a pressure, potential temperature value pair.
+        The gradient change as a pressure-potential_temperature value pair.
 
     """
 
@@ -416,7 +416,7 @@ class Profile:
         if self.data.ndim != 2 or self.data.shape[-1] != 2:
             msg = (
                 "The environment profile data requires to be a sequence "
-                "of pressure, temperature value pairs."
+                "of pressure-temperature value pairs."
             )
             raise ValueError(msg)
         self.axes = axes
