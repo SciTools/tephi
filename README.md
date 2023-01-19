@@ -19,4 +19,22 @@
 
 </div>
 
+<table style="margin-left: auto; margin-right: auto;">
+    <tr>
+        <th></th>
+        <th></th>      
+    </tr>
+    <tr>
+        <td>CI</td>
+        <td>
+            [![Documentation Status](https://readthedocs.org/projects/tephi/badge/?version=latest)](https://readthedocs.org/projects/tephi/)
+            [![Pre-Commit CI Status](https://results.pre-commit.ci/badge/github/SciTools/tephi/main.svg)](https://results.pre-commit.ci/latest/github/SciTools/tephi/main)
+        </td>    
+    </tr>
+    <tr>
+        <td>Health</td>        
+        <td>1.89</td>
+    </tr>
+</table>
+
 <br>
