@@ -6,6 +6,15 @@
 
 <p align="center"><strong>Tephigram plotting in Python</strong></p>
 
+|         |                                                                                                                                     |
+|---------|-------------------------------------------------------------------------------------------------------------------------------------|
+| CI      | [![ci-locks](https://readthedocs.org/projects/tephi/)](https://readthedocs.org/projects/tephi/badge/?version=latest)                |
+| Health  | [![coverage](https://coveralls.io/github/SciTools/tephi?branch=main)](https://readthedocs.org/projects/tephi/badge/?version=latest) |
+| Meta    | [![code-style](https://github.com/psf/black)](https://img.shields.io/badge/code/style-black-000000.svg)                             | 
+| Package |                                                                                                                                     |
+| Repo    |                                                                                                                                     |
+|         |                                                                                                                                     | 
+
 <p align="center">
   <a href="https://readthedocs.org/projects/tephi/">
     <img src="https://readthedocs.org/projects/tephi/badge/?version=latest"
