@@ -445,7 +445,7 @@ class Profile:
             self.axes.lines.remove(self.line)
 
         if "zorder" not in kwargs:
-            kwargs["zorder"] = 10
+            kwargs["zorder"] = 4
 
         (self.line,) = self.axes.plot(
             self.temperature, self.theta, transform=self._transform, **kwargs
