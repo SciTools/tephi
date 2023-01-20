@@ -368,6 +368,8 @@ class Barbs:
 
         """
         self._gutter = kwargs.pop("gutter", _BARB_GUTTER)
+        # zorder of 4.1 is higher than all MPL defaults, excluding legend. Also
+        # higher than tephi default for plot-lines.
         self._kwargs = dict(length=7, zorder=4.1)
         self._kwargs.update(kwargs)
         self._custom_kwargs = dict(
@@ -444,6 +446,7 @@ class Profile:
         if self.line is not None and self.line in self.axes.lines:
             self.axes.lines.remove(self.line)
 
+        # zorder of 4 is higher than all MPL defaults, excluding legend.
         if "zorder" not in kwargs:
             kwargs["zorder"] = 4
 
