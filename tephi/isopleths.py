@@ -368,7 +368,7 @@ class Barbs:
 
         """
         self._gutter = kwargs.pop("gutter", _BARB_GUTTER)
-        self._kwargs = dict(length=7, zorder=10)
+        self._kwargs = dict(length=7, zorder=4.1)
         self._kwargs.update(kwargs)
         self._custom_kwargs = dict(
             color=None, linewidth=1.5, zorder=self._kwargs["zorder"]
