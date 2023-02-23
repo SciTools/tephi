@@ -1,4 +1,4 @@
-name: Test tephi
+name: ci-tests
 
 on:
   push:
@@ -20,9 +20,9 @@ jobs:
 
     - uses: actions/cache@v3
       with:
-        key: tox-${{ hashFiles('ci/requirements/dev.yml') }}-${{ hashFiles('tox.ini') }}
+        key: tox-${{ hashFiles('requirements/dev.yml') }}-${{ hashFiles('tox.ini') }}
         path: |
           .tox
 
     - name: Run tox
-      run: pipx run tox
+      run: pipx run 'tox<4'

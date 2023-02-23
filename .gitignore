@@ -54,6 +54,7 @@ coverage.xml
 *.log
 *.pot
 .ipynb_checkpoints
+.idea
 
 # Sphinx documentation
 docs/_build/

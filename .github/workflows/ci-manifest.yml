@@ -2,7 +2,7 @@
 #   - https://github.com/actions/checkout
 #   - https://pypa.github.io/pipx/docs/
 
-name: Check manifest
+name: ci-manifest
 
 on:
   pull_request:
