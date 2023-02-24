@@ -4,6 +4,6 @@ build:
   image: latest
 
 conda:
-  environment: ci/requirements/rtd.yml
+  environment: requirements/rtd.yml
 
 formats: []
