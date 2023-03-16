@@ -141,9 +141,7 @@ def loadtxt(*filenames, **kwargs):
 
     For example:
 
-    >>> import os.path
-    >>> import tephi
-
+    >>> from src import tephi    >>> import os.path
     >>> winds = os.path.join(tephi.DATA_DIR, 'barbs.txt')
     >>> columns = ('pressure', 'dewpoint', 'wind_speed', 'wind_direction')
     >>> data = tephi.loadtxt(winds, column_titles=columns)
@@ -279,7 +277,7 @@ class Locator:
 
         For example:
 
-            >>> from tephi import Locator
+            >>> from src.tephi import Locator
             >>> locator = Locator(10)
             >>> locator(-45, 23)
             (array([-50, -40, -30, -20, -10,   0,  10,  20]), 8, 1)

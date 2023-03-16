@@ -28,7 +28,7 @@ import numpy as np
 import pytest
 import requests
 
-from tephi import DATA_DIR
+from src.tephi import DATA_DIR
 
 
 #: Basepath for test data.
