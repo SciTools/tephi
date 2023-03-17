@@ -12,5 +12,4 @@ updates:
       # Check for updates to GitHub Actions every weekday
       interval: "daily"
     labels:
-      - "New: pull request"
       - "Bot"
