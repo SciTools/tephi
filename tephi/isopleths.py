@@ -140,7 +140,7 @@ def _wet_adiabat_gradient(min_temperature, pressure, temperature, dp):
         calculate the gradient difference.
 
     Returns:
-        The gradient change as a pressure-potential_temperature value pair.
+        The gradient change as a (pressure, potential-temperature) value pair.
 
     """
 
