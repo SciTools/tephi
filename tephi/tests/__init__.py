@@ -114,7 +114,6 @@ class TephiTest:
 
 
 class GraphicsTest(TephiTest):
-
     _assertion_count = collections.defaultdict(int)
 
     def _unique_id(self, nodeid):
