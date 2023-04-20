@@ -266,9 +266,10 @@ texinfo_documents = [
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    "python": ("http://docs.python.org/3.8", None),
-    "numpy": ("http://docs.scipy.org/doc/numpy/", None),
-    "matplotlib": ("http://matplotlib.sourceforge.net/", None),
+    "matplotlib": ("https://matplotlib.org/stable/", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "python": ("https://docs.python.org/3/", None),
+    "scipy": ("https://docs.scipy.org/doc/scipy/", None),
 }
 
 # Define Python input prompt to copybutton.
