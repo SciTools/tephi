@@ -17,7 +17,7 @@
   </a>
   <a href="https://github.com/psf/black">
     <img src="https://img.shields.io/badge/code/style-black-000000.svg"
-         alt="black" />
+         alt="Black" />
   </a>
   <a href="https://results.pre-commit.ci/latest/github/SciTools/tephi/main">
     <img src="https://results.pre-commit.ci/badge/github/SciTools/tephi/main.svg"
