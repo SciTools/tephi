@@ -595,9 +595,9 @@ class Tephigram:
             A :class:`tephi.Locator` instance or a numeric step size
             for the dry adiabat lines.
         * anchor:
-            A sequence of two pressure, temperature pairs specifying the extent
-            of the tephigram plot in terms of the bottom left hand corner and
-            the top right hand corner. Pressure data points must be in units of
+            A sequence of two (pressure, temperature) pairs specifying the extent
+            of the tephigram plot in terms of the bottom right-hand corner, and
+            the top left-hand corner. Pressure data points must be in units of
             mb or hPa, and temperature data points must be in units of degC.
 
         For example:
@@ -801,9 +801,9 @@ class Tephigram:
                 or len(self._anchor) != 2
             ):
                 msg = (
-                    "Invalid anchor, expecting [(bottom-left-pressure, "
-                    "bottom-left-temperature), (top-right-pressure, "
-                    "top-right-temperature)]"
+                    "Invalid anchor, expecting [(bottom-right-pressure, "
+                    "bottom-right-temperature), (top-left-pressure, "
+                    "top-left-temperature)]"
                 )
                 raise ValueError(msg)
             (
@@ -839,7 +839,7 @@ class Tephigram:
 
         Args:
 
-        * data: pressure and temperature pair data points.
+        * data: (pressure, temperature) pair data points.
 
         .. note::
             All keyword arguments are passed through to
