@@ -8,13 +8,13 @@ Tests the tephigram plotting capability provided by tephi.
 """
 # Import tephi test package first so that some things can be initialised
 # before importing anything else.
-import tephi.tests as tests
+import tests as tests
 
 import numpy as np
 import pytest
 
-import tephi
-from tephi import Tephigram
+from src import tephi
+from src.tephi import Tephigram
 
 
 def _load_result(filename):
