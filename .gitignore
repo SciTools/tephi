@@ -59,7 +59,7 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 # ignore autogen apidoc files
-docs/tephi/source/api
+docs/source/api
 # misc
 *.lock
 

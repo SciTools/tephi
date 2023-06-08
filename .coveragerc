@@ -5,11 +5,11 @@
 [run]
 branch = True
 include =
-    tephi/*
+    src/tephi/*
 omit =
     setup.py
     docs/*
-    tephi/tests/*
+    tests/*
     .eggs
 
 [report]
