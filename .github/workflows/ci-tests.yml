@@ -26,3 +26,7 @@ jobs:
 
     - name: Run tox
       run: pipx run 'tox<4'
+
+    - name: Upload coverage report
+      uses: codecov/codecov-action@v3
+      if: ${{ matrix.coverage }}
