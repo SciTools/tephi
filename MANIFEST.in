@@ -7,7 +7,6 @@ include .coveragerc
 include .flake8
 include .git-blame-ignore-revs
 include tox.ini
-exclude codecov.yml
 recursive-include requirements *.yml
 recursive-include docs *.bat
 recursive-include docs *.ico
