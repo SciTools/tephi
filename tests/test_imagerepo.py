@@ -9,7 +9,7 @@ test-tephi-imagehash repository.
 """
 # Import tephi tests first so that some things can be initialised before
 # importing anything else
-import tephi.tests as tests
+from src import tephi as tests
 
 import codecs
 import itertools

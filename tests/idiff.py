@@ -25,7 +25,7 @@ import warnings
 # command-line argument as idiff is an interactive tool that requires a
 # gui interface.
 sys.argv.append("-d")
-import tephi.tests  # noqa
+from src import tephi
 
 from PIL import Image  # noqa
 import filelock  # noqa
