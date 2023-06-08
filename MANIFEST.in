@@ -3,6 +3,7 @@ include LICENSE
 include *.ipynb
 include *.yaml
 include *.yml
+include *.cff
 include .coveragerc
 include .flake8
 include .git-blame-ignore-revs
