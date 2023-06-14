@@ -13,4 +13,8 @@ recursive-include docs *.ico
 recursive-include docs *.png
 recursive-include docs *.py
 recursive-include docs *.rst
+recursive-include src *.json
+recursive-include src *.npz
+recursive-include src *.py
+recursive-include src *.txt
 recursive-include docs Makefile
