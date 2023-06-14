@@ -10,10 +10,8 @@ authors:
 
 title: "tephi"
 abstract: "Tephigram plotting in Python"
-version: "0.2.4"
-date-released: 2025-05-25
+date-released: 2014-07-01
 license: "BSD-3-Clause"
 license-url: "https://spdx.org/licenses/BSD-3-Clause.html"
-doi: ""
 repository-code: "https://github.com/SciTools/tephi"
 type: "software"
