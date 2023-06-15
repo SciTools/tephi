@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you've used tephi in your research, please cite us using the references below."
+authors:
+- family-names: "Little"
+  given-names: "Bill"
+  orcid: "https://orcid.org/0000-0002-1345-9465"
+- family-names: "Sadek"
+  given-names: "Elias"
+  orcid: "https://orcid.org/0009-0007-3284-9745"
+
+title: "tephi"
+abstract: "Tephigram plotting in Python"
+date-released: "2014-07-01"
+license: "BSD-3-Clause"
+license-url: "https://spdx.org/licenses/BSD-3-Clause.html"
+repository-code: "https://github.com/SciTools/tephi"
+type: "software"
