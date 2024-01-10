@@ -13,7 +13,7 @@ env:
 jobs:
   stale:
     if: "github.repository == 'SciTools/tephi'"
-    runs-on: ubuntu-latests
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/stale@v8
