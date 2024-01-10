@@ -1,5 +1,6 @@
 name: "Close stale issues and PRs"
 on:
+  workflow_dispatch:
   schedule:
     # daily
     - cron: "0 0 * * *"
