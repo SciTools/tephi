@@ -47,24 +47,6 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: "build ${{ matrix.os }} (${{ matrix.arch }}) wheels"
-      uses: pypa/cibuildwheel@v2.16.2
-      env:
-        CIBW_SKIP: "cp36-* cp37-* cp312-* pp* *-musllinux*"
-        CIBW_ARCHS: ${{ matrix.arch }}
-        CIBW_BUILD_FRONTEND: "build"
-        CIBW_MANYLINUX_X86_64_IMAGE: "manylinux2014"
-        CIBW_TEST_SKIP: "*-macosx_arm64"
-        CIBW_TEST_REQUIRES: "pytest"
-        CIBW_TEST_COMMAND: >
-          python -m pytest --pyargs tephi
-
-    - uses: actions/upload-artifact@v4
-      with:
-        name: pypi-${{ matrix.os }}-${{ matrix.arch }}-artifact
-        path: ${{ github.workspace }}/wheelhouse/*.whl
-
-
   build_sdist:
     name: "Build sdist"
     runs-on: ubuntu-latest
@@ -118,7 +100,6 @@ jobs:
         repository_url: https://test.pypi.org/legacy/
         skip_existing: true
         print_hash: true
-
 
   publish-artifacts-pypi:
     needs: [build_bdist, build_sdist]
