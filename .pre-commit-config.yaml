@@ -26,3 +26,9 @@ repos:
     -   id: flake8
         types: [file, python]
         args: [--config=./.flake8]
+
+-   repo: https://github.com/scientific-python/cookie
+    rev: 2024.08.19
+    hooks:
+    -   id: sp-repo-review
+        additional_dependencies: ["repo-review[cli]"]
