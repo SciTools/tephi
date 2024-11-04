@@ -18,8 +18,8 @@ import sys
 
 # ensure tephi is discoverable by rtd build environment
 root = pathlib.Path(__file__).absolute().parent.parent.parent.parent
-os.environ["PYTHONPATH"] = str(root) + "src"
-sys.path.insert(0, str(root) + "src")
+os.environ["PYTHONPATH"] = str(root) + "/src"
+sys.path.insert(0, str(root) + "/src")
 
 from src import tephi
 
