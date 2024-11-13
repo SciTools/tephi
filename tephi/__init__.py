@@ -11,145 +11,10 @@ from mpl_toolkits.axisartist.grid_helper_curvelinear \
     import GridHelperCurveLinear
 import numpy as np
 
-import tephi.artists as artists
-# from tephi.constants import default
-import tephi.isopleths as isopleths
-import tephi.transforms as transforms
+from . import artists, isopleths, transforms
+from .constants import default
 
 __version__ = "0.4.0.dev0"
-
-# MODE is scope creep from the original PR, this should go in a seperate PR
-
-# _MODE = namedtuple('Mode', 'name kwargs')
-#
-# _MODE_SPEC = [_MODE('default', dict(show=False)),
-#               _MODE('temperature', dict(pointer=True)),
-#               _MODE('potential temperature', dict(pointer=True)),
-#               _MODE('relative humidity',
-#                     dict(pointer=True, highlight=True, fmt='{humidity:.2f}%'))
-#               ]
-#
-#
-# def _motion_handler(event):
-#     if event.inaxes and event.inaxes.name == 'tephigram':
-#         print('motion ...')
-#
-#
-# def _key_press_handler(event):
-#     key = event.key
-#     if key in ['m', 'M']:
-#         if event.inaxes and event.inaxes.name == 'tephigram':
-#             reverse = key == 'M'
-#             event.inaxes.tephi['mode'].next(reverse=reverse)
-#             event.inaxes.figure.canvas.draw()
-#
-#
-# def _pick_handler(event):
-#     axes = event.artist.get_axes()
-#     profile = axes.tephi['profiles'].picker(event.artist)
-#     profile.highlight()
-#     plt.draw()
-#
-#
-# class _MODE(object):
-#     def __init__(self, axes, modes):
-#         self.axes = axes
-#         if not isinstance(modes, Iterable):
-#             modes = [modes]
-#         if len(modes) == 0:
-#             msg = 'Define at least one mode of operation.'
-#             raise ValueError(msg)
-#         self.modes = modes
-#         self._index = 0
-#         if all([self.has_highlight(index) for index in range(len(modes))]):
-#             msg = 'Define at least one non-highlight mode of operation.'
-#             raise ValueError(msg)
-#         size = default.get('mode_size', 9)
-#         prop = dict(size=size, weight='normal', color='white')
-#         loc = default.get('mode_loc', 3)
-#         frameon = default.get('mode_frameon', False)
-#         self._anchor = AnchoredText('', prop=prop, frameon=False, loc=loc)  # BLHC
-#         text = self._anchor.txt.get_children()[0]
-#         text.set_path_effects([mpath.withStroke(linewidth=3, foreground='black')])
-#         self._anchor.patch.set_boxstyle('round, pad=0, rounding_size=0.2')
-#         self._anchor.set_visible(False)
-#         self.axes.add_artist(self._anchor)
-#         self._cache = []
-#
-#     def __call__(self):
-#         return self.modes[self._index].name
-#
-#     def _check(self, index, kwarg):
-#         if index is None:
-#             index = self._index
-#         mode = self.modes[index]
-#         kwargs = mode.kwargs if mode.kwargs is not None else {kwarg: False}
-#         return kwargs.get(kwarg, False)
-#
-#     def _refresh(self, text=None):
-#         title = self.modes[self._index].name.capitalize()
-#         if text:
-#             title = '{}: {}'.format(title, text)
-#         self._anchor.txt.set_text(title)
-#         self._anchor.set_visible(True)
-#
-#     def has_highlight(self, index=None):
-#         return self._check(index, 'highlight')
-#
-#     def has_pointer(self, index=None):
-#         return self._check(index, 'pointer')
-#
-#     def next(self, reverse=False):
-#         profiles = self.axes.tephi['profiles']
-#         highlighted = profiles.highlighted()
-#         if self.has_highlight() or len(highlighted):
-#             self._cache = highlighted
-#
-#         # Cycle to the next mode.
-#         mcount = len(self.modes)
-#         self._index += -1 if reverse else 1
-#         if self._index == mcount:
-#             self._index = 0
-#         elif self._index < 0:
-#             self._index = mcount - 1
-#
-#         mode = self.modes[self._index]
-#         kwargs = mode.kwargs if mode.kwargs is not None else dict(show=True)
-#         show = kwargs.get('show', True)
-#         self._anchor.set_visible(show)
-#
-#         # Show the mode anchor text.
-#         if show:
-#             self._refresh()
-#
-#         state = False
-#         if self.has_highlight():
-#             if len(profiles) == 2:
-#                 state = True
-#             elif len(profiles.highlighted()) == 0 and len(self._cache):
-#                 state = None
-#                 for profile in self._cache:
-#                     profile.highlight(True)
-#
-#         if state is not None:
-#             for profile in profiles:
-#                 profile.highlight(state)
-#
-#         return mode.name
-#
-#     def update(self, **kwargs):
-#         text = None
-#         if kwargs:
-#             if 'msg' in kwargs:
-#                 text = kwargs['msg']
-#             else:
-#                 mode = self.modes[self._index]
-#                 mode_kwargs = mode.kwargs if mode.kwargs is not None else {}
-#                 fmt = mode_kwargs.get('fmt')
-#                 if fmt is not None and kwargs:
-#                     text = fmt.format(**kwargs)
-#         self._refresh(text)
-#
 
 class _FormatterTheta(object):
     """
@@ -265,7 +130,6 @@ class TephiAxes(Subplot):
         transform = transforms.TephiTransform() + self.transData
         self.tephi = dict(anchor=anchor,
                           figure=figure.add_subplot(self),
-                          mode=_MODE(self, _MODE_SPEC),
                           profiles=isopleths.ProfileList(),
                           transform=transform)
 
@@ -339,14 +203,6 @@ class TephiAxes(Subplot):
             self.set_xlim(xlim)
             self.set_ylim(ylim)
             self.tephi['anchor'] = xlim, ylim
-
-        # Initialise the tephigram plot event handlers.
-        #        plt.connect('motion_notify_event', _motion_handler)
-        plt.connect('pick_event', _pick_handler)
-        plt.connect('key_press_event', _key_press_handler)
-
-        # Initialiase the hodograph.
-        self.hodograph = isopleths.Hodograph(self)
 
     def plot(self, data, **kwargs):
         """

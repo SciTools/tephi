@@ -6,15 +6,14 @@
 Tephigram transform support.
 
 """
+
+from __future__ import (absolute_import, division, print_function)
+
+import matplotlib as mpl
 from matplotlib.transforms import Transform
 import numpy as np
 
-from ._constants import CONST_K, CONST_KELVIN, CONST_L, CONST_MA, CONST_RV
-
-
-#
-# Reference: http://www-nwp/~hadaa/tephigram/tephi_plot.html
-#
+import tephi.constants as constants
 
 
 def convert_Tt2pT(temperature, theta):
@@ -37,12 +36,12 @@ def convert_Tt2pT(temperature, theta):
     temperature, theta = np.asarray(temperature), np.asarray(theta)
 
     # Convert temperature and theta from degC to kelvin.
-    kelvin = temperature + CONST_KELVIN
-    theta = theta + CONST_KELVIN
+    kelvin = temperature + constants.KELVIN
+    theta = theta + constants.KELVIN
 
     # Calculate the associated pressure given the temperature and
     # potential temperature.
-    pressure = 1000.0 * np.power(kelvin / theta, 1 / CONST_K)
+    pressure = constants.P_BASE * np.power(kelvin / theta, 1 / constants.K)
 
     return pressure, temperature
 
@@ -67,13 +66,13 @@ def convert_pT2Tt(pressure, temperature):
     pressure, temperature = np.asarray(pressure), np.asarray(temperature)
 
     # Convert temperature from degC to kelvin.
-    kelvin = temperature + CONST_KELVIN
+    kelvin = temperature + constants.KELVIN
 
     # Calculate the potential temperature given the pressure and temperature.
-    theta = kelvin * ((1000.0 / pressure) ** CONST_K)
+    theta = kelvin * ((constants.P_BASE / pressure) ** constants.K)
 
     # Convert potential temperature from kelvin to degC.
-    return temperature, theta - CONST_KELVIN
+    return temperature, theta - constants.KELVIN
 
 
 def convert_pt2pT(pressure, theta):
@@ -95,14 +94,14 @@ def convert_pt2pT(pressure, theta):
     pressure, theta = np.asarray(pressure), np.asarray(theta)
 
     # Convert potential temperature from degC to kelvin.
-    theta = theta + CONST_KELVIN
+    theta = theta + constants.KELVIN
 
-    # Calculate the temperature given the pressure and
-    # potential temperature.
-    kelvin = theta * (pressure**CONST_K) / (1000.0**CONST_K)
+    # Calculate the temperature given the pressure and potential temperature.
+    denom = constants.P_BASE ** constants.K
+    kelvin = theta * (pressure ** constants.K) / denom
 
     # Convert temperature from kelvin to degC.
-    return pressure, kelvin - CONST_KELVIN
+    return pressure, kelvin - constants.KELVIN
 
 
 def convert_Tt2xy(temperature, theta):
@@ -125,13 +124,13 @@ def convert_Tt2xy(temperature, theta):
     temperature, theta = np.asarray(temperature), np.asarray(theta)
 
     # Convert potential temperature from degC to kelvin.
-    theta = theta + CONST_KELVIN
+    theta = theta + constants.KELVIN
     theta = np.clip(theta, 1, 1e10)
 
     phi = np.log(theta)
 
-    x_data = phi * CONST_MA + temperature
-    y_data = phi * CONST_MA - temperature
+    x_data = phi * constants.MA + temperature
+    y_data = phi * constants.MA - temperature
 
     return x_data, y_data
 
@@ -155,10 +154,10 @@ def convert_xy2Tt(x_data, y_data):
     """
     x_data, y_data = np.asarray(x_data), np.asarray(y_data)
 
-    phi = (x_data + y_data) / (2 * CONST_MA)
-    temperature = (x_data - y_data) / 2.0
+    phi = (x_data + y_data) / (2 * constants.MA)
+    temperature = (x_data - y_data) / 2.
 
-    theta = np.exp(phi) - CONST_KELVIN
+    theta = np.exp(phi) - constants.KELVIN
 
     return temperature, theta
 
@@ -173,21 +172,20 @@ def convert_pw2T(pressure, mixing_ratio):
         Pressure in mb in hPa.
 
     * mixing_ratio:
-        Dimensionless mixing ratios.
+        Mixing ratio in g kg-1.
 
     Returns:
         Temperature in degC.
 
     """
-    pressure = np.array(pressure)
+    pressure = np.asarray(pressure)
 
     # Calculate the dew-point.
-    vapp = pressure * (8.0 / 5.0) * (mixing_ratio / 1000.0)
-    temp = 1.0 / (
-        (1.0 / CONST_KELVIN) - ((CONST_RV / CONST_L) * np.log(vapp / 6.11))
-    )
+    vapp = pressure * (8.0 / 5.0) * (mixing_ratio / constants.P_BASE)
+    temp = 1.0 / ((1.0 / constants.KELVIN) -
+                  ((constants.Rv / constants.L) * np.log(vapp / 6.11)))
 
-    return temp - CONST_KELVIN
+    return temp - constants.KELVIN
 
 
 class TephiTransform(Transform):
@@ -196,7 +194,6 @@ class TephiTransform(Transform):
     potential temperature to native plotting device coordinates.
 
     """
-
     input_dims = 2
     output_dims = 2
     is_separable = False
@@ -213,9 +210,8 @@ class TephiTransform(Transform):
             Values to be transformed, with shape (N, 2).
 
         """
-        return np.concatenate(
-            convert_Tt2xy(values[:, 0:1], values[:, 1:2]), axis=1
-        )
+        return np.concatenate(convert_Tt2xy(values[:, 0:1], values[:, 1:2]),
+                              axis=-1)
 
     def inverted(self):
         """Return the inverse transformation."""
@@ -229,7 +225,6 @@ class TephiTransformInverted(Transform):
     potential temperature.
 
     """
-
     input_dims = 2
     output_dims = 2
     is_separable = False
@@ -246,9 +241,8 @@ class TephiTransformInverted(Transform):
            Values to be transformed, with shape (N, 2).
 
         """
-        return np.concatenate(
-            convert_xy2Tt(values[:, 0:1], values[:, 1:2]), axis=1
-        )
+        return np.concatenate(convert_xy2Tt(values[:, 0:1], values[:, 1:2]),
+                              axis=-1)
 
     def inverted(self):
         """Return the inverse transformation."""
