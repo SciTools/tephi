@@ -1,11 +1,5 @@
-from __future__ import (absolute_import, division, print_function)
-
-from collections import namedtuple
-from collections.abc import Iterable
 from matplotlib.font_manager import FontProperties
-import matplotlib.patheffects as mpath
 import matplotlib.pyplot as plt
-from matplotlib.offsetbox import AnchoredText
 from mpl_toolkits.axisartist import Subplot
 from mpl_toolkits.axisartist.grid_helper_curvelinear \
     import GridHelperCurveLinear

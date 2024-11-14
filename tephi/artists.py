@@ -5,9 +5,9 @@ from scipy.interpolate import interp1d
 from shapely.geometry import LineString, Polygon
 from shapely.prepared import prep
 
-from tephi.constants import default
-from tephi.isopleths import Isobar, WetAdiabat, HumidityMixingRatio
-from tephi.transforms import convert_xy2Tt, convert_Tt2pT, convert_pT2Tt
+from .constants import default
+from .isopleths import Isobar, WetAdiabat, HumidityMixingRatio
+from .transforms import convert_xy2Tt, convert_Tt2pT, convert_pT2Tt
 
 
 class IsoplethArtist(matplotlib.artist.Artist):
