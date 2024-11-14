@@ -8,7 +8,7 @@ environment profiles and barbs.
 
 """
 
-from __future__ import (absolute_import, division, print_function)
+from __future__ import absolute_import, division, print_function
 
 from abc import ABCMeta, abstractmethod
 from collections import namedtuple
@@ -31,8 +31,12 @@ import tephi.transforms as transforms
 
 # Wind barb speed (knots) ranges used since 1 January 1955.
 _BARB_BINS = np.arange(20) * 5 + 3
-_BARB_DTYPE = np.dtype(dict(names=('speed', 'angle', 'pressure', 'barb'),
-                            formats=('f4', 'f4', 'f4', object)))
+_BARB_DTYPE = np.dtype(
+    dict(
+        names=("speed", "angle", "pressure", "barb"),
+        formats=("f4", "f4", "f4", object),
+    )
+)
 
 # Isopleth defaults.
 _DRY_ADIABAT_STEPS = 50
@@ -41,33 +45,40 @@ _ISOBAR_STEPS = 50
 _ISOTHERM_STEPS = 50
 _SATURATION_ADIABAT_PRESSURE_DELTA = -5.0
 
-BOUNDS = namedtuple('BOUNDS', 'lower upper')
-POINTS = namedtuple('POINTS', 'temperature theta pressure')
+BOUNDS = namedtuple("BOUNDS", "lower upper")
+POINTS = namedtuple("POINTS", "temperature theta pressure")
 
 
 class BarbArtist(matplotlib.artist.Artist):
     def __init__(self, barbs, **kwargs):
         super(BarbArtist, self).__init__()
-        self._gutter = kwargs.pop('gutter', default.get('barbs_gutter'))
-        self._kwargs = dict(length=default.get('barbs_length'),
-                            zorder=default.get('barbs_zorder', 10))
+        self._gutter = kwargs.pop("gutter", default.get("barbs_gutter"))
+        self._kwargs = dict(
+            length=default.get("barbs_length"),
+            zorder=default.get("barbs_zorder", 10),
+        )
         self._kwargs.update(kwargs)
-        self.set_zorder(self._kwargs['zorder'])
-        self._path_kwargs = dict(color=None,
-                                 linewidth=default.get('barbs_linewidth'),
-                                 zorder=self._kwargs['zorder'])
-        alias_by_kwarg = dict(color=['barbcolor', 'color',
-                                     'edgecolor', 'facecolor'],
-                              linewidth=['lw', 'linewidth'],
-                              linestyle=['ls', 'linestyle'])
+        self.set_zorder(self._kwargs["zorder"])
+        self._path_kwargs = dict(
+            color=None,
+            linewidth=default.get("barbs_linewidth"),
+            zorder=self._kwargs["zorder"],
+        )
+        alias_by_kwarg = dict(
+            color=["barbcolor", "color", "edgecolor", "facecolor"],
+            linewidth=["lw", "linewidth"],
+            linestyle=["ls", "linestyle"],
+        )
         for kwarg, alias in iter(alias_by_kwarg.items()):
             common = set(alias).intersection(kwargs)
             if common:
                 self._path_kwargs[kwarg] = kwargs[sorted(common)[0]]
         barbs = np.asarray(barbs)
         if barbs.ndim != 2 or barbs.shape[-1] != 3:
-            msg = 'The barbs require to be a sequence of wind speed, ' \
-                  'wind direction and pressure value triples.'
+            msg = (
+                "The barbs require to be a sequence of wind speed, "
+                "wind direction and pressure value triples."
+            )
             raise ValueError(msg)
         self.barbs = np.empty(barbs.shape[0], dtype=_BARB_DTYPE)
         for i, barb in enumerate(barbs):
@@ -85,7 +96,7 @@ class BarbArtist(matplotlib.artist.Artist):
         # Snap the magnitude of the barb vector to fall into one of the
         # _BARB_BINS ensuring it's a multiple of five. Five is the increment
         # step size for decorating with barb with flags.
-        magnitude = np.searchsorted(_BARB_BINS, magnitude, side='right') * 5
+        magnitude = np.searchsorted(_BARB_BINS, magnitude, side="right") * 5
         modulus = angle % 90
         if modulus:
             quadrant = int(angle / 90)
@@ -114,28 +125,35 @@ class BarbArtist(matplotlib.artist.Artist):
 
     def _make_barb(self, temperature, theta, speed, angle):
         """Add the barb to the plot at the specified location."""
-        transform = self.axes.tephi['transform']
+        transform = self.axes.tephi["transform"]
         u, v = self._uv(speed, angle)
         if 0 < speed < _BARB_BINS[0]:
             # Plot the missing barbless 1-2 knots line.
-            length = self._kwargs['length']
-            pivot_points = dict(tip=0.0, middle=-length / 2.)
-            pivot = self._kwargs.get('pivot', 'tip')
+            length = self._kwargs["length"]
+            pivot_points = dict(tip=0.0, middle=-length / 2.0)
+            pivot = self._kwargs.get("pivot", "tip")
             offset = pivot_points[pivot]
             verts = [(0.0, offset), (0.0, length + offset)]
-            verts = mtrans.Affine2D().rotate(math.radians(-angle)).transform(verts)
+            verts = (
+                mtrans.Affine2D().rotate(math.radians(-angle)).transform(verts)
+            )
             codes = [Path.MOVETO, Path.LINETO]
             path = Path(verts, codes)
-            size = length ** 2 / 4
+            size = length**2 / 4
             xy = np.array([[temperature, theta]])
-            barb = PathCollection([path], (size,), offsets=xy,
-                                  transOffset=transform,
-                                  **self._path_kwargs)
+            barb = PathCollection(
+                [path],
+                (size,),
+                offsets=xy,
+                transOffset=transform,
+                **self._path_kwargs,
+            )
             barb.set_transform(mtrans.IdentityTransform())
         else:
-            barb = self.axes.barbs(temperature, theta, u, v,
-                                   transform=transform, **self._kwargs)
-            collections = (list(self.axes.collections).remove(barb))
+            barb = self.axes.barbs(
+                temperature, theta, u, v, transform=transform, **self._kwargs
+            )
+            collections = list(self.axes.collections).remove(barb)
             if collections:
                 self.axes.collections = tuple(collections)
         return barb
@@ -155,11 +173,12 @@ class BarbArtist(matplotlib.artist.Artist):
         func = interp1d(pressure, temperature)
         for i, (speed, angle, pressure, barb) in enumerate(self.barbs):
             if min_pressure < pressure < max_pressure:
-                temperature, theta = transforms.convert_pT2Tt(pressure,
-                                                              func(pressure))
+                temperature, theta = transforms.convert_pT2Tt(
+                    pressure, func(pressure)
+                )
                 if barb is None:
                     barb = self._make_barb(temperature, theta, speed, angle)
-                    self.barbs[i]['barb'] = barb
+                    self.barbs[i]["barb"] = barb
                 else:
                     barb.set_offsets(np.array([[temperature, theta]]))
                 barb.draw(renderer)
@@ -170,28 +189,36 @@ class Isopleth(object):
 
     def __init__(self, axes):
         self.axes = axes
-        self._transform = axes.tephi['transform']
+        self._transform = axes.tephi["transform"]
         self.points = self._generate_points()
-        self.geometry = LineString(np.vstack((self.points.temperature,
-                                              self.points.theta)).T)
+        self.geometry = LineString(
+            np.vstack((self.points.temperature, self.points.theta)).T
+        )
         self.line = None
         self.label = None
         self._kwargs = dict(line={}, text={})
-        Tmin, Tmax = (np.argmin(self.points.temperature),
-                      np.argmax(self.points.temperature))
-        tmin, tmax = (np.argmin(self.points.theta),
-                      np.argmax(self.points.theta))
-        pmin, pmax = (np.argmin(self.points.pressure),
-                      np.argmax(self.points.pressure))
-        self.index = POINTS(BOUNDS(Tmin, Tmax),
-                            BOUNDS(tmin, tmax),
-                            BOUNDS(pmin, pmax))
-        self.extent = POINTS(BOUNDS(self.points.temperature[Tmin],
-                                    self.points.temperature[Tmax]),
-                             BOUNDS(self.points.theta[tmin],
-                                    self.points.theta[tmax]),
-                             BOUNDS(self.points.pressure[pmin],
-                                    self.points.pressure[pmax]))
+        Tmin, Tmax = (
+            np.argmin(self.points.temperature),
+            np.argmax(self.points.temperature),
+        )
+        tmin, tmax = (
+            np.argmin(self.points.theta),
+            np.argmax(self.points.theta),
+        )
+        pmin, pmax = (
+            np.argmin(self.points.pressure),
+            np.argmax(self.points.pressure),
+        )
+        self.index = POINTS(
+            BOUNDS(Tmin, Tmax), BOUNDS(tmin, tmax), BOUNDS(pmin, pmax)
+        )
+        self.extent = POINTS(
+            BOUNDS(
+                self.points.temperature[Tmin], self.points.temperature[Tmax]
+            ),
+            BOUNDS(self.points.theta[tmin], self.points.theta[tmax]),
+            BOUNDS(self.points.pressure[pmin], self.points.pressure[pmax]),
+        )
 
     @abstractmethod
     def _generate_points(self):
@@ -199,12 +226,16 @@ class Isopleth(object):
 
     def draw(self, renderer, **kwargs):
         if self.line is None:
-            if 'zorder' not in kwargs:
-                kwargs['zorder'] = default.get('isopleth_zorder')
-            draw_kwargs = dict(self._kwargs['line'])
+            if "zorder" not in kwargs:
+                kwargs["zorder"] = default.get("isopleth_zorder")
+            draw_kwargs = dict(self._kwargs["line"])
             draw_kwargs.update(kwargs)
-            self.line = plt.Line2D(self.points.temperature, self.points.theta,
-                                   transform=self._transform, **draw_kwargs)
+            self.line = plt.Line2D(
+                self.points.temperature,
+                self.points.theta,
+                transform=self._transform,
+                **draw_kwargs,
+            )
             self.line.set_clip_box(self.axes.bbox)
         self.line.draw(renderer)
         return self.line
@@ -223,29 +254,45 @@ class Isopleth(object):
         if self.line is not None:
             if self.line in self.axes.lines:
                 self.axes.lines.remove(self.line)
-        if 'zorder' not in kwargs:
-            kwargs['zorder'] = default.get('isopleth_zorder')
-        if 'picker' not in kwargs:
-            kwargs['picker'] = default.get('isopleth_picker')
-        plot_kwargs = dict(self._kwargs['line'])
+        if "zorder" not in kwargs:
+            kwargs["zorder"] = default.get("isopleth_zorder")
+        if "picker" not in kwargs:
+            kwargs["picker"] = default.get("isopleth_picker")
+        plot_kwargs = dict(self._kwargs["line"])
         plot_kwargs.update(kwargs)
-        self.line, = Subplot.plot(self.axes, self.points.temperature,
-                                  self.points.theta, transform=self._transform,
-                                  **plot_kwargs)
+        (self.line,) = Subplot.plot(
+            self.axes,
+            self.points.temperature,
+            self.points.theta,
+            transform=self._transform,
+            **plot_kwargs,
+        )
         return self.line
 
     def text(self, temperature, theta, text, **kwargs):
-        if 'zorder' not in kwargs:
-            kwargs['zorder'] = default.get('isopleth_zorder', 10) + 1
-        text_kwargs = dict(self._kwargs['text'])
+        if "zorder" not in kwargs:
+            kwargs["zorder"] = default.get("isopleth_zorder", 10) + 1
+        text_kwargs = dict(self._kwargs["text"])
         text_kwargs.update(kwargs)
         if self.label is not None and self.label in self.axes.texts:
             self.axes.lines.remove(self.label)
-        self.label = self.axes.text(temperature, theta, str(text),
-                                    transform=self._transform, **text_kwargs)
-        self.label.set_bbox(dict(boxstyle='Round,pad=0.3', facecolor='white',
-                                 edgecolor='white', alpha=0.5, clip_on=True,
-                                 clip_box=self.axes.bbox))
+        self.label = self.axes.text(
+            temperature,
+            theta,
+            str(text),
+            transform=self._transform,
+            **text_kwargs,
+        )
+        self.label.set_bbox(
+            dict(
+                boxstyle="Round,pad=0.3",
+                facecolor="white",
+                edgecolor="white",
+                alpha=0.5,
+                clip_on=True,
+                clip_box=self.axes.bbox,
+            )
+        )
         return self.label
 
     def refresh(self, temperature, theta, renderer=None, **kwargs):
@@ -253,7 +300,9 @@ class Isopleth(object):
             self.text(temperature, theta, self.data, **kwargs)
             if renderer is not None:
                 try:
-                    self.axes.tests = tuple(list(self.axes.texts).remove(self.label))
+                    self.axes.tests = tuple(
+                        list(self.axes.texts).remove(self.label)
+                    )
                 except TypeError:
                     self.axes.tests = None
         else:
@@ -270,11 +319,13 @@ class DryAdiabat(Isopleth):
         super(DryAdiabat, self).__init__(axes)
 
     def _generate_points(self):
-        pressure = np.linspace(self.bounds.lower, self.bounds.upper,
-                               self._steps)
+        pressure = np.linspace(
+            self.bounds.lower, self.bounds.upper, self._steps
+        )
         theta = np.asarray([self.data] * self._steps)
         _, temperature = transforms.convert_pt2pT(pressure, theta)
         return POINTS(temperature, theta, pressure)
+
 
 class HumidityMixingRatio(Isopleth):
     def __init__(self, axes, mixing_ratio, min_pressure, max_pressure):
@@ -284,7 +335,9 @@ class HumidityMixingRatio(Isopleth):
         super(HumidityMixingRatio, self).__init__(axes)
 
     def _generate_points(self):
-        pressure = np.linspace(self.bounds.lower, self.bounds.upper, self._step)
+        pressure = np.linspace(
+            self.bounds.lower, self.bounds.upper, self._step
+        )
         temperature = transforms.convert_pw2T(pressure, self.data)
         _, theta = transforms.convert_pT2Tt(pressure, temperature)
         return POINTS(temperature, theta, pressure)
@@ -296,8 +349,8 @@ class Isobar(Isopleth):
         self.bounds = BOUNDS(min_theta, max_theta)
         self._steps = _ISOBAR_STEPS
         super(Isobar, self).__init__(axes)
-        self._kwargs['line'] = default.get('isobar_line')
-        self._kwargs['text'] = default.get('isobar_text')
+        self._kwargs["line"] = default.get("isobar_line")
+        self._kwargs["text"] = default.get("isobar_text")
 
     def _generate_points(self):
         pressure = np.asarray([self.data] * self._steps)
@@ -314,7 +367,9 @@ class Isotherm(Isopleth):
         super(Isotherm, self).__init__(axes)
 
     def _generate_points(self):
-        pressure = np.linspace(self.bounds.lower, self.bounds.upper, self._steps)
+        pressure = np.linspace(
+            self.bounds.lower, self.bounds.upper, self._steps
+        )
         temperature = np.asarray([self.data] * self._steps)
         _, theta = transforms.convert_pT2Tt(pressure, temperature)
         return POINTS(temperature, theta, pressure)
@@ -349,13 +404,20 @@ class Profile(Isopleth):
         if state:
             if self._highlight is None:
                 linewidth = self.line.get_linewidth() * 7
-                zorder = default.get('isopleth_zorder', 10) - 1
-                kwargs = dict(linewidth=linewidth, color='grey', alpha=0.3,
-                              transform=self._transform, zorder=zorder)
-                self._highlight, = Subplot.plot(self.axes,
-                                                self.points.temperature,
-                                                self.points.theta,
-                                                **kwargs)
+                zorder = default.get("isopleth_zorder", 10) - 1
+                kwargs = dict(
+                    linewidth=linewidth,
+                    color="grey",
+                    alpha=0.3,
+                    transform=self._transform,
+                    zorder=zorder,
+                )
+                (self._highlight,) = Subplot.plot(
+                    self.axes,
+                    self.points.temperature,
+                    self.points.theta,
+                    **kwargs,
+                )
         else:
             if self._highlight is not None:
                 self.axes.lines.remove(self._highlight)
@@ -363,8 +425,10 @@ class Profile(Isopleth):
 
     def _generate_points(self):
         if self.data.ndim != 2 or self.data.shape[-1] != 2:
-            msg = 'The profile data requires to be a sequence ' \
-                  'of pressure, temperature value pairs.'
+            msg = (
+                "The profile data requires to be a sequence "
+                "of pressure, temperature value pairs."
+            )
             raise ValueError(msg)
 
         pressure = self.data[:, 0]
@@ -390,9 +454,9 @@ class Profile(Isopleth):
             See :func:`matplotlib.pyplot.barbs`
 
         """
-        colors = ['color', 'barbcolor', 'edgecolor', 'facecolor']
+        colors = ["color", "barbcolor", "edgecolor", "facecolor"]
         if not set(colors).intersection(kwargs):
-            kwargs['color'] = self.line.get_color()
+            kwargs["color"] = self.line.get_color()
         self._barbs = BarbArtist(barbs, **kwargs)
         self.axes.add_artist(self._barbs)
 
@@ -411,11 +475,17 @@ class WetAdiabat(Isopleth):
         stop = False
 
         kelvin = temperature + constants.KELVIN
-        lsbc = (constants.L / constants.Rv) * ((1.0 / constants.KELVIN) - (1.0 / kelvin))
+        lsbc = (constants.L / constants.Rv) * (
+            (1.0 / constants.KELVIN) - (1.0 / kelvin)
+        )
         rw = 6.11 * np.exp(lsbc) * (constants.E / pressure)
         lrwbt = (constants.L * rw) / (constants.Rd * kelvin)
-        numerator = ((constants.Rd * kelvin) / (constants.Cp * pressure)) * (1.0 + lrwbt)
-        denominator = 1.0 + (lrwbt * ((constants.E * constants.L) / (constants.Cp * kelvin)))
+        numerator = ((constants.Rd * kelvin) / (constants.Cp * pressure)) * (
+            1.0 + lrwbt
+        )
+        denominator = 1.0 + (
+            lrwbt * ((constants.E * constants.L) / (constants.Cp * kelvin))
+        )
         grad = numerator / denominator
         dt = dp * grad
 
@@ -445,7 +515,7 @@ class ProfileList(list):
     def __new__(cls, profiles=None):
         profile_list = list.__new__(cls, profiles)
         if not all(isinstance(profile, Profile) for profile in profile_list):
-            msg = 'All items in the list must be a Profile instance.'
+            msg = "All items in the list must be a Profile instance."
             raise TypeError(msg)
         return profile_list
 
@@ -460,5 +530,5 @@ class ProfileList(list):
                 result = profile
                 break
         if result is None:
-            raise ValueError('Picker cannot find the profile.')
+            raise ValueError("Picker cannot find the profile.")
         return result
