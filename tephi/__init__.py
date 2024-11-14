@@ -5,7 +5,7 @@ from mpl_toolkits.axisartist.grid_helper_curvelinear import (
     GridHelperCurveLinear,
 )
 import numpy as np
-
+import os.path
 from . import artists, isopleths, transforms
 
 __version__ = "0.4.0.dev0"
