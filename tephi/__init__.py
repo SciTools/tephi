@@ -13,6 +13,7 @@ __version__ = "0.4.0.dev0"
 RESOURCES_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "etc")
 DATA_DIR = os.path.join(RESOURCES_DIR, "test_data")
 
+
 class _FormatterTheta(object):
     """
     Dry adiabats potential temperature axis tick formatter.
