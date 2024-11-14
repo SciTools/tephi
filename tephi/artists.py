@@ -1,5 +1,4 @@
 import matplotlib.artist
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy.interpolate import interp1d
 from shapely.geometry import LineString, Polygon
@@ -7,7 +6,7 @@ from shapely.prepared import prep
 
 from .constants import default
 from .isopleths import Isobar, WetAdiabat, HumidityMixingRatio
-from .transforms import convert_xy2Tt, convert_Tt2pT, convert_pT2Tt
+from .transforms import convert_xy2Tt, convert_Tt2pT
 
 
 class IsoplethArtist(matplotlib.artist.Artist):

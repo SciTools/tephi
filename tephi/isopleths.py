@@ -18,7 +18,6 @@ from matplotlib.collections import PathCollection
 from matplotlib.path import Path
 import matplotlib.pyplot as plt
 import matplotlib.transforms as mtrans
-from mpl_toolkits.axes_grid1.inset_locator import AnchoredSizeLocator
 from mpl_toolkits.axisartist import Subplot
 import numpy as np
 from shapely.geometry import LineString

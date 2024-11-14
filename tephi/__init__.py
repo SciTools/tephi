@@ -7,7 +7,6 @@ from mpl_toolkits.axisartist.grid_helper_curvelinear import (
 import numpy as np
 
 from . import artists, isopleths, transforms
-from .constants import default
 
 __version__ = "0.4.0.dev0"
 
