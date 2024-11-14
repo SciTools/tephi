@@ -7,7 +7,7 @@ Tephigram transform support.
 
 """
 
-from __future__ import (absolute_import, division, print_function)
+from __future__ import absolute_import, division, print_function
 
 import matplotlib as mpl
 from matplotlib.transforms import Transform
@@ -97,8 +97,8 @@ def convert_pt2pT(pressure, theta):
     theta = theta + constants.KELVIN
 
     # Calculate the temperature given the pressure and potential temperature.
-    denom = constants.P_BASE ** constants.K
-    kelvin = theta * (pressure ** constants.K) / denom
+    denom = constants.P_BASE**constants.K
+    kelvin = theta * (pressure**constants.K) / denom
 
     # Convert temperature from kelvin to degC.
     return pressure, kelvin - constants.KELVIN
@@ -155,7 +155,7 @@ def convert_xy2Tt(x_data, y_data):
     x_data, y_data = np.asarray(x_data), np.asarray(y_data)
 
     phi = (x_data + y_data) / (2 * constants.MA)
-    temperature = (x_data - y_data) / 2.
+    temperature = (x_data - y_data) / 2.0
 
     theta = np.exp(phi) - constants.KELVIN
 
@@ -182,8 +182,10 @@ def convert_pw2T(pressure, mixing_ratio):
 
     # Calculate the dew-point.
     vapp = pressure * (8.0 / 5.0) * (mixing_ratio / constants.P_BASE)
-    temp = 1.0 / ((1.0 / constants.KELVIN) -
-                  ((constants.Rv / constants.L) * np.log(vapp / 6.11)))
+    temp = 1.0 / (
+        (1.0 / constants.KELVIN)
+        - ((constants.Rv / constants.L) * np.log(vapp / 6.11))
+    )
 
     return temp - constants.KELVIN
 
@@ -194,6 +196,7 @@ class TephiTransform(Transform):
     potential temperature to native plotting device coordinates.
 
     """
+
     input_dims = 2
     output_dims = 2
     is_separable = False
@@ -210,8 +213,9 @@ class TephiTransform(Transform):
             Values to be transformed, with shape (N, 2).
 
         """
-        return np.concatenate(convert_Tt2xy(values[:, 0:1], values[:, 1:2]),
-                              axis=-1)
+        return np.concatenate(
+            convert_Tt2xy(values[:, 0:1], values[:, 1:2]), axis=-1
+        )
 
     def inverted(self):
         """Return the inverse transformation."""
@@ -225,6 +229,7 @@ class TephiTransformInverted(Transform):
     potential temperature.
 
     """
+
     input_dims = 2
     output_dims = 2
     is_separable = False
@@ -241,8 +246,9 @@ class TephiTransformInverted(Transform):
            Values to be transformed, with shape (N, 2).
 
         """
-        return np.concatenate(convert_xy2Tt(values[:, 0:1], values[:, 1:2]),
-                              axis=-1)
+        return np.concatenate(
+            convert_xy2Tt(values[:, 0:1], values[:, 1:2]), axis=-1
+        )
 
     def inverted(self):
         """Return the inverse transformation."""

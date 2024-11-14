@@ -28,47 +28,55 @@ class IsoplethArtist(matplotlib.artist.Artist):
                     mask[:] = False
                     upint = indices.size + self.nbins - 1
                     # this is an ugly solution, I'm sure there must be better ones
-                    mask[indices[::upint // self.nbins + 1]] = True
+                    mask[indices[:: upint // self.nbins + 1]] = True
 
         return mask
 
 
 class IsobarArtist(IsoplethArtist):
-    def __init__(self, ticks=None, line=None, text=None,
-                 min_theta=None, max_theta=None, nbins=None):
+    def __init__(
+        self,
+        ticks=None,
+        line=None,
+        text=None,
+        min_theta=None,
+        max_theta=None,
+        nbins=None,
+    ):
         super(IsobarArtist, self).__init__()
         if ticks is None:
-            ticks = default.get('isobar_ticks')
+            ticks = default.get("isobar_ticks")
         self.ticks = ticks
         self._kwargs = {}
         if line is None:
-            line = default.get('isobar_line')
-        self._kwargs['line'] = line
+            line = default.get("isobar_line")
+        self._kwargs["line"] = line
         if text is None:
-            text = default.get('isobar_text')
-        self._kwargs['text'] = text
+            text = default.get("isobar_text")
+        self._kwargs["text"] = text
         if min_theta is None:
-            min_theta = default.get('isobar_min_theta')
+            min_theta = default.get("isobar_min_theta")
         self.min_theta = min_theta
         if max_theta is None:
-            max_theta = default.get('isobar_max_theta')
+            max_theta = default.get("isobar_max_theta")
         self.max_theta = max_theta
         if nbins is None:
-            nbins = default.get('isobar_nbins')
+            nbins = default.get("isobar_nbins")
         elif nbins < 2 or isinstance(nbins, str):
             nbins = None
         self.nbins = nbins
 
     @matplotlib.artist.allow_rasterization
-    def draw(self, renderer, line=None, text=None,
-             min_theta=None, max_theta=None):
+    def draw(
+        self, renderer, line=None, text=None, min_theta=None, max_theta=None
+    ):
         if not self.get_visible():
             return
         axes = self.axes
-        draw_kwargs = dict(self._kwargs['line'])
+        draw_kwargs = dict(self._kwargs["line"])
         if line is not None:
             draw_kwargs.update(line)
-        text_kwargs = dict(self._kwargs['text'])
+        text_kwargs = dict(self._kwargs["text"])
         if text is not None:
             text_kwargs.update(text)
         if min_theta is None:
@@ -97,8 +105,9 @@ class IsobarArtist(IsoplethArtist):
             isobar.draw(renderer, **draw_kwargs)
             point = text_line.intersection(isobar.geometry)
             if point:
-                isobar.refresh(point.x, point.y, renderer=renderer,
-                               **text_kwargs)
+                isobar.refresh(
+                    point.x, point.y, renderer=renderer, **text_kwargs
+                )
             else:
                 if func(isobar.data) < isobar.extent.theta.lower:
                     T = isobar.points.temperature[isobar.index.theta.lower]
@@ -110,41 +119,54 @@ class IsobarArtist(IsoplethArtist):
 
 
 class WetAdiabatArtist(IsoplethArtist):
-    def __init__(self, ticks=None, line=None, text=None,
-                 min_temperature=None, max_pressure=None, nbins=None):
+    def __init__(
+        self,
+        ticks=None,
+        line=None,
+        text=None,
+        min_temperature=None,
+        max_pressure=None,
+        nbins=None,
+    ):
         super(WetAdiabatArtist, self).__init__()
         if ticks is None:
-            ticks = default.get('wet_adiabat_ticks')
+            ticks = default.get("wet_adiabat_ticks")
         self.ticks = sorted(ticks)
         self._kwargs = {}
         if line is None:
-            line = default.get('wet_adiabat_line')
-        self._kwargs['line'] = line
+            line = default.get("wet_adiabat_line")
+        self._kwargs["line"] = line
         if text is None:
-            text = default.get('wet_adiabat_text')
-        self._kwargs['text'] = text
+            text = default.get("wet_adiabat_text")
+        self._kwargs["text"] = text
         if min_temperature is None:
-            min_temperature = default.get('wet_adiabat_min_temperature')
+            min_temperature = default.get("wet_adiabat_min_temperature")
         self.min_temperature = min_temperature
         if max_pressure is None:
-            max_pressure = default.get('wet_adiabat_max_pressure')
+            max_pressure = default.get("wet_adiabat_max_pressure")
         self.max_pressure = max_pressure
         if nbins is None:
-            nbins = default.get('wet_adiabat_nbins')
+            nbins = default.get("wet_adiabat_nbins")
         if nbins < 2 or isinstance(nbins, str):
             nbins = None
         self.nbins = nbins
 
     @matplotlib.artist.allow_rasterization
-    def draw(self, renderer, line=None, text=None,
-             min_temperature=None, max_pressure=None):
+    def draw(
+        self,
+        renderer,
+        line=None,
+        text=None,
+        min_temperature=None,
+        max_pressure=None,
+    ):
         if not self.get_visible():
             return
         axes = self.axes
-        draw_kwargs = dict(self._kwargs['line'])
+        draw_kwargs = dict(self._kwargs["line"])
         if line is not None:
             draw_kwargs.update(line)
-        text_kwargs = dict(self._kwargs['text'])
+        text_kwargs = dict(self._kwargs["text"])
         if text is not None:
             text_kwargs.update(text)
         if min_temperature is None:
@@ -155,8 +177,9 @@ class WetAdiabatArtist(IsoplethArtist):
         if self._isopleths is None:
             adiabats = []
             for tick in self.ticks:
-                adiabats.append(WetAdiabat(axes, tick, min_temperature,
-                                           max_pressure))
+                adiabats.append(
+                    WetAdiabat(axes, tick, min_temperature, max_pressure)
+                )
             self._isopleths = np.asarray(adiabats)
 
         (x0, x1), (y0, y1) = axes.get_xlim(), axes.get_ylim()
@@ -173,58 +196,72 @@ class WetAdiabatArtist(IsoplethArtist):
             adiabat.draw(renderer, **draw_kwargs)
             point = text_line.intersection(adiabat.geometry)
             if point:
-                adiabat.refresh(point.x, point.y, renderer=renderer,
-                                **text_kwargs)
+                adiabat.refresh(
+                    point.x, point.y, renderer=renderer, **text_kwargs
+                )
             else:
                 upper = abs(adiabat.extent.temperature.upper - mT)
                 lower = abs(adiabat.extent.temperature.lower - mT)
-                if snap == 'upper' or upper < lower:
+                if snap == "upper" or upper < lower:
                     T = adiabat.extent.temperature.upper
                     t = adiabat.points.theta[adiabat.index.temperature.upper]
-                    snap = 'upper'
+                    snap = "upper"
                 else:
                     T = adiabat.extent.temperature.lower
                     t = adiabat.points.theta[adiabat.index.temperature.lower]
-                    snap = 'lower'
+                    snap = "lower"
                 adiabat.refresh(T, t, renderer=renderer, **text_kwargs)
 
 
 class HumidityMixingRatioArtist(IsoplethArtist):
-    def __init__(self, ticks=None, line=None, text=None,
-                 min_pressure=None, max_pressure=None, nbins=None):
+    def __init__(
+        self,
+        ticks=None,
+        line=None,
+        text=None,
+        min_pressure=None,
+        max_pressure=None,
+        nbins=None,
+    ):
         super(HumidityMixingRatioArtist, self).__init__()
         if ticks is None:
-            ticks = default.get('mixing_ratio_ticks')
+            ticks = default.get("mixing_ratio_ticks")
         self.ticks = ticks
         self._kwargs = {}
         if line is None:
-            line = default.get('mixing_ratio_line')
-        self._kwargs['line'] = line
+            line = default.get("mixing_ratio_line")
+        self._kwargs["line"] = line
         if text is None:
-            text = default.get('mixing_ratio_text')
-        self._kwargs['text'] = text
+            text = default.get("mixing_ratio_text")
+        self._kwargs["text"] = text
         if min_pressure is None:
-            min_pressure = default.get('mixing_ratio_min_pressure')
+            min_pressure = default.get("mixing_ratio_min_pressure")
         self.min_pressure = min_pressure
         if max_pressure is None:
-            max_pressure = default.get('mixing_ratio_max_pressure')
+            max_pressure = default.get("mixing_ratio_max_pressure")
         self.max_pressure = max_pressure
         if nbins is None:
-            nbins = default.get('mixing_ratio_nbins')
+            nbins = default.get("mixing_ratio_nbins")
         if nbins < 2 or isinstance(nbins, str):
             nbins = None
         self.nbins = nbins
 
     @matplotlib.artist.allow_rasterization
-    def draw(self, renderer, line=None, text=None,
-             min_pressure=None, max_pressure=None):
+    def draw(
+        self,
+        renderer,
+        line=None,
+        text=None,
+        min_pressure=None,
+        max_pressure=None,
+    ):
         if not self.get_visible():
             return
         axes = self.axes
-        draw_kwargs = dict(self._kwargs['line'])
+        draw_kwargs = dict(self._kwargs["line"])
         if line is not None:
             draw_kwargs.update(line)
-        text_kwargs = dict(self._kwargs['text'])
+        text_kwargs = dict(self._kwargs["text"])
         if text is not None:
             text_kwargs.update(text)
         if min_pressure is None:
@@ -235,8 +272,9 @@ class HumidityMixingRatioArtist(IsoplethArtist):
         if self._isopleths is None:
             ratios = []
             for tick in self.ticks:
-                ratios.append(HumidityMixingRatio(axes, tick, min_pressure,
-                                                  max_pressure))
+                ratios.append(
+                    HumidityMixingRatio(axes, tick, min_pressure, max_pressure)
+                )
             self._isopleths = np.asarray(ratios)
 
         (x0, x1), (y0, y1) = axes.get_xlim(), axes.get_ylim()
@@ -253,17 +291,18 @@ class HumidityMixingRatioArtist(IsoplethArtist):
             ratio.draw(renderer, **draw_kwargs)
             point = text_line.intersection(ratio.geometry)
             if point:
-                ratio.refresh(point.x, point.y, renderer=renderer,
-                              **text_kwargs)
+                ratio.refresh(
+                    point.x, point.y, renderer=renderer, **text_kwargs
+                )
             else:
                 upper = abs(ratio.extent.theta.upper - mt)
                 lower = abs(ratio.extent.theta.lower - mt)
-                if snap == 'upper' or upper < lower:
+                if snap == "upper" or upper < lower:
                     T = ratio.points.temperature[ratio.index.theta.upper]
                     t = ratio.extent.theta.upper
-                    snap = 'upper'
+                    snap = "upper"
                 else:
                     T = ratio.points.temperature[ratio.index.theta.lower]
                     t = ratio.extent.theta.lower
-                    snap = 'lower'
+                    snap = "lower"
                 ratio.refresh(T, t, renderer=renderer, **text_kwargs)
