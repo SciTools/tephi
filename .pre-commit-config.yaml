@@ -32,3 +32,4 @@ repos:
     hooks:
     -   id: sp-repo-review
         additional_dependencies: ["repo-review[cli]"]
+        args: ["--show=errskip"]
