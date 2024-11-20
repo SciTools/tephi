@@ -15,24 +15,27 @@ build-backend = "setuptools.build_meta"
 [tool.repo-review]
 # These are a list of the currently failing tests:
 ignore = [
-  # https://learn.scientific-python.org/development/guides/style/#PY005
+  # https://learn.scientific-python.org/development/guides/packaging-simple/#PY005
   "PY005",  # Has tests folder
-  # https://learn.scientific-python.org/development/guides/style/#PP003
+
+  # https://learn.scientific-python.org/development/guides/packaging-classic/#PP003
   "PP003",  # Does not list wheel as a build-dep
-  # https://learn.scientific-python.org/development/guides/style/#PP301
+  # https://learn.scientific-python.org/development/guides/pytest/#PP301
   "PP301",  # Has pytest in project
-  # https://learn.scientific-python.org/development/guides/style/#PP304
+  # https://learn.scientific-python.org/development/guides/pytest/#PP304
   "PP304",  # Sets the log level in pytest
-  # https://learn.scientific-python.org/development/guides/style/#PP305
+  # https://learn.scientific-python.org/development/guides/pytest/#PP305
   "PP305",  # Specifies xfail_strict
-  # https://learn.scientific-python.org/development/guides/style/#PP306
-  "PP306",  # Specifies strict config 
-  # https://learn.scientific-python.org/development/guides/style/#PP307
+  # https://learn.scientific-python.org/development/guides/pytest/#PP306
+  "PP306",  # Specifies strict config
+  # https://learn.scientific-python.org/development/guides/pytest/#PP307
   "PP307",  # Specifies strict markers
-  # https://learn.scientific-python.org/development/guides/style/#PP309
+  # https://learn.scientific-python.org/development/guides/pytest/#PP309
   "PP309",  # Filter warnings specified
-  # https://learn.scientific-python.org/development/guides/style/#GH212
+
+  # https://learn.scientific-python.org/development/guides/gha-basic/#GH212
   "GH212",  # Require GHA update grouping
+
   # https://learn.scientific-python.org/development/guides/style/#PC110
   "PC110",  # Uses black or ruff-format
   # https://learn.scientific-python.org/development/guides/style/#PC140
@@ -47,8 +50,10 @@ ignore = [
   "PC190",  # Uses Ruff
   # https://learn.scientific-python.org/development/guides/style/#PC901
   "PC901",  # Custom pre-commit CI message
+
   # https://learn.scientific-python.org/development/guides/style/#MY100
   "MY100",  # Uses MyPy (pyproject config)
+
   # https://learn.scientific-python.org/development/guides/style/#RF001
   "RF001",  # Has Ruff config
 ]
