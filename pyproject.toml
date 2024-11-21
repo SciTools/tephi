@@ -8,7 +8,7 @@ include = '\.pyi?$'
 
 [project]
 authors = [
-    {name = "UK Met Office", email = "scitools-iris-dev@googlegroups.com"}
+    {name = "Tephi Regrid Contributors", email = "scitools.pub@gmail.com"}
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -52,16 +52,6 @@ Docs =  "https://tephi.readthedocs.io/en/latest/"
 requires = ["setuptools>=45"]
 # Defined by PEP 517
 build-backend = "setuptools.build_meta"
-
-#[tool.pytest.ini_options]
-#minversion = "6.0"
-#addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
-#xfail_strict = true
-#filterwarnings = ["error"]
-#log_cli_level = "info"
-#testpaths = [
-#  "tephi",
-#]
 
 [tool.repo-review]
 # These are a list of the currently failing tests:
@@ -129,9 +119,6 @@ checks = [
 
     # -> No Yields section found
     "YD01",  # Not all docstrings require a "Yields" section.
-
-    # TODO: exceptions that still need investigating are below. Might be fixable, or might become permanent (above):
-
 ]
 exclude = [
     '\.__eq__$',
