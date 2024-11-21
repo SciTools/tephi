@@ -16,12 +16,12 @@ import os
 import pathlib
 import sys
 
-import tephi
-
 # ensure tephi is discoverable by rtd build environment
-root = pathlib.Path(__file__).absolute().parent.parent.parent
+root = pathlib.Path(__file__).absolute().parent[2]
 os.environ["PYTHONPATH"] = str(root)
 sys.path.insert(0, str(root))
+
+import tephi
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the

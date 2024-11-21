@@ -12,8 +12,6 @@ ci:
 files: |
     (?x)(
         docs\/.+\.py|
-        lib\/.+\.py|
-        noxfile\.py|
         pyproject\.toml|
         setup\.py|
         src\/.+\.py
