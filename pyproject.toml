@@ -3,12 +3,50 @@ line-length = 79
 target-version = ["py37", "py38", "py39", "py310"]
 include = '\.pyi?$'
 
+[project]
+authors = [
+    {name = "UK Met Office", email = "scitools-iris-dev@googlegroups.com"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Atmospheric Science",
+    "Topic :: Scientific/Engineering :: Visualization",
+]
+description = "Tephigram plotting in Python"
+dynamic = [
+    "dependencies",
+    "optional-dependencies",
+    "readme",
+    "version",
+]
+keywords = [
+    "tephigram",
+    "radiosonde",
+    "meteorology",
+    "visualization",
+]
+license = {text = "BSD-3-Clause"}
+name = "tephi"
+requires-python = ">=3.8"
+
+[project.urls]
+Code = "https://github.com/SciTools/tephi"
+Issues = "issues = https://github.com/SciTools/tephi/issues"
+Binder= "https://mybinder.org/v2/gh/SciTools/tephi/main?filepath=index.ipynb"
+Docs =  "https://tephi.readthedocs.io/en/latest/"
+
 [build-system]
 # Defined by PEP 518
-requires = [
-  "setuptools>=45",
-  "wheel",
-]
+requires = ["setuptools>=45"]
 # Defined by PEP 517
 build-backend = "setuptools.build_meta"
 
@@ -45,7 +83,7 @@ ignore = [
   # https://learn.scientific-python.org/development/guides/style/#PC170
   "PC170",  # Uses PyGrep hooks (only needed if rST present)
   # https://learn.scientific-python.org/development/guides/style/#PC180
-  "PC180",  # Uses a markdown formatter
+  "PC180",  # Uses prettier
   # https://learn.scientific-python.org/development/guides/style/#PC190
   "PC190",  # Uses Ruff
   # https://learn.scientific-python.org/development/guides/style/#PC901
@@ -58,3 +96,109 @@ ignore = [
   "RF001",  # Has Ruff config
 ]
 
+[tool.mypy]
+strict = false
+ignore_missing_imports = true
+warn_unused_configs = true
+warn_unreachable = true
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+exclude = [
+
+]
+
+[tool.numpydoc_validation]
+checks = [
+    "all",  # Enable all numpydoc validation rules, apart from the following:
+
+    # -> Docstring text (summary) should start in the line immediately
+    #    after the opening quotes (not in the same line, or leaving a
+    #    blank line in between)
+    "GL01",  # Permit summary line on same line as docstring opening quotes.
+
+    # -> Closing quotes should be placed in the line after the last text
+    #    in the docstring (do not close the quotes in the same line as
+    #    the text, or leave a blank line between the last text and the
+    #    quotes)
+    "GL02",  # Permit a blank line before docstring closing quotes.
+
+    # -> Double line break found; please use only one blank line to
+    #    separate sections or paragraphs, and do not leave blank lines
+    #    at the end of docstrings
+    "GL03",  # Ignoring.
+
+    # -> See Also section not found
+    "SA01",  # Not all docstrings require a "See Also" section.
+
+    # -> No extended summary found
+    "ES01",  # Not all docstrings require an "Extended Summary" section.
+
+    # -> No examples section found
+    "EX01",  # Not all docstrings require an "Examples" section.
+
+    # -> No Yields section found
+    "YD01",  # Not all docstrings require a "Yields" section.
+
+    # TODO: exceptions that still need investigating are below. Might be fixable, or might become permanent (above):
+
+]
+exclude = [
+    '\.__eq__$',
+    '\.__ne__$',
+    '\.__repr__$',
+]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.format]
+preview = false
+
+[tool.ruff.lint]
+ignore = [
+    # flake8-commas (COM)
+    # https://docs.astral.sh/ruff/rules/#flake8-commas-com
+    "COM812",  # Trailing comma missing.
+    "COM819",  # Trailing comma prohibited.
+
+    # flake8-implicit-str-concat (ISC)
+    # https://docs.astral.sh/ruff/rules/single-line-implicit-string-concatenation/
+    # NOTE: This rule may cause conflicts when used with "ruff format".
+    "ISC001",  # Implicitly concatenate string literals on one line.
+
+
+    # TODO: exceptions that still need investigating are below. Might be fixable, or might become permanent (above):
+    "ERA001", # Doesn't have commented out code
+    "EXE001",
+    "C408",
+    "D100",
+    "INP001",
+    "DTZ005",
+    "A001",
+    "E402"
+
+    ]
+    preview = false
+    select = [
+        "ALL",
+        # list specific rules to include that is skipped using numpy convention.
+        "D212",  # Multi-line docstring summary should start at the first line
+    ]
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = true
+# Change to match specific package name:
+known-first-party = ["iris"]
+
+[tool.ruff.lint.per-file-ignores]
+# All test scripts
+
+# Change to match specific package path:
+"lib/iris/tests/*.py" = [
+    # https://docs.astral.sh/ruff/rules/undocumented-public-module/
+    "D100",  # Missing docstring in public module
+    "D205",  # 1 blank line required between summary line and description
+    "D401",  # 1 First line of docstring should be in imperative mood
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"

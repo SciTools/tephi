@@ -1,3 +1,5 @@
+"""An example to show barbs being plotted."""
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -42,16 +44,12 @@ plt.text(lsx + delta, ly - 2, knots[0])
 for i, u in enumerate(range(5, 50, 5)):
     y = ly - (i + 2) * 2
     plt.barbs(lsx, y, u, 0, **kwargs)
-    plt.text(
-        lsx + delta, y, knots[np.searchsorted(_BARB_BINS, u, side="right")]
-    )
+    plt.text(lsx + delta, y, knots[np.searchsorted(_BARB_BINS, u, side="right")])
 
 for i, u in enumerate(range(50, 105, 5)):
     y = ly - i * 2
     plt.barbs(rsx, y, u, 0, **kwargs)
-    plt.text(
-        rsx + delta, y, knots[np.searchsorted(_BARB_BINS, u, side="right")]
-    )
+    plt.text(rsx + delta, y, knots[np.searchsorted(_BARB_BINS, u, side="right")])
 
 ax = plt.gca()
 ax.set_xlim(0, 5)

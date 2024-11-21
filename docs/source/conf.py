@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-#
-# tephi documentation build configuration file, created by
-# sphinx-quickstart on Thu Jun 26 15:24:09 2014.
-#
+"""Tephi documentation build configuration file."""
+
+# created by sphinx-quickstart on Thu Jun 26 15:24:09 2014
 # This file is execfile()d with the current directory set to its containing dir.
 #
 # Note that not all possible configuration values are present in this
@@ -10,6 +8,8 @@
 #
 # All configuration values have a default; values that are commented out
 # serve to show the default.
+
+from __future__ import annotations
 
 from datetime import datetime
 import os
@@ -190,7 +190,7 @@ htmlhelp_basename = "tephidoc"
 
 # -- Options for LaTeX output --------------------------------------------------
 
-latex_elements = {}
+latex_elements: dict[str, str] = {}
 # The paper size ('letterpaper' or 'a4paper').
 # 'papersize': 'letterpaper',
 
