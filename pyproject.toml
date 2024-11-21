@@ -53,6 +53,13 @@ requires = ["setuptools>=45"]
 # Defined by PEP 517
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools.package-data]
+mypkg = [
+    "etc/test_data/*.txt",
+    "tests/results/*.npz",
+    "tests/results/imagerepo.json"
+]
+
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
