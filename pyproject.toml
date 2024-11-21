@@ -144,10 +144,8 @@ ignore = [
     # NOTE: This rule may cause conflicts when used with "ruff format".
     "ISC001",  # Implicitly concatenate string literals on one line.
 
-
     # TODO: exceptions that still need investigating are below. Might be fixable, or might become permanent (above):
-    "ERA001", # Has commented out code
-    "EXE001", # Shebang is present but file is not executable
+
     "INP001", # File `` is part of an implicit namespace package. Add an `__init__.py`.
 
     ]
@@ -161,19 +159,23 @@ ignore = [
 
 [tool.ruff.lint.isort]
 force-sort-within-sections = true
-# Change to match specific package name:
-known-first-party = ["iris"]
+known-first-party = ["tephi"]
 
 [tool.ruff.lint.per-file-ignores]
 # All test scripts
-
-# Change to match specific package path:
-"lib/iris/tests/*.py" = [
+"tephi/tests/*.py" = [
     # https://docs.astral.sh/ruff/rules/undocumented-public-module/
     "D100",  # Missing docstring in public module
     "D205",  # 1 blank line required between summary line and description
     "D401",  # 1 First line of docstring should be in imperative mood
 ]
+"setup.py" = [
+    "EXE001", # Shebang is present but file is not executable
+]
+"docs/source/conf.py" = [
+    "ERA001", # Has commented out code
+]
+
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
