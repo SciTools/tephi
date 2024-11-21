@@ -11,10 +11,7 @@ ci:
 # Alphabetised, for lack of a better order.
 files: |
     (?x)(
-        benchmarks\/.+\.py|
         docs\/.+\.py|
-        lib\/.+\.py|
-        noxfile\.py|
         pyproject\.toml|
         setup\.py|
         src\/.+\.py

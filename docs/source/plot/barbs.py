@@ -29,7 +29,7 @@ knots = {
 }
 
 color = "blue"
-kwargs = dict(length=8, color=color)
+kwargs = {"length": 8, "color": color}
 lsx = 1
 rsx = 3
 ly = 23

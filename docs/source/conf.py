@@ -11,17 +11,17 @@
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import os
 import pathlib
 import sys
+
+import tephi
 
 # ensure tephi is discoverable by rtd build environment
 root = pathlib.Path(__file__).absolute().parent.parent.parent
 os.environ["PYTHONPATH"] = str(root)
 sys.path.insert(0, str(root))
-
-import tephi
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -62,8 +62,8 @@ master_doc = "index"
 
 # General information about the project.
 project = "tephi"
-copyright = f"2014-{datetime.now().year}, British Crown Copyright, Met Office"
-
+tzone = timezone(timedelta())
+copyright_info = f"2014-{datetime.now(tzone).year}, British Crown Copyright, Met Office"
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
@@ -203,7 +203,7 @@ latex_elements: dict[str, str] = {}
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ("index", "tephi.tex", "tephi Documentation", copyright, "manual"),
+    ("index", "tephi.tex", "tephi Documentation", copyright_info, "manual"),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -231,7 +231,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [("index", "tephi", "tephi Documentation", [copyright], 1)]
+man_pages = [("index", "tephi", "tephi Documentation", [copyright_info], 1)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
@@ -247,7 +247,7 @@ texinfo_documents = [
         "index",
         "tephi",
         "tephi Documentation",
-        copyright,
+        copyright_info,
         "tephi",
         "One line description of project.",
         "Miscellaneous",
