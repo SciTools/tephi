@@ -56,8 +56,8 @@ ignore = [
   # https://learn.scientific-python.org/development/guides/packaging-simple/#PY005
   "PY005",  # Has tests folder
 
-  # https://learn.scientific-python.org/development/guides/packaging-classic/#PP003
-  "PP003",  # Does not list wheel as a build-dep
+#  # https://learn.scientific-python.org/development/guides/packaging-classic/#PP003
+#  "PP003",  # Does not list wheel as a build-dep
   # https://learn.scientific-python.org/development/guides/pytest/#PP301
   "PP301",  # Has pytest in project
   # https://learn.scientific-python.org/development/guides/pytest/#PP304
@@ -74,27 +74,14 @@ ignore = [
   # https://learn.scientific-python.org/development/guides/gha-basic/#GH212
   "GH212",  # Require GHA update grouping
 
-  # https://learn.scientific-python.org/development/guides/style/#PC110
-  "PC110",  # Uses black or ruff-format
-  # https://learn.scientific-python.org/development/guides/style/#PC140
-  "PC140",  # Uses a type checker
-  # https://learn.scientific-python.org/development/guides/style/#PC160
-  "PC160",  # Uses a spell checker
   # https://learn.scientific-python.org/development/guides/style/#PC170
   "PC170",  # Uses PyGrep hooks (only needed if rST present)
   # https://learn.scientific-python.org/development/guides/style/#PC180
   "PC180",  # Uses prettier
-  # https://learn.scientific-python.org/development/guides/style/#PC190
-  "PC190",  # Uses Ruff
   # https://learn.scientific-python.org/development/guides/style/#PC901
   "PC901",  # Custom pre-commit CI message
-
-  # https://learn.scientific-python.org/development/guides/style/#MY100
-  "MY100",  # Uses MyPy (pyproject config)
-
-  # https://learn.scientific-python.org/development/guides/style/#RF001
-  "RF001",  # Has Ruff config
 ]
+
 
 [tool.mypy]
 strict = false
@@ -167,14 +154,13 @@ ignore = [
 
 
     # TODO: exceptions that still need investigating are below. Might be fixable, or might become permanent (above):
-    "ERA001", # Doesn't have commented out code
-    "EXE001",
-    "C408",
-    "D100",
-    "INP001",
-    "DTZ005",
-    "A001",
-    "E402"
+    "ERA001", # Has commented out code
+    "EXE001", # Shebang is present but file is not executable
+    "C408",   # Unnecessary `dict` call (rewrite as a literal)
+    "INP001", # File `` is part of an implicit namespace package. Add an `__init__.py`.
+    "DTZ005", # `datetime.datetime.now()` called without a `tz` argument
+    "A001",   # Variable `copyright` is shadowing a Python builtin
+    "E402",   # Module level import not at top of file
 
     ]
     preview = false
