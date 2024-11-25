@@ -1,6 +1,6 @@
 <p align="center">
 <a href="https://tephi.readthedocs.io/en/latest/">
-    <img src="https://scitools.github.io/tephi/tephi-logo-200-137.png" alt="Tephi">
+    <img src="https://scitools.github.io/tephi/tephi-logo.svg" alt="Tephi">
 </a>
 </p>
 
