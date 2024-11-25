@@ -49,7 +49,7 @@ for text in ax.texts:
     text.set_visible(False)
 
 ax.set_aspect("auto")
-plt.gcf().set_size_inches(6, 6)
+plt.gcf().set_size_inches(3, 3)
 
 ax.text(
     0.5,
@@ -58,7 +58,7 @@ ax.text(
     horizontalalignment='center',
     verticalalignment='center',
     transform=ax.transAxes,
-    size=256,
+    size=128,
     style="italic",
     weight="bold",
     zorder=10,
