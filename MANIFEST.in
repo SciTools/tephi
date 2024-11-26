@@ -5,7 +5,6 @@ include *.yaml
 include *.yml
 include *.cff
 include .coveragerc
-include .flake8
 include .git-blame-ignore-revs
 include tox.ini
 recursive-include requirements *.yml
