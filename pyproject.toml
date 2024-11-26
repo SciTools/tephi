@@ -43,7 +43,7 @@ requires-python = ">=3.8"
 
 [project.urls]
 Code = "https://github.com/SciTools/tephi"
-Issues = "issues = https://github.com/SciTools/tephi/issues"
+Issues = "https://github.com/SciTools/tephi/issues"
 Binder= "https://mybinder.org/v2/gh/SciTools/tephi/main?filepath=index.ipynb"
 Docs =  "https://tephi.readthedocs.io/en/latest/"
 
