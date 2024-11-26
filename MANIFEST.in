@@ -14,3 +14,7 @@ recursive-include docs *.png
 recursive-include docs *.py
 recursive-include docs *.rst
 recursive-include docs Makefile
+recursive-include tephi *.json
+recursive-include tephi *.npz
+recursive-include tephi *.txt
+
