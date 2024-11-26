@@ -60,6 +60,9 @@ mypkg = [
     "tests/results/imagerepo.json"
 ]
 
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"]}
+
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
