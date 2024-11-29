@@ -26,6 +26,7 @@ classifiers = [
 ]
 description = "Tephigram plotting in Python"
 dynamic = [
+    "version",
     "dependencies",
     "readme",
 ]
@@ -60,6 +61,7 @@ tephi = [
 
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements/dev.yml"] }
+version = { attr = "tephi.__version__"}
 readme = {file = ["README.md"], content-type = "text/markdown"}
 
 [tool.setuptools.packages.find]
