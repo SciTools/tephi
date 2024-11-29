@@ -94,16 +94,6 @@ ignore = [
     "PC901",  # Custom pre-commit CI message
 ]
 
-[tool.pytest.ini_options]
-minversion = "6.0"
-addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
-xfail_strict = true
-filterwarnings = ["error"]
-log_cli_level = "info"
-testpaths = [
-  "tephi",
-]
-
 [tool.mypy]
 strict = false
 ignore_missing_imports = true
