@@ -1,5 +1,10 @@
 # See https://github.com/SciTools/.github/wiki/Linting
 # for SciTools linting guidelines
+[build-system]
+# Defined by PEP 518
+requires = ["setuptools>=45"]
+# Defined by PEP 517
+build-backend = "setuptools.build_meta"
 
 [tool.black]
 line-length = 79
@@ -45,12 +50,6 @@ Code = "https://github.com/SciTools/tephi"
 Issues = "https://github.com/SciTools/tephi/issues"
 Binder= "https://mybinder.org/v2/gh/SciTools/tephi/main?filepath=index.ipynb"
 Docs =  "https://tephi.readthedocs.io/en/latest/"
-
-[build-system]
-# Defined by PEP 518
-requires = ["setuptools>=45"]
-# Defined by PEP 517
-build-backend = "setuptools.build_meta"
 
 [tool.setuptools.package-data]
 tephi = [
