@@ -27,9 +27,7 @@ classifiers = [
 description = "Tephigram plotting in Python"
 dynamic = [
     "dependencies",
-    "optional-dependencies",
     "readme",
-    "version",
 ]
 keywords = [
     "tephigram",
@@ -54,14 +52,18 @@ requires = ["setuptools>=45"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.package-data]
-mypkg = [
+tephi = [
     "etc/test_data/*.txt",
     "tests/results/*.npz",
     "tests/results/imagerepo.json"
 ]
 
 [tool.setuptools.dynamic]
-readme = {file = ["README.md"]}
+dependencies = { file = ["requirements/dev.yml"] }
+readme = {file = ["README.md"], content-type = "text/markdown"}
+
+[tool.setuptools.packages.find]
+include = ["tephi*"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
