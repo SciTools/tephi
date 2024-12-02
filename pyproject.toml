@@ -3,7 +3,7 @@
 
 [build-system]
 # Defined by PEP 518
-requires = ["setuptools>=60", "setuptools-scm>=8.0"]
+requires = ["setuptools>=60"]
 # Defined by PEP 517
 build-backend = "setuptools.build_meta"
 
@@ -27,8 +27,6 @@ classifiers = [
 ]
 description = "Tephigram plotting in Python"
 dynamic = [
-    "dependencies",
-    "optional-dependencies",
     "readme",
     "version",
 ]
@@ -41,16 +39,17 @@ keywords = [
 license = {text = "BSD-3-Clause"}
 name = "tephi"
 requires-python = ">=3.8"
+dependencies = ["matplotlib", "numpy", "scipy"]
 
 [project.urls]
 Code = "https://github.com/SciTools/tephi"
-Issues = "issues = https://github.com/SciTools/tephi/issues"
+Issues = "https://github.com/SciTools/tephi/issues"
 Binder= "https://mybinder.org/v2/gh/SciTools/tephi/main?filepath=index.ipynb"
 Docs =  "https://tephi.readthedocs.io/en/latest/"
 
 [tool.black]
 line-length = 79
-target-version = ["py37", "py38", "py39", "py310"]
+target-version = ["py38", "py39", "py310", "py311"]
 include = '\.pyi?$'
 
 [tool.mypy]
@@ -130,9 +129,6 @@ ignore = [
 
     # TODO: exceptions that still need investigating are below. Might be fixable, or might become permanent (above):
 
-    # https://learn.scientific-python.org/development/guides/pytest/#PP301
-    "PP301", # Has pytest in pyproject
-
     # https://learn.scientific-python.org/development/guides/pytest#PP309
     "PP309", # has filterwarnings set
 
@@ -202,3 +198,13 @@ convention = "numpy"
 [tool.setuptools.dynamic]
 version = { attr = "tephi.__version__"}
 readme = {file = ["README.md"], content-type = "text/markdown"}
+
+[tool.setuptools.package-data]
+tephi = [
+    "etc/test_data/*.txt",
+    "tests/results/*.npz",
+    "tests/results/imagerepo.json"
+]
+
+[tool.setuptools.packages.find]
+include = ["tephi*"]
