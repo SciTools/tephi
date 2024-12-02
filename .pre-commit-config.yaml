@@ -7,7 +7,6 @@ ci:
   autofix_prs: false
   autoupdate_commit_msg: "chore: update pre-commit hooks"
 
-
 # Alphabetised, for lack of a better order.
 files: |
     (?x)(

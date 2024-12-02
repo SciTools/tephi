@@ -131,9 +131,6 @@ ignore = [
 
     # https://learn.scientific-python.org/development/guides/pytest#PP309
     "PP309", # has filterwarnings set
-
-    # https://learn.scientific-python.org/development/guides/style/#PC901
-    "PC901",  # Custom pre-commit CI message
 ]
 
 [tool.ruff]
