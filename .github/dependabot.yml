@@ -5,7 +5,6 @@
 
 version: 2
 updates:
-
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -17,3 +16,7 @@ updates:
       timezone: "Europe/London"
     labels:
       - "🤖 Bot"
+    groups:
+      actions:
+        patterns:
+          - "*"
