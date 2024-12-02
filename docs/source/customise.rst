@@ -219,7 +219,7 @@ Updating the ``WET_ADIABAT_LINE`` dictionary will change the default behaviour o
 Saturated adiabat text
 ^^^^^^^^^^^^^^^^^^^^^^
 
-The default behavour of the tephigram *saturated adiabat text* is controlled by the :data:`tephi.WET_ADIABAT_TEXT` dictionary:
+The default behaviour of the tephigram *saturated adiabat text* is controlled by the :data:`tephi.WET_ADIABAT_TEXT` dictionary:
 
    >>> pprint(tephi.WET_ADIABAT_TEXT)
    {'clip_on': True, 'color': 'orange', 'ha': 'left', 'size': 8, 'va': 'bottom'}
