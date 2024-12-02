@@ -40,4 +40,4 @@ jobs:
     - name: Run tox
       run: |
         pip install 'tox<4'
-        tox -e py311-test ${{ matrix.version }}-${{ matrix.session }}
+        tox -e ${{ matrix.version }}-${{ matrix.session }}
