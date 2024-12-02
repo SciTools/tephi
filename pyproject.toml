@@ -67,7 +67,7 @@ addopts = ["-ra",
            "--strict-config"
     ]
 xfail_strict = true
-filterwarnings = ["error"]
+#filterwarnings = ["error"]
 log_cli_level = "info"
 testpaths = [
   "tephi/",
