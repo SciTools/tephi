@@ -111,6 +111,9 @@ addopts = ["-ra",
            "--strict-markers",
            "--strict-config"
     ]
+filterwarnings = [
+    "error"
+    ]
 xfail_strict = true
 log_cli_level = "info"
 testpaths = [
@@ -126,11 +129,6 @@ ignore = [
 
     # https://learn.scientific-python.org/development/guides/packaging-simple/#PY005
     "PY005",  # Has tests folder
-
-    # TODO: exceptions that still need investigating are below. Might be fixable, or might become permanent (above):
-
-    # https://learn.scientific-python.org/development/guides/pytest#PP309
-    "PP309", # has filterwarnings set
 ]
 
 [tool.ruff]
@@ -150,9 +148,6 @@ ignore = [
     # https://docs.astral.sh/ruff/rules/single-line-implicit-string-concatenation/
     # NOTE: This rule may cause conflicts when used with "ruff format".
     "ISC001",  # Implicitly concatenate string literals on one line.
-
-    # TODO: exceptions that still need investigating are below. Might be fixable, or might become permanent (above):
-
     ]
     preview = false
     select = [
