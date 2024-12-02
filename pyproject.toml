@@ -53,6 +53,24 @@ requires = ["setuptools>=45"]
 # Defined by PEP 517
 build-backend = "setuptools.build_meta"
 
+[tool.pytest.ini_options]
+minversion = "6.0"
+markers = ["graphical: mark a test as a graphical test"]
+addopts = ["-ra",
+           "-v",
+           "--cov-config=.coveragerc",
+           "--cov=tephi",
+           "--cov-report=term-missing",
+           "--doctest-modules",
+    ]
+xfail_strict = true
+filterwarnings = ["error"]
+log_cli_level = "info"
+testpaths = [
+  "tephi/",
+]
+doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS NUMBER"
+
 [tool.setuptools.dynamic]
 version = { attr = "tephi.__version__"}
 readme = {file = ["README.md"], content-type = "text/markdown"}
