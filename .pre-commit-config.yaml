@@ -12,6 +12,7 @@ ci:
 files: |
     (?x)(
         docs\/.+\.py|
+        docs\/.+\.rst|
         pyproject\.toml|
         setup\.py|
         src\/.+\.py
