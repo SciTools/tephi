@@ -58,10 +58,13 @@ minversion = "6.0"
 markers = ["graphical: mark a test as a graphical test"]
 addopts = ["-ra",
            "-v",
-#           "--cov-config=.coveragerc",
-#           "--cov=tephi",
-#           "--cov-report=term-missing",
+           "--cov-config=.coveragerc",
+           "--cov=tephi",
+           "--cov-report=term-missing",
            "--doctest-modules",
+           "--showlocals",
+           "--strict-markers",
+           "--strict-config"
     ]
 xfail_strict = true
 filterwarnings = ["error"]
