@@ -72,7 +72,7 @@ xfail_strict = true
 filterwarnings = ["error"]
 log_cli_level = "info"
 testpaths = [
-  "tephi",
+  "tephi/tests",
 ]
 
 [tool.repo-review]
