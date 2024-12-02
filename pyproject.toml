@@ -49,7 +49,7 @@ Docs =  "https://tephi.readthedocs.io/en/latest/"
 
 [build-system]
 # Defined by PEP 518
-requires = ["setuptools>=45"]
+requires = ["setuptools>=60", "setuptools-scm>=8.0"]
 # Defined by PEP 517
 build-backend = "setuptools.build_meta"
 
