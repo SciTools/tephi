@@ -29,4 +29,4 @@ jobs:
     - name: Run tox
       run: |
         pipx run 'tox<4'
-#        tox -e py311-test
+        tox -e py311-test
