@@ -28,5 +28,5 @@ jobs:
 
     - name: Run tox
       run: |
-        pipx install 'tox<4'
-        tox -e py311-test
+        pipx run 'tox<4'
+#        tox -e py311-test
