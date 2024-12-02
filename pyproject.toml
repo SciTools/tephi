@@ -1,10 +1,11 @@
 # See https://github.com/SciTools/.github/wiki/Linting
 # for SciTools linting guidelines
 
-[tool.black]
-line-length = 79
-target-version = ["py37", "py38", "py39", "py310"]
-include = '\.pyi?$'
+[build-system]
+# Defined by PEP 518
+requires = ["setuptools>=60", "setuptools-scm>=8.0"]
+# Defined by PEP 517
+build-backend = "setuptools.build_meta"
 
 [project]
 authors = [
@@ -47,63 +48,10 @@ Issues = "issues = https://github.com/SciTools/tephi/issues"
 Binder= "https://mybinder.org/v2/gh/SciTools/tephi/main?filepath=index.ipynb"
 Docs =  "https://tephi.readthedocs.io/en/latest/"
 
-[build-system]
-# Defined by PEP 518
-requires = ["setuptools>=60", "setuptools-scm>=8.0"]
-# Defined by PEP 517
-build-backend = "setuptools.build_meta"
-
-[tool.pytest.ini_options]
-minversion = "6.0"
-markers = ["graphical: mark a test as a graphical test"]
-addopts = ["-ra",
-           "-v",
-           "--cov-config=.coveragerc",
-           "--cov=tephi",
-           "--cov-report=term-missing",
-           "--doctest-modules",
-           "--showlocals",
-           "--strict-markers",
-           "--strict-config"
-    ]
-xfail_strict = true
-log_cli_level = "info"
-testpaths = [
-  "tephi/",
-]
-doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS NUMBER"
-
-[tool.setuptools.dynamic]
-version = { attr = "tephi.__version__"}
-readme = {file = ["README.md"], content-type = "text/markdown"}
-
-[tool.repo-review]
-# These are a list of the currently failing tests:
-ignore = [
-    # https://learn.scientific-python.org/development/guides/style/#PC180
-    "PC180",  # Uses prettier
-
-    # https://learn.scientific-python.org/development/guides/packaging-simple/#PY005
-    "PY005",  # Has tests folder
-
-    # TODO: exceptions that still need investigating are below. Might be fixable, or might become permanent (above):
-
-    # https://learn.scientific-python.org/development/guides/pytest/#PP301
-    "PP301", # Has pytest in pyproject
-
-    # https://learn.scientific-python.org/development/guides/pytest#PP309
-    "PP309", # has filterwarnings set
-
-    # https://learn.scientific-python.org/development/guides/gha-basic/#GH212
-    "GH212",  # Require GHA update grouping
-
-    # https://learn.scientific-python.org/development/guides/style/#PC170
-    "PC170",  # Uses PyGrep hooks (only needed if rST present)
-
-    # https://learn.scientific-python.org/development/guides/style/#PC901
-    "PC901",  # Custom pre-commit CI message
-]
-
+[tool.black]
+line-length = 79
+target-version = ["py37", "py38", "py39", "py310"]
+include = '\.pyi?$'
 
 [tool.mypy]
 strict = false
@@ -111,9 +59,7 @@ ignore_missing_imports = true
 warn_unused_configs = true
 warn_unreachable = true
 enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
-exclude = [
-
-]
+exclude = []
 
 [tool.numpydoc_validation]
 checks = [
@@ -151,6 +97,53 @@ exclude = [
     '\.__eq__$',
     '\.__ne__$',
     '\.__repr__$',
+]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+markers = ["graphical: mark a test as a graphical test"]
+addopts = ["-ra",
+           "-v",
+           "--cov-config=.coveragerc",
+           "--cov=tephi",
+           "--cov-report=term-missing",
+           "--doctest-modules",
+           "--showlocals",
+           "--strict-markers",
+           "--strict-config"
+    ]
+xfail_strict = true
+log_cli_level = "info"
+testpaths = [
+  "tephi/",
+]
+doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS NUMBER"
+
+[tool.repo-review]
+# These are a list of the currently failing tests:
+ignore = [
+    # https://learn.scientific-python.org/development/guides/style/#PC180
+    "PC180",  # Uses prettier
+
+    # https://learn.scientific-python.org/development/guides/packaging-simple/#PY005
+    "PY005",  # Has tests folder
+
+    # TODO: exceptions that still need investigating are below. Might be fixable, or might become permanent (above):
+
+    # https://learn.scientific-python.org/development/guides/pytest/#PP301
+    "PP301", # Has pytest in pyproject
+
+    # https://learn.scientific-python.org/development/guides/pytest#PP309
+    "PP309", # has filterwarnings set
+
+    # https://learn.scientific-python.org/development/guides/gha-basic/#GH212
+    "GH212",  # Require GHA update grouping
+
+    # https://learn.scientific-python.org/development/guides/style/#PC170
+    "PC170",  # Uses PyGrep hooks (only needed if rST present)
+
+    # https://learn.scientific-python.org/development/guides/style/#PC901
+    "PC901",  # Custom pre-commit CI message
 ]
 
 [tool.ruff]
@@ -203,6 +196,9 @@ known-first-party = ["tephi"]
     "ERA001", # Has commented out code
 ]
 
-
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
+
+[tool.setuptools.dynamic]
+version = { attr = "tephi.__version__"}
+readme = {file = ["README.md"], content-type = "text/markdown"}
