@@ -153,8 +153,6 @@ ignore = [
 
     # TODO: exceptions that still need investigating are below. Might be fixable, or might become permanent (above):
 
-    "INP001", # File `` is part of an implicit namespace package. Add an `__init__.py`.
-
     ]
     preview = false
     select = [
@@ -181,6 +179,10 @@ known-first-party = ["tephi"]
 ]
 "docs/source/conf.py" = [
     "ERA001", # Has commented out code
+    "INP001" # File `docs/source/conf.py` is part of an implicit namespace package. Add an `__init__.py`.
+]
+"docs/source/plot/barbs.py" = [
+    "INP001" # File `docs/source/plot/barbs.py` is part of an implicit namespace package. Add an `__init__.py`.
 ]
 
 [tool.ruff.lint.pydocstyle]
