@@ -2,5 +2,5 @@ name: tephi-binder
 channels:
   - conda-forge
 dependencies:
-  - python>=3.6
+  - python>=3.10
   - tephi
