@@ -5,7 +5,7 @@ Introduction
 
 The tephigram is a thermodynamic or energy diagram, devised in 1915 by Sir William Napier Shaw, a former Director-General of the Met Office.
 
-It is a graphical representation of the obervations of pressure, temperature and humidity, made in a vertical sounding of the atmosphere, typically from radiosondes.
+It is a graphical representation of the observations of pressure, temperature and humidity, made in a vertical sounding of the atmosphere, typically from radiosondes.
 
 The axis of the tephigram are temperature (T) and entropy (:math:`\phi`), hence the name "T-:math:`\phi`-gram".
 The axes and lines of the tephigram are shown in :ref:`tephi_axes`.
@@ -121,7 +121,7 @@ Pseudo saturated wet adiabats
 
 Saturated adiabats are lines of constant equivalent potential temperature for saturated air parcels, measured in units :sup:`o`\ C. They run as vertically curved lines across the plot from top to bottom.
 
-The saturated adiabats represent the rate at which saturated air will cool when rising i.e. the saturated adiabatic lapse rate (SALR).  
+The saturated adiabats represent the rate at which saturated air will cool when rising i.e. the saturated adiabatic lapse rate (SALR).
 
 .. _tephi_axis_wet_adiabat:
 

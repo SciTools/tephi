@@ -9,9 +9,10 @@ This section describes how to visualise one or more data sets as a tephigram.
 
    import os.path
    import tephi
-   dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
-   dry_bulb = os.path.join(tephi.DATA_DIR, 'temps.txt')
-   winds = os.path.join(tephi.DATA_DIR, 'barbs.txt')
+
+   dew_point = os.path.join(tephi.DATA_DIR, "dews.txt")
+   dry_bulb = os.path.join(tephi.DATA_DIR, "temps.txt")
+   winds = os.path.join(tephi.DATA_DIR, "barbs.txt")
    dews, temps = tephi.loadtxt(dew_point, dry_bulb)
 
 
@@ -20,20 +21,20 @@ Tephigram data
 
 Throughout this user guide we will make use of three data sets to plot temperature profiles on a tephigram.
 
-Currently, the tephigram module can only plot data from ascii text files. 
+Currently, the tephigram module can only plot data from ascii text files.
 These files may contain pressure, temperature, wind speed and wind direction data sets.
-Here pressure is measured in units of *millibars* or *hectopascals*, 
+Here pressure is measured in units of *millibars* or *hectopascals*,
 temperature is measured in units of *degrees celsius*,
 wind speed is measured in *knots* and wind direction is measured in *degrees from north*.
 
-Note that the data set must consist of one or more pressure and temperature paired values, 
-and optionally one wind speed and wind direction pair for each pressure value. 
-Thus any temperature value must be paired with a pressure value, 
+Note that the data set must consist of one or more pressure and temperature paired values,
+and optionally one wind speed and wind direction pair for each pressure value.
+Thus any temperature value must be paired with a pressure value,
 and wind speed and wind direction pairs must be paired with a pressure value.
 
-Data from the text files is loaded into one :func:`collections.namedtuple` instance per text file. 
-Each column of data representing a given phenomenon in a text file is loaded into a single named tuple. 
-The name of each tuple is set using a list of strings passed to the loader. 
+Data from the text files is loaded into one :func:`collections.namedtuple` instance per text file.
+Each column of data representing a given phenomenon in a text file is loaded into a single named tuple.
+The name of each tuple is set using a list of strings passed to the loader.
 If not specified, the names default to *(pressure, temperature)*.
 
 For our example tephigram data sets we have a 2-dimensional *dew-point* data set:
@@ -57,7 +58,7 @@ And a 2-dimensional *dry-bulb* data set, with each named tuple printed individua
     -38. -47. -51. -56. -57. -63. -63. -64. -69. -77. -79. -77. -78. -78.
     -72. -71. -69.]
 
-A convenience function, as introduced above, has been provided to assist with loading one or more text files of pressure, temperature, wind speed and wind direction data; see :func:`tephi.loadtxt`. 
+A convenience function, as introduced above, has been provided to assist with loading one or more text files of pressure, temperature, wind speed and wind direction data; see :func:`tephi.loadtxt`.
 Here it is used to load the third example data set that contains four columns of data, being *pressure*, *temperature*, *wind speed* and *wind direction*::
 
     >>> import os.path
@@ -79,7 +80,7 @@ Here it is used to load the third example data set that contains four columns of
             240.,  270.,  285.,  300.,  330.,  359.], dtype=float32))
 
 .. note::
-   WMO upper-level pressure, temperature, humidity, and wind reports *FM 35-IX Ext. TEMP*, *FM 36-IX Ext. TEMP SHIP*, *FM 37-IX Ext. TEMP DROP* and 
+   WMO upper-level pressure, temperature, humidity, and wind reports *FM 35-IX Ext. TEMP*, *FM 36-IX Ext. TEMP SHIP*, *FM 37-IX Ext. TEMP DROP* and
    *FM 38-IX Ext. MOBIL* are currently **not** supported.
 
 
@@ -146,7 +147,7 @@ Customising a temperature profile
 
 All keyword arguments passed to :meth:`tephi.Tephigram.plot` are simply passed through to :func:`matplotlib.pyplot.plot`.
 
-This transparency allows full control when plotting a temperature profile on the tephigram. 
+This transparency allows full control when plotting a temperature profile on the tephigram.
 
 .. plot::
    :include-source:
@@ -218,5 +219,3 @@ To fix the extent of a plot, simply specify an :term:`anchor` point to the tephi
    tpg = tephi.Tephigram(anchor=[(1000, 0), (300, 0)])
    tpg.plot(dews)
    plt.show()
-
-
