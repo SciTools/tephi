@@ -1,7 +1,7 @@
 .. tephi documentation master file, created by
    sphinx-quickstart on Thu Jun 26 15:24:09 2014.
    You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+   contain the root ``toctree`` directive.
 
 The tephi user guide
 ====================
