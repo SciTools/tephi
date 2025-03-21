@@ -17,3 +17,7 @@ updates:
       timezone: "Europe/London"
     labels:
       - "🤖 Bot"
+    groups:
+      actions:
+        patterns:
+          - "*"
