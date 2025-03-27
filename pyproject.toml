@@ -110,6 +110,7 @@ addopts = ["-ra",
            "--strict-config"
     ]
 xfail_strict = true
+filterwarnings=["error"]
 log_cli_level = "info"
 testpaths = [
   "tephi/",
@@ -124,11 +125,6 @@ ignore = [
 
     # https://learn.scientific-python.org/development/guides/packaging-simple/#PY005
     "PY005",  # Has tests folder
-
-    # TODO: exceptions that still need investigating are below. Might be fixable, or might become permanent (above):
-
-    # https://learn.scientific-python.org/development/guides/pytest#PP309
-    "PP309", # has filterwarnings set
 ]
 
 [tool.ruff]
