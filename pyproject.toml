@@ -129,15 +129,6 @@ ignore = [
 
     # https://learn.scientific-python.org/development/guides/pytest#PP309
     "PP309", # has filterwarnings set
-
-    # https://learn.scientific-python.org/development/guides/gha-basic/#GH212
-    "GH212",  # Require GHA update grouping
-
-    # https://learn.scientific-python.org/development/guides/style/#PC170
-    "PC170",  # Uses PyGrep hooks (only needed if rST present)
-
-    # https://learn.scientific-python.org/development/guides/style/#PC901
-    "PC901",  # Custom pre-commit CI message
 ]
 
 [tool.ruff]
@@ -188,6 +179,10 @@ known-first-party = ["tephi"]
 ]
 "docs/source/conf.py" = [
     "ERA001", # Has commented out code
+    "INP001" # File `docs/source/conf.py` is part of an implicit namespace package. Add an `__init__.py`.
+]
+"docs/source/plot/barbs.py" = [
+    "INP001" # File `docs/source/plot/barbs.py` is part of an implicit namespace package. Add an `__init__.py`.
 ]
 
 [tool.ruff.lint.pydocstyle]

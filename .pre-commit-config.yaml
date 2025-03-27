@@ -12,6 +12,7 @@ ci:
 files: |
     (?x)(
         docs\/.+\.py|
+        docs\/.+\.rst|
         pyproject\.toml|
         setup\.py|
         src\/.+\.py
@@ -105,3 +106,9 @@ repos:
     hooks:
     - id: validate-pyproject
 
+- repo: https://github.com/pre-commit/pygrep-hooks
+  rev: "v1.10.0"
+  hooks:
+    - id: rst-backticks
+    - id: rst-directive-colons
+    - id: rst-inline-touching-normal
