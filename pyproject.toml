@@ -3,7 +3,7 @@
 
 [build-system]
 # Defined by PEP 518
-requires = ["setuptools>=60"]
+requires = ["setuptools>=77.0.3"]
 # Defined by PEP 517
 build-backend = "setuptools.build_meta"
 
@@ -15,7 +15,6 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
     "Operating System :: OS Independent",
-    "License :: OSI Approved :: BSD License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
@@ -34,7 +33,8 @@ keywords = [
     "meteorology",
     "visualization",
 ]
-license = {text = "BSD-3-Clause"}
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
 name = "tephi"
 requires-python = ">=3.10"
 dependencies = ["matplotlib", "numpy", "scipy"]
