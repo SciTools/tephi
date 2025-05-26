@@ -79,7 +79,7 @@ repos:
         types: [file, python]
 
 -   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.11.6"
+    rev: "v0.11.11"
     hooks:
     -   id: ruff
         types: [file, python]
@@ -94,7 +94,7 @@ repos:
         types: [file, python]
 
 -   repo: https://github.com/scientific-python/cookie
-    rev: 2025.01.22
+    rev: 2025.05.02
     hooks:
     - id: sp-repo-review
       additional_dependencies: ["repo-review[cli]"]
