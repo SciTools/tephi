@@ -65,10 +65,12 @@ include CITATION.cff
 exclude CODE_OF_CONDUCT.md
 include COPYING
 include COPYING.LESSER
+include environment.yml
 include LICENSE
 exclude Makefile
 exclude codecov.yml
 include noxfile.py
+include tox.ini
     # principles:
     #    - *ANY* file in the root should be explicitly "include"- or "exclude"-d
     #         - EXCEPT (possibly) those covered by setuptools default rules (see above link)
@@ -90,7 +92,6 @@ prune .coverage
 # (2) top-level files to omit
 exclude .coveragerc
 exclude index.ipynb
-include environment.yml
 # (3) file types (path patterns) to skip everywhere
 global-exclude *.py[cod]
 global-exclude __pycache__
