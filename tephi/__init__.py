@@ -238,7 +238,7 @@ def loadtxt(*filenames, **kwargs):
                 if multiple_titles:
                     tephidata = namedtuple("tephidata", column_titles[ct])
                 tephidata.__repr__ = _repr
-                payload = np.loadtxt(arg, dtype=dtype, delimiter=delimiter)
+                payload = np.loadtxt(arg, dtype=dtype, delimiter=delimiter, converters=float)
                 item = tephidata(*payload.T)
                 data.append(item)
             else:
