@@ -1,43 +1,125 @@
+# Reference:
+#   - https://github.com/actions/checkout
+#   - https://github.com/actions/download-artifact
+#   - https://github.com/actions/setup-python
+#   - https://github.com/actions/upload-artifact
+#   - https://github.com/awalsh128/cache-apt-pkgs-action
+#   - https://github.com/codecov/codecov-action
+#   - https://github.com/prefix-dev/setup-pixi
+
 name: ci-tests
 
 on:
-  push:
-    branches:
-      - "*"
   pull_request:
-    branches:
-      - "*"
+  push:
+
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash -l {0}
+
 jobs:
   tests:
     name: "${{ matrix.session }} (${{ matrix.version }})"
+    runs-on: "${{ matrix.os }}"
 
-    runs-on: ${{ matrix.os }}
+    env:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      ENV_NAME: "ci-tests"
 
     strategy:
       fail-fast: false
       matrix:
-        os: [ "ubuntu-latest" ]
+        os: ["ubuntu-22.04"]
         version: ["py310", "py311"]
-        session: [ "test" ]
+        session: ["tests"]
         include:
           - version: "py311"
-            coverage: "--cov-report= --cov=tephi"
+            coverage: "--cov-report= --cov=geovista"
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - uses: actions/cache@v4
-      with:
-        key: tox-${{ hashFiles('requirements/dev.yml') }}-${{ hashFiles('tox.ini') }}
-        path: |
-          .tox
+      - name: "environment configure"
+        env:
+          # Maximum cache period (in weeks) before forcing a cache refresh.
+          CACHE_WEEKS: 2
+        run: |
+          echo "CACHE_PERIOD=$(date +%Y).$(expr $(date +%U) / ${CACHE_WEEKS})" >> ${GITHUB_ENV}
 
-    - name: Run tox
-      run: |
-        pip install 'tox<4'
-        tox -e ${{ matrix.version }}-${{ matrix.session }}
+      - name: "apt cache"
+        uses: awalsh128/cache-apt-pkgs-action@7ca5f46d061ad9aa95863cd9b214dd48edef361d
+        with:
+          packages: libgl1-mesa-glx xvfb
+          version: 1.0
+
+      - name: "setup pixi"
+        uses: prefix-dev/setup-pixi@19eac09b398e3d0c747adc7921926a6d802df4da
+        with:
+          environments: "test-${{ matrix.version }}"
+          frozen: true
+          activate-environment: true
+
+      - name: "${{ matrix.session }} (${{ matrix.version }})"
+        env:
+          PY_COLORS: "1"
+        run: |
+          pixi run --frozen pytest -m ${{ matrix.posargs }} ${{ matrix.coverage }}
+
+      - name: "upload test images"
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-images-${{ github.job }}-${{ strategy.job-index }}
+          path: ${{ github.workspace }}/test_images
+
+      - name: "prepare coverage"
+        if: ${{ matrix.coverage }}
+        run: |
+          mv .coverage ci-test-coverage${{ strategy.job-index }}
+
+      - if: ${{ matrix.coverage }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-artifacts-${{ github.job }}-${{ strategy.job-index }}
+          path: ${{ github.workspace }}/ci-test-coverage*
+
+
+  coverage:
+    needs: [tests]
+    name: "upload coverage"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: |
+          python -m pip install --upgrade pip
+          pip install coverage
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: coverage-artifacts-*
+          merge-multiple: true
+
+      - name: "create coverage report"
+        run: |
+          coverage combine ci-test-coverage*
+          coverage xml --omit=*/_version.py
+
+      - name: "upload coverage report"
+        uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

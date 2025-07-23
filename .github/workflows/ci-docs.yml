@@ -1,30 +1,67 @@
+# Reference:
+#   - https://github.com/actions/checkout
+#   - https://github.com/awalsh128/cache-apt-pkgs-action
+#   - https://github.com/prefix-dev/setup-pixi
+
 name: ci-docs
 
 on:
+  pull_request:
+
   push:
     branches:
       - "*"
-  pull_request:
-    branches:
-      - "*"
+
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build:
+  tests:
+    name: "${{ matrix.session }} (${{ matrix.version }})"
+    runs-on: "${{ matrix.os }}"
 
-    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    env:
+      ENV_NAME: "ci-docs"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest"]
+        version: ["py311"]
+        session: ["doctest"]
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - uses: actions/cache@v4
-      with:
-        key: tox-${{ hashFiles('requirements/dev.yml') }}-${{ hashFiles('tox.ini') }}
-        path: |
-          .tox
+      - name: "environment configure"
+        env:
+          # Maximum cache period (in weeks) before forcing a cache refresh.
+          CACHE_WEEKS: 2
+        run: |
+          echo "CACHE_PERIOD=$(date +%Y).$(expr $(date +%U) / ${CACHE_WEEKS})" >> ${GITHUB_ENV}
 
-    - name: Run tox
-      run: pipx run 'tox<4' -e doctests
+      - name: "apt cache"
+        uses: awalsh128/cache-apt-pkgs-action@7ca5f46d061ad9aa95863cd9b214dd48edef361d
+        with:
+          packages: libgl1-mesa-glx xvfb
+          version: 1.0
+
+      - name: "setup pixi"
+        uses: prefix-dev/setup-pixi@19eac09b398e3d0c747adc7921926a6d802df4da
+        with:
+          environments: "docs-${{ matrix.version }}"
+          frozen: true
+          activate-environment: true
+
+      - name: "${{ matrix.session }} (${{ matrix.version }})"
+        run: |
+          pixi run --frozen make ${{ matrix.session }}
