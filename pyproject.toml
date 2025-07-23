@@ -197,3 +197,132 @@ tephi = [
 
 [tool.setuptools.packages.find]
 include = ["tephi*"]
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tool.pixi.environments]
+default = { features = [], solve-group = "default" }
+devs = { features = ["devs"], solve-group = "default" }
+docs = { features = ["devs", "docs"], solve-group = "default" }
+geovista = { features = ["devs", "docs", "test"], solve-group = "default" }
+test = { features = ["devs", "test"], solve-group = "default" }
+
+devs-py310 = { features = ["devs", "py310"], solve-group = "py310" }
+docs-py310 = { features = ["devs", "docs", "py310"], solve-group = "py310" }
+tephi-py310 = { features = [
+  "devs",
+  "docs",
+  "py310",
+  "test",
+], solve-group = "py310" }
+py310 = { features = ["py310"], solve-group = "py310" }
+test-py310 = { features = ["devs", "py310", "test"], solve-group = "py310" }
+devs-py311 = { features = ["devs", "py311"], solve-group = "py311" }
+docs-py311 = { features = ["devs", "docs", "py311"], solve-group = "py311" }
+tephi-py311 = { features = [
+  "devs",
+  "docs",
+  "py311",
+  "test",
+], solve-group = "py311" }
+py311 = { features = ["py311"], solve-group = "py311" }
+test-py311 = { features = ["devs", "py311", "test"], solve-group = "py311" }
+
+[tool.pixi.dependencies]
+cartopy = ">=0.24.0,<0.25"
+click = ">=8.2.1,<9"
+click-default-group = ">=1.2.4,<2"
+cmocean = ">=4.0.3,<5"
+colorcet = ">=3.1.0,<4"
+lazy_loader = ">=0.4,<0.5"
+netcdf4 = ">=1.7.2,<2"
+numpy = ">=2.2.6,<3"
+platformdirs = ">=4.3.8,<5"
+pykdtree = ">=1.4.1,<2"
+pyproj = ">=3.7.1,<4"
+setuptools = ">=80.9.0,<81"
+setuptools-scm = ">=8.3.1,<9"
+
+[tool.pixi.feature.devs.dependencies]
+fastparquet = ">=2024.11.0,<2025"
+h3-py = ">=4.2.2,<5"
+pandas = ">=2.2.3,<3"
+pre-commit = ">=4.2.0,<5"
+rasterio = ">=1.4.3,<2"
+ruff = ">=0.12.0,<0.13"
+zizmor = ">=1.9.0,<2"
+
+[tool.pixi.feature.devs.pypi-dependencies]
+tephi = { path = ".", editable = true }
+
+[tool.pixi.feature.devs.tasks]
+fmt = "ruff format"
+lint = "ruff check"
+
+[tool.pixi.feature.docs.dependencies]
+ipykernel = ">=6.29.5,<7"
+ipywidgets = ">=8.1.7,<9"
+joblib = ">=1.5.1,<2"
+jupyter-server-proxy = ">=4.4.0,<5"
+myst-nb = ">=1.2.0,<2"
+nest-asyncio = ">=1.6.0,<2"
+numpydoc = ">=1.8.0,<2"
+sphinx = ">=8.2.3,<9"
+sphinx-autoapi = ">=3.5.0,<4"
+sphinx-book-theme = ">=1.1.3,<2"
+sphinx-click = ">=6.0.0,<7"
+sphinx-copybutton = ">=0.5.2,<0.6"
+sphinx-design = ">=0.6.1,<0.7"
+sphinx-gallery = ">=0.19.0,<0.20"
+sphinx-tags = ">=0.4,<0.5"
+sphinx-togglebutton = ">=0.3.2,<0.4"
+sphinx_changelog = ">=1.6.0,<2"
+
+[tool.pixi.feature.docs.pypi-dependencies]
+sphinx-tippy = ">=0.4.3,<0.5"
+
+[tool.pixi.feature.docs.tasks.clean]
+cmd = "make clean"
+cwd = "docs"
+
+[tool.pixi.feature.docs.tasks.clean-all]
+cmd = "make clean-all"
+cwd = "docs"
+depends-on = [{ "task" = "clean" }, { "task" = "clean-cache" }]
+
+[tool.pixi.feature.docs.tasks.clean-cache]
+cmd = "make clean-cache"
+cwd = "docs"
+
+[tool.pixi.feature.docs.tasks.doctest]
+cmd = "make doctest"
+cwd = "docs"
+depends-on = [{ "task" = "clean" }]
+
+[tool.pixi.feature.docs.tasks.make]
+args = [{ "arg" = "option", "default" = "html-noplot" }]
+cmd = "make {{ option }}"
+cwd = "docs"
+depends-on = [{ "task" = "clean" }]
+
+[tool.pixi.feature.docs.tasks.serve-html]
+args = [{ "arg" = "option", "default" = "html-noplot" }]
+cmd = "make serve-html"
+cwd = "docs"
+depends-on = [{ "task" = "make", "args" = ["{{ option }}"] }]
+
+[tool.pixi.feature.py310.dependencies]
+pip = ">=25.1.1,<26"
+python = "3.10.*"
+
+[tool.pixi.feature.py311.dependencies]
+pip = ">=25.1.1,<26"
+python = "3.11.*"
+
+[tool.pixi.feature.test.dependencies]
+codecov = ">=2.1.13,<3"
+pytest = ">=8.4.0,<9"
+pytest-cov = ">=6.1.1,<7"
+pytest-mock = ">=3.14.1,<4"
