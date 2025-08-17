@@ -7,7 +7,7 @@ on:
 
 env:
   # 6 months
-  DAYS_BEFORE_STALE: 168
+  DAYS_BEFORE_STALE: 182
   # 1 month
   DAYS_BEFORE_CLOSE: 28
 
@@ -29,6 +29,7 @@ jobs:
             In order to maintain a backlog of relevant issues, we automatically label them as stale after ${{ env.DAYS_BEFORE_STALE }} days of inactivity.
             If this issue is still important to you, then please comment on this issue and the stale label will be removed.
             Otherwise this issue will be automatically closed in ${{ env.DAYS_BEFORE_CLOSE }} days time.
+
           stale-pr-message: |
             In order to maintain a backlog of relevant PRs, we automatically label them as stale after ${{ env.DAYS_BEFORE_STALE }} days of inactivity.
             If this PR is still important to you, then please comment on this PR and the stale label will be removed.
@@ -40,6 +41,7 @@ jobs:
             If you still care about this issue, then please either:
               * Re-open this issue, if you have sufficient permissions, or
               * Add a comment pinging `@SciTools/tephi-maintainers` who will re-open on your behalf.
+
           close-pr-message: |
             This stale PR has been automatically closed due to a lack of community activity.
             
@@ -56,7 +58,6 @@ jobs:
 
           # Exempt all issues/prs with milestones from stale.
           exempt-all-milestones: true
-
           remove-stale-when-updated: true
 
           # Max number of operations per run.
