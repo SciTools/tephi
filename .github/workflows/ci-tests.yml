@@ -13,18 +13,31 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  tests:
+    name: "${{ matrix.session }} (${{ matrix.version }})"
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ "ubuntu-latest" ]
+        version: ["py310", "py311"]
+        session: [ "test" ]
+        include:
+          - version: "py311"
+            coverage: "--cov-report= --cov=tephi"
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       with:
         key: tox-${{ hashFiles('requirements/dev.yml') }}-${{ hashFiles('tox.ini') }}
         path: |
           .tox
 
     - name: Run tox
-      run: pipx run 'tox<4'
+      run: |
+        pip install 'tox<4'
+        tox -e ${{ matrix.version }}-${{ matrix.session }}
