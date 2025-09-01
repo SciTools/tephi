@@ -1,8 +1,9 @@
 name: tephi-dev
 channels:
   - conda-forge
+  - nodefaults
 dependencies:
-  - matplotlib
+  - matplotlib>=3.10
   - shapely
   - numpy
   - scipy

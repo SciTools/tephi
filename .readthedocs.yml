@@ -1,9 +1,13 @@
 version: 2
+sphinx:
+  # path to conf file
+  configuration: docs/source/conf.py
+  fail_on_warning: false
 
 build:
   os: "ubuntu-22.04"
   tools:
-    python: "mambaforge-22.9"
+    python: "mambaforge-23.11"
 
 conda:
   environment: requirements/rtd.yml

@@ -1,14 +1,199 @@
-[tool.black]
-line-length = 79
-target-version = ["py37", "py38", "py39", "py310"]
-include = '\.pyi?$'
+# See https://github.com/SciTools/.github/wiki/Linting
+# for SciTools linting guidelines
 
 [build-system]
 # Defined by PEP 518
-requires = [
-  "setuptools>=45",
-  "wheel",
-]
+requires = ["setuptools>=77.0.3"]
 # Defined by PEP 517
 build-backend = "setuptools.build_meta"
 
+[project]
+authors = [
+    {name = "Tephi Contributors", email = "scitools.pub@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Atmospheric Science",
+    "Topic :: Scientific/Engineering :: Visualization",
+]
+description = "Tephigram plotting in Python"
+dynamic = [
+    "readme",
+    "version",
+]
+keywords = [
+    "tephigram",
+    "radiosonde",
+    "meteorology",
+    "visualization",
+]
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+name = "tephi"
+requires-python = ">=3.10"
+dependencies = ["matplotlib", "numpy", "scipy"]
+
+[project.urls]
+Code = "https://github.com/SciTools/tephi"
+Issues = "https://github.com/SciTools/tephi/issues"
+Binder= "https://mybinder.org/v2/gh/SciTools/tephi/main?filepath=index.ipynb"
+Docs =  "https://tephi.readthedocs.io/en/latest/"
+
+[tool.black]
+line-length = 79
+target-version = ["py310", "py311"]
+include = '\.pyi?$'
+
+[tool.mypy]
+strict = false
+ignore_missing_imports = true
+warn_unused_configs = true
+warn_unreachable = true
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+exclude = []
+
+[tool.numpydoc_validation]
+checks = [
+    "all",  # Enable all numpydoc validation rules, apart from the following:
+
+    # -> Docstring text (summary) should start in the line immediately
+    #    after the opening quotes (not in the same line, or leaving a
+    #    blank line in between)
+    "GL01",  # Permit summary line on same line as docstring opening quotes.
+
+    # -> Closing quotes should be placed in the line after the last text
+    #    in the docstring (do not close the quotes in the same line as
+    #    the text, or leave a blank line between the last text and the
+    #    quotes)
+    "GL02",  # Permit a blank line before docstring closing quotes.
+
+    # -> Double line break found; please use only one blank line to
+    #    separate sections or paragraphs, and do not leave blank lines
+    #    at the end of docstrings
+    "GL03",  # Ignoring.
+
+    # -> See Also section not found
+    "SA01",  # Not all docstrings require a "See Also" section.
+
+    # -> No extended summary found
+    "ES01",  # Not all docstrings require an "Extended Summary" section.
+
+    # -> No examples section found
+    "EX01",  # Not all docstrings require an "Examples" section.
+
+    # -> No Yields section found
+    "YD01",  # Not all docstrings require a "Yields" section.
+]
+exclude = [
+    '\.__eq__$',
+    '\.__ne__$',
+    '\.__repr__$',
+]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+markers = ["graphical: mark a test as a graphical test"]
+addopts = ["-ra",
+           "-v",
+           "--cov-config=.coveragerc",
+           "--cov=tephi",
+           "--cov-report=term-missing",
+           "--doctest-modules",
+           "--showlocals",
+           "--strict-markers",
+           "--strict-config"
+    ]
+xfail_strict = true
+log_cli_level = "info"
+testpaths = [
+  "tephi/",
+]
+doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS NUMBER"
+filterwarnings = ["default"]
+
+[tool.repo-review]
+# These are a list of the currently failing tests:
+ignore = [
+    # https://learn.scientific-python.org/development/guides/style/#PC180
+    "PC180",  # Uses prettier
+
+    # https://learn.scientific-python.org/development/guides/packaging-simple/#PY005
+    "PY005",  # Has tests folder
+]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.format]
+preview = false
+
+[tool.ruff.lint]
+ignore = [
+    # flake8-commas (COM)
+    # https://docs.astral.sh/ruff/rules/#flake8-commas-com
+    "COM812",  # Trailing comma missing.
+    "COM819",  # Trailing comma prohibited.
+
+    # flake8-implicit-str-concat (ISC)
+    # https://docs.astral.sh/ruff/rules/single-line-implicit-string-concatenation/
+    # NOTE: This rule may cause conflicts when used with "ruff format".
+    "ISC001",  # Implicitly concatenate string literals on one line.
+
+    # TODO: exceptions that still need investigating are below. Might be fixable, or might become permanent (above):
+
+    "INP001", # File `` is part of an implicit namespace package. Add an `__init__.py`.
+
+    ]
+    preview = false
+    select = [
+        "ALL",
+
+        # list specific rules to include that is skipped using numpy convention.
+        "D212",  # Multi-line docstring summary should start at the first line
+    ]
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = true
+known-first-party = ["tephi"]
+
+[tool.ruff.lint.per-file-ignores]
+# All test scripts
+"tephi/tests/*.py" = [
+    # https://docs.astral.sh/ruff/rules/undocumented-public-module/
+    "D100",  # Missing docstring in public module
+    "D205",  # 1 blank line required between summary line and description
+    "D401",  # 1 First line of docstring should be in imperative mood
+]
+"setup.py" = [
+    "EXE001", # Shebang is present but file is not executable
+]
+"docs/source/conf.py" = [
+    "ERA001", # Has commented out code
+    "INP001" # File `docs/source/conf.py` is part of an implicit namespace package. Add an `__init__.py`.
+]
+"docs/source/plot/barbs.py" = [
+    "INP001" # File `docs/source/plot/barbs.py` is part of an implicit namespace package. Add an `__init__.py`.
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.setuptools.dynamic]
+version = { attr = "tephi.__version__"}
+readme = {file = ["README.md"], content-type = "text/markdown"}
+
+[tool.setuptools.package-data]
+tephi = [
+    "etc/test_data/*.txt",
+    "tests/results/*.npz",
+    "tests/results/imagerepo.json"
+]
+
+[tool.setuptools.packages.find]
+include = ["tephi*"]
