@@ -146,7 +146,7 @@ def loadtxt(*filenames, **kwargs):
 
     >>> winds = os.path.join(tephi.DATA_DIR, 'barbs.txt')
     >>> columns = ('pressure', 'dewpoint', 'wind_speed', 'wind_direction')
-    >>> data = tephi.loadtxt(winds, column_titles=columns)
+    >>> data = numpy.loadtxt(winds, column_titles=columns)
     >>> pressure = data.pressure
     >>> dews = data.dewpoint
     >>> wind_speed = data.wind_speed
@@ -613,7 +613,7 @@ class Tephigram:
 
             dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
             dry_bulb = os.path.join(tephi.DATA_DIR, 'temps.txt')
-            dew_data, temp_data = tephi.loadtxt(dew_point, dry_bulb)
+            dew_data, temp_data = numpy.loadtxt(dew_point, dry_bulb)
             dews = column_stack((dew_data.pressure, dew_data.temperature))
             temps = column_stack((temp_data.pressure, temp_data.temperature))
             tpg = Tephigram()

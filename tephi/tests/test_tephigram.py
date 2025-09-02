@@ -35,13 +35,14 @@ class TestTephigramLoadTxt(tests.TephiTest):
         self.filename_temps = tephi.tests.get_data_path("temps.txt")
         self.filename_barbs = tephi.tests.get_data_path("barbs.txt")
         self.filename_comma = tephi.tests.get_data_path("comma_sep.txt")
+        print(self.filename_dews)
 
     def test_is_not_file(self):
         with pytest.raises(OSError):
-            tephi.loadtxt("wibble")
+            numpy.loadtxt("wibble")
 
     def test_load_data_no_column_names(self):
-        dews = tephi.loadtxt(self.filename_dews)
+        dews = numpy.loadtxt(self.filename_dews)
         assert dews._fields == ("pressure", "temperature")
         self.assertArrayEqual(dews.pressure, _expected_dews[0])
         self.assertArrayEqual(dews, _expected_dews)
@@ -49,14 +50,14 @@ class TestTephigramLoadTxt(tests.TephiTest):
     def test_load_data_with_column_names(self):
         # Column titles test all valid namedtuple characters (alphanumeric, _).
         columns = ("pressure", "dewpoint2", "wind_speed", "WindDirection")
-        barbs = tephi.loadtxt(self.filename_barbs, column_titles=columns)
+        barbs = numpy.loadtxt(self.filename_barbs, column_titles=columns)
         assert barbs._fields == columns
         self.assertArrayEqual(barbs.wind_speed, _expected_barbs[2])
         self.assertArrayEqual(barbs, _expected_barbs)
 
     def test_load_multiple_files_same_column_names(self):
         columns = ("foo", "bar")
-        dews, temps = tephi.loadtxt(
+        dews, temps = numpy.loadtxt(
             self.filename_dews, self.filename_temps, column_titles=columns
         )
         assert dews._fields == columns
@@ -68,33 +69,33 @@ class TestTephigramLoadTxt(tests.TephiTest):
             ("pressure", "wind_speed", "wind_direction"),
         ]
         with pytest.raises(ValueError):
-            tephi.loadtxt(self.filename_dews, column_titles=columns)
+            numpy.loadtxt(self.filename_dews, column_titles=columns)
 
     def test_number_of_columns_and_titles_not_equal(self):
         columns = ("pressure", "dewpoint", "wind_speed")
         with pytest.raises(TypeError):
-            tephi.loadtxt(self.filename_barbs, column_titles=columns)
+            numpy.loadtxt(self.filename_barbs, column_titles=columns)
 
     def test_invalid_column_titles(self):
         columns = ("pres-sure", "dew+point", 5)
         with pytest.raises(ValueError):
-            tephi.loadtxt(self.filename_dews, column_titles=columns)
+            numpy.loadtxt(self.filename_dews, column_titles=columns)
 
     def test_non_iterable_column_title(self):
         # For the case of column titles, strings are considered non-iterable.
         columns = "pressure"
         with pytest.raises(TypeError):
-            tephi.loadtxt(self.filename_dews, column_titles=columns)
+            numpy.loadtxt(self.filename_dews, column_titles=columns)
 
     def test_delimiter(self):
         columns = ("pressure", "temperature", "wind_direction", "wind_speed")
-        data = tephi.loadtxt(
+        data = numpy.loadtxt(
             self.filename_comma, column_titles=columns, delimiter=","
         )
         assert data.pressure.shape == (2,)
 
     def test_dtype(self):
-        dews = tephi.loadtxt(self.filename_dews, dtype="i4")
+        dews = numpy.loadtxt(self.filename_dews, dtype="i4")
         assert dews.pressure[0].dtype == np.int32
         assert dews.temperature[0].dtype == np.int32
 
