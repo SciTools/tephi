@@ -23,7 +23,7 @@ repos:
 
 # Hook for pre-commit's  built-in checks
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
         # Prevent giant files from being committed.
     -   id: check-added-large-files
@@ -54,7 +54,7 @@ repos:
 # NOTE : keep these in hook-name (aka 'id') order
 
 -   repo: https://github.com/adamchainz/blacken-docs
-    rev: 1.19.1
+    rev: 1.20.0
     hooks:
     -   id: blacken-docs
         types: [file, rst]
@@ -67,7 +67,7 @@ repos:
         additional_dependencies: [tomli]
 
 -   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 'v1.17.0'
+    rev: 'v1.17.1'
     hooks:
     -   id: mypy
         exclude: 'noxfile\.py|docs/conf\.py'
@@ -79,7 +79,7 @@ repos:
         types: [file, python]
 
 -   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.12.5"
+    rev: "v0.12.12"
     hooks:
     -   id: ruff
         types: [file, python]
