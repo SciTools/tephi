@@ -1,9 +1,13 @@
+from collections import namedtuple
+from collections.abc import Iterable
+
 from matplotlib.font_manager import FontProperties
 import matplotlib.pyplot as plt
-from mpl_toolkits.axisartist import Subplot
+from mpl_toolkits.axisartist import Subplot, SubplotHost
 from mpl_toolkits.axisartist.grid_helper_curvelinear import (
     GridHelperCurveLinear,
 )
+from mpl_toolkits.axisartist.grid_finder import MaxNLocator
 import numpy as np
 import os.path
 from . import artists, isopleths, transforms
@@ -13,6 +17,114 @@ __version__ = "0.4.0.dev0"
 RESOURCES_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "etc")
 DATA_DIR = os.path.join(RESOURCES_DIR, "test_data")
 
+def loadtxt(*filenames, **kwargs):
+    """
+    Load one or more text files of pressure, temperature, wind speed and wind
+    direction value sets.
+    Each line should contain, at minimum, a single pressure value (mb or hPa),
+    and a single temperature value (degC), but may also contain a dewpoint
+    value (degC), wind speed (knots) and wind direction value (degrees from
+    north).
+    Note that blank lines and comment lines beginning with a '#' are ignored.
+    For example:
+    >>> import os.path
+    >>> import tephi
+    >>> winds = os.path.join(tephi.DATA_DIR, 'barbs.txt')
+    >>> columns = ('pressure', 'dewpoint', 'wind_speed', 'wind_direction')
+    >>> data = tephi.loadtxt(winds, column_titles=columns)
+    >>> pressure = data.pressure
+    >>> dews = data.dewpoint
+    >>> wind_speed = data.wind_speed
+    >>> wind_direction = data.wind_direction
+    .. seealso:: :func:`numpy.loadtxt`.
+    Args:
+    * filenames: one or more filenames.
+    Kwargs:
+    * column_titles:
+        List of iterables, or None. If specified, should contain one title
+        string for each column of data per specified file. If all of multiple
+        files loaded have the same column titles, then only one tuple of column
+        titles need be specified.
+    * delimiter:
+        The string used to separate values. This is passed directly to
+        :func:`np.loadtxt`, which defaults to using any whitespace as delimiter
+        if this keyword is not specified.
+    * dtype:
+        The datatype to cast the data in the text file to. Passed directly to
+        :func:`np.loadtxt`.
+    Returns:
+        A :func:`collections.namedtuple` instance containing one tuple, named
+        with the relevant column title if specified, for each column of data
+        in the text file loaded. If more than one file is loaded, a sequence
+        of namedtuples is returned.
+    """
+
+    def _repr(nt):
+        """An improved representation of namedtuples over the default."""
+
+        typename = nt.__class__.__name__
+        fields = nt._fields
+        n_fields = len(fields)
+        return_str = "{}(\n".format(typename)
+        for i, t in enumerate(fields):
+            gap = " " * 4
+            if i == n_fields - 1:
+                ender = ""
+            else:
+                ender = "\n"
+            return_str += "{}{}={!r}{}".format(gap, t, getattr(nt, t), ender)
+        return_str += ")"
+        return return_str
+
+    column_titles = kwargs.pop("column_titles", None)
+    delimiter = kwargs.pop("delimiter", None)
+    dtype = kwargs.pop("dtype", "f4")
+
+    if column_titles is not None:
+        fields = column_titles[0]
+        if not isinstance(column_titles, str):
+            if isinstance(fields, Iterable) and not isinstance(fields, str):
+                # We've an iterable of iterables - multiple titles is True.
+                multiple_titles = True
+                if len(column_titles) > len(filenames):
+                    msg = "Received {} files but {} sets of column titles."
+                    raise ValueError(
+                        msg.format(len(column_titles), len(filenames))
+                    )
+            elif isinstance(fields, str):
+                # We've an iterable of title strings - use for namedtuple.
+                tephidata = namedtuple("tephidata", column_titles)
+                multiple_titles = False
+            else:
+                # Whatever we've got it isn't iterable, so raise TypeError.
+                msg = "Expected title to be string, got {!r}."
+                raise TypeError(msg.format(type(column_titles)))
+        else:
+            msg = "Expected column_titles to be iterable, got {!r}."
+            raise TypeError(msg.format(type(column_titles)))
+
+    else:
+        tephidata = namedtuple("tephidata", ("pressure", "temperature"))
+        multiple_titles = False
+
+    data = []
+    for ct, arg in enumerate(filenames):
+        if isinstance(arg, str):
+            if os.path.isfile(arg):
+                if multiple_titles:
+                    tephidata = namedtuple("tephidata", column_titles[ct])
+                tephidata.__repr__ = _repr
+                payload = np.loadtxt(arg, dtype=dtype, delimiter=delimiter, converters=float)
+                item = tephidata(*payload.T)
+                data.append(item)
+            else:
+                msg = "Item {} is either not a file or does not exist."
+                raise OSError(msg.format(arg))
+
+    if len(data) == 1:
+        data = data[0]
+
+    return data
 
 class _FormatterTheta(object):
     """
@@ -76,7 +188,7 @@ class Locator(object):
 class TephiAxes(Subplot):
     name = "tephigram"
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, isotherm_locator=None, dry_adiabat_locator=None, **kwargs):
         # Validate the subplot arguments.
         if len(args) == 0:
             args = (1, 1, 1)
@@ -94,36 +206,43 @@ class TephiAxes(Subplot):
 
         # Process the kwargs.
         figure = kwargs.get("figure")
-        isotherm_locator = kwargs.get("isotherm_locator")
-        dry_adiabat_locator = kwargs.get("dry_adiabat_locator")
-        anchor = None
-        if "anchor" in kwargs:
-            anchor = kwargs.pop("anchor")
+        xylim = None
+        if "xylim" in kwargs:
+            xylim = kwargs.pop("xylim")
 
         # Get the figure.
         if figure is None:
             figure = plt.gcf()
 
         # Configure the locators.
-        locator_isotherm = isotherm_locator
-        if locator_isotherm and not isinstance(locator_isotherm, Locator):
-            if not isinstance(locator_isotherm, int):
+        if isotherm_locator and not isinstance(isotherm_locator, Locator):
+            if isinstance(isotherm_locator, int):
+                locator_T = MaxNLocator(
+                    nbins=isotherm_locator,
+                    steps=[10],
+                    integer=True
+                )
+            else:
                 raise ValueError("Invalid isotherm locator.")
-            locator_isotherm = Locator(locator_isotherm)
-        locator_theta = dry_adiabat_locator
-        if locator_theta and not isinstance(locator_theta, Locator):
-            if not isinstance(locator_theta, int):
+        else:
+            locator_T = isotherm_locator
+
+        if dry_adiabat_locator and not isinstance(dry_adiabat_locator, Locator):
+            if isinstance(dry_adiabat_locator, int):
+                locator_theta = MaxNLocator(
+                    nbins=dry_adiabat_locator,
+                    steps=[10],
+                    integer=True
+                )
+            else:
                 raise ValueError("Invalid dry adiabat locator.")
-
-        from mpl_toolkits.axisartist.grid_finder import MaxNLocator
-
-        locator_isotherm = MaxNLocator(nbins=20, steps=[10], integer=True)
-        locator_theta = MaxNLocator(nbins=20, steps=[10], integer=True)
+        else:
+            locator_theta = dry_adiabat_locator
 
         gridder = GridHelperCurveLinear(
             transforms.TephiTransform(),
             tick_formatter1=_FormatterIsotherm(),
-            grid_locator1=locator_isotherm,
+            grid_locator1=locator_T,
             tick_formatter2=_FormatterTheta(),
             grid_locator2=locator_theta,
         )
@@ -134,7 +253,7 @@ class TephiAxes(Subplot):
         # The tephigram cache.
         transform = transforms.TephiTransform() + self.transData
         self.tephi = dict(
-            anchor=anchor,
+            xylim=xylim,
             figure=figure.add_subplot(self),
             profiles=isopleths.ProfileList(),
             transform=transform,
@@ -199,19 +318,19 @@ class TephiAxes(Subplot):
         # Initialise the text formatter for the navigation status bar.
         self.format_coord = self._status_bar
 
-        # Center the plot around the anchor extent.
-        if anchor is not None:
-            anchor = np.asarray(anchor)
-            if anchor.shape != (2, 2):
+        # Center the plot around the xylim extent.
+        if xylim is not None:
+            xylim = np.asarray(xylim)
+            if xylim.shape != (2, 2):
                 msg = (
-                    "Invalid anchor, expecting [(BLHC-T, BLHC-t),"
+                    "Invalid xylim, expecting [(BLHC-T, BLHC-t),"
                     "(TRHC-T, TRHC-t)]"
                 )
                 raise ValueError(msg)
-            xlim, ylim = transforms.convert_Tt2xy(anchor[:, 0], anchor[:, 1])
+            xlim, ylim = transforms.convert_Tt2xy(xylim[:, 0], xylim[:, 1])
             self.set_xlim(xlim)
             self.set_ylim(ylim)
-            self.tephi["anchor"] = xlim, ylim
+            self.tephi["xylim"] = xlim, ylim
 
     def plot(self, data, **kwargs):
         """
@@ -260,7 +379,7 @@ class TephiAxes(Subplot):
         self.tephi["profiles"].append(profile)
 
         # Center the tephigram plot around all the profiles.
-        if self.tephi["anchor"] is None:
+        if self.tephi["xylim"] is None:
             xlim, ylim = self._calculate_extents(xfactor=0.25, yfactor=0.05)
             self.set_xlim(xlim)
             self.set_ylim(ylim)
@@ -348,8 +467,8 @@ class TephiAxes(Subplot):
         min_x = min_y = np.inf
         max_x = max_y = -np.inf
 
-        if self.tephi["anchor"] is not None:
-            xlim, ylim = self.tephi["anchor"]
+        if self.tephi["xylim"] is not None:
+            xlim, ylim = self.tephi["xylim"]
         else:
             for profile in self.tephi["profiles"]:
                 temperature = profile.points.temperature

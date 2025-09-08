@@ -180,8 +180,10 @@ class BarbArtist(matplotlib.artist.Artist):
                     self.barbs[i]["barb"] = barb
                 else:
                     barb.set_offsets(np.array([[temperature, theta]]))
-                barb.draw(renderer)
 
+                # collections are not automatically added to the figure
+                barb.set_figure(self.axes.figure)
+                barb.draw(renderer)
 
 class Isopleth(object):
     __metaclass__ = ABCMeta
