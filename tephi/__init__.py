@@ -188,10 +188,13 @@ class Locator(object):
 class TephiAxes(Subplot):
     name = "tephigram"
 
-    def __init__(self, *args, isotherm_locator=None, dry_adiabat_locator=None, **kwargs):
+    def __init__(self, *args, **kwargs):
         # Validate the subplot arguments.
         if len(args) == 0:
             args = (1, 1, 1)
+        elif (len(args) == 1 and isinstance(args[0], tuple)
+              and len(args[0]) == 3):
+                args = args[0]
         elif len(args) == 1 and isinstance(args[0], int):
             args = tuple([int(c) for c in str(args[0])])
             if len(args) != 3:
@@ -206,15 +209,13 @@ class TephiAxes(Subplot):
 
         # Process the kwargs.
         figure = kwargs.get("figure")
-        xylim = None
-        if "xylim" in kwargs:
-            xylim = kwargs.pop("xylim")
+        xylim = kwargs.pop("xylim", None)
 
         # Get the figure.
         if figure is None:
             figure = plt.gcf()
 
-        # Configure the locators.
+        isotherm_locator = kwargs.pop("isotherm_locator", None)
         if isotherm_locator and not isinstance(isotherm_locator, Locator):
             if isinstance(isotherm_locator, int):
                 locator_T = MaxNLocator(
@@ -227,6 +228,7 @@ class TephiAxes(Subplot):
         else:
             locator_T = isotherm_locator
 
+        dry_adiabat_locator = kwargs.pop("dry_adiabat_locator", None)
         if dry_adiabat_locator and not isinstance(dry_adiabat_locator, Locator):
             if isinstance(dry_adiabat_locator, int):
                 locator_theta = MaxNLocator(

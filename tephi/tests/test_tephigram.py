@@ -327,3 +327,20 @@ class TestTephigramBarbs(tests.GraphicsTest):
         dprofile.barbs(self.barbs, gutter=0.3, pivot="middle", length=8)
         with pytest.raises(AssertionError, match="Bad phash"):
             self.check_graphic(nodeid)
+
+class TestSubplots(tests.GraphicsTest):
+    @pytest.fixture(autouse=True)
+    def _setup(self):
+        self.dews = _expected_dews.T
+        self.temps = _expected_temps.T
+
+    def test_subplot(self, nodeid):
+        tephi_one = TephiAxes(133)
+        tephi_two = TephiAxes((1,3,1))
+
+        tephi_one.plot(self.temps)
+        tephi_one.plot(self.dews)
+        tephi_two.plot(self.dews)
+
+        with pytest.raises(AssertionError):
+            self.check_graphic(nodeid)
