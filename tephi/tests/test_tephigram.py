@@ -297,9 +297,6 @@ class TestTephigramBarbs(tests.GraphicsTest):
             self.check_graphic(nodeid)
 
     def test_barbs_from_file(self, nodeid):
-        self.tephigram.add_wet_adiabats()
-        self.tephigram.add_humidity_mixing_ratios()
-        self.tephigram.add_isobars()
         dews = _expected_barbs.T[:, :2]
         barbs = np.column_stack(
             (_expected_barbs[2], _expected_barbs[3], _expected_barbs[0])
