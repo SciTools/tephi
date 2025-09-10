@@ -3,7 +3,7 @@ from collections.abc import Iterable
 
 from matplotlib.font_manager import FontProperties
 import matplotlib.pyplot as plt
-from mpl_toolkits.axisartist import Subplot, SubplotHost
+from mpl_toolkits.axisartist import Subplot
 from mpl_toolkits.axisartist.grid_helper_curvelinear import (
     GridHelperCurveLinear,
 )
@@ -185,7 +185,7 @@ class Locator(object):
             >>> from tephi import Locator
             >>> locator = Locator(10)
             >>> locator(-45, 23)
-            (array([-50, -40, -30, -20, -10,   0,  10,  30]), 9, 1)
+            (array([-50, -40, -30, -20, -10,   0,  10, 20, 30]), 9, 1)
 
         Args:
 
