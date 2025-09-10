@@ -6,6 +6,8 @@
 Tests the tephigram plotting capability provided by tephi.
 
 """
+import matplotlib
+
 # Import tephi test package first so that some things can be initialised
 # before importing anything else.
 import tephi.tests as tests
@@ -28,7 +30,7 @@ _expected_temps = _load_result("temps.npz")
 _expected_barbs = _load_result("barbs.npz")
 
 # make the default size for this session 8x8in
-# matplotlib.rcParams['figure.figsize'] = (8, 8)
+matplotlib.rcParams['figure.figsize'] = (8, 8)
 
 class TestTephigramLoadTxt(tests.TephiTest):
     @pytest.fixture(autouse=True)
