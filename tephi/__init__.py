@@ -23,12 +23,46 @@ def loadtxt(*filenames, **kwargs):
     """
     Load one or more text files of pressure, temperature, wind speed and wind
     direction value sets.
+
     Each line should contain, at minimum, a single pressure value (mb or hPa),
     and a single temperature value (degC), but may also contain a dewpoint
     value (degC), wind speed (knots) and wind direction value (degrees from
     north).
+
+    Parameters
+    ----------
+    filenames : iterable of str
+        One or more filenames.
+
+    Other Parameters
+    ----------------
+
+    column_titles : list of iterables, optional
+        List of iterables, or None. If specified, should contain one title
+        string for each column of data per specified file. If all of multiple
+        files loaded have the same column titles, then only one tuple of column
+        titles need be specified.
+    delimiter : str, optional
+        The string used to separate values. This is passed directly to
+        :func:`np.loadtxt`, which defaults to using any whitespace as delimiter
+        if this keyword is not specified.
+    dtype : type, optional
+        The datatype to cast the data in the text file to. Passed directly to
+        :func:`np.loadtxt`.
+
+    Returns
+    -------
+    data : collections.namedtuple
+    Contains one tuple, named with the relevant column title if specified,
+    for each column of data in the text file loaded. If more than one file
+    is loaded, a sequence of namedtuples is returned.
+
+    Notes
+    -----
     Note that blank lines and comment lines beginning with a '#' are ignored.
-    For example:
+
+    Examples
+    --------
     >>> import os.path
     >>> import tephi
     >>> winds = os.path.join(tephi.DATA_DIR, 'barbs.txt')
@@ -38,27 +72,11 @@ def loadtxt(*filenames, **kwargs):
     >>> dews = data.dewpoint
     >>> wind_speed = data.wind_speed
     >>> wind_direction = data.wind_direction
-    .. seealso:: :func:`numpy.loadtxt`.
-    Args:
-    * filenames: one or more filenames.
-    Kwargs:
-    * column_titles:
-        List of iterables, or None. If specified, should contain one title
-        string for each column of data per specified file. If all of multiple
-        files loaded have the same column titles, then only one tuple of column
-        titles need be specified.
-    * delimiter:
-        The string used to separate values. This is passed directly to
-        :func:`np.loadtxt`, which defaults to using any whitespace as delimiter
-        if this keyword is not specified.
-    * dtype:
-        The datatype to cast the data in the text file to. Passed directly to
-        :func:`np.loadtxt`.
-    Returns:
-        A :func:`collections.namedtuple` instance containing one tuple, named
-        with the relevant column title if specified, for each column of data
-        in the text file loaded. If more than one file is loaded, a sequence
-        of namedtuples is returned.
+
+    See Also
+    --------
+    :func:`numpy.loadtxt`.
+
     """
 
     def _repr(nt):
