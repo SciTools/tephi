@@ -115,29 +115,24 @@ class TestTephigramPlot(tests.GraphicsTest):
 
     def test_plot_dews(self, nodeid):
         self.tephigram.plot(self.dews)
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_plot_temps(self, nodeid):
         self.tephigram.plot(self.temps)
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_plot_dews_temps(self, nodeid):
         self.tephigram.plot(self.dews)
         self.tephigram.plot(self.temps)
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_plot_dews_label(self, nodeid):
         self.tephigram.plot(self.dews, label="Dew-point temperature")
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_plot_temps_label(self, nodeid):
         self.tephigram.plot(self.temps, label="Dry-bulb temperature")
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_plot_dews_custom(self, nodeid):
         self.tephigram.plot(
@@ -147,8 +142,7 @@ class TestTephigramPlot(tests.GraphicsTest):
             color="blue",
             marker="s",
         )
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_plot_temps_custom(self, nodeid):
         self.tephigram.plot(
@@ -158,8 +152,7 @@ class TestTephigramPlot(tests.GraphicsTest):
             color="red",
             marker="o",
         )
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_plot_dews_temps_custom(self, nodeid):
         self.tephigram.plot(
@@ -176,8 +169,7 @@ class TestTephigramPlot(tests.GraphicsTest):
             color="red",
             marker="o",
         )
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
 @pytest.mark.graphical
 @pytest.mark.usefixtures("close_plot", "nodeid")
@@ -190,32 +182,27 @@ class TestTephigramAxes(tests.GraphicsTest):
     def test_plot_dews_locator_isotherm_numeric(self, nodeid):
         tephigram = TephiAxes(isotherm_locator=30)
         tephigram.plot(self.dews)
-        with pytest.raises(AssertionError):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_plot_dews_locator_isotherm_object(self, nodeid):
         tephigram = TephiAxes(isotherm_locator=tephi.Locator(10))
         tephigram.plot(self.dews)
-        with pytest.raises(AssertionError):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_plot_dews_locator_adiabat_numeric(self, nodeid):
         tephigram = TephiAxes(dry_adiabat_locator=10)
         tephigram.plot(self.dews)
-        with pytest.raises(AssertionError):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_plot_dews_locator_adiabat_object(self, nodeid):
         tephigram = TephiAxes(dry_adiabat_locator=tephi.Locator(10))
         tephigram.plot(self.dews)
-        with pytest.raises(AssertionError):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_plot_dews_locator_numeric(self, nodeid):
         tephigram = TephiAxes(isotherm_locator=10, dry_adiabat_locator=10)
         tephigram.plot(self.dews)
-        with pytest.raises(AssertionError):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_plot_dews_locator_object(self, nodeid):
         locator = tephi.Locator(10)
@@ -223,38 +210,33 @@ class TestTephigramAxes(tests.GraphicsTest):
             isotherm_locator=locator, dry_adiabat_locator=locator
         )
         tephigram.plot(self.dews)
-        with pytest.raises(AssertionError):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_plot_xylim(self, nodeid):
         tephigram = TephiAxes(xylim=[(0, 0), (40, 200)])
         tephigram.plot(self.dews)
-        with pytest.raises(AssertionError):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_add_wet_adiabats(self, nodeid):
         # the xylim is needed so that the isopleths actually appear
         tephigram = TephiAxes(xylim=[(0, 0), (40, 70)])
 
         tephigram.add_wet_adiabats()
-        with pytest.raises(AssertionError):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_add_humidity_mixing_ratios(self, nodeid):
         # the xylim is needed so that the isopleths actually appear
         tephigram = TephiAxes(xylim=[(0, 0), (40, 70)])
 
         tephigram.add_humidity_mixing_ratios()
-        with pytest.raises(AssertionError):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_add_isobars(self, nodeid):
         # the xylim is needed so that the isopleths actually appear
         tephigram = TephiAxes(xylim=[(0, 0), (40, 70)])
 
         tephigram.add_isobars()
-        with pytest.raises(AssertionError):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
 @pytest.mark.graphical
 @pytest.mark.usefixtures("close_plot", "nodeid")
@@ -287,14 +269,12 @@ class TestTephigramBarbs(tests.GraphicsTest):
             ],
             zorder=10,
         )
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_barbs(self, nodeid):
         profile = self.tephigram.plot(self.temps)
         profile.barbs(self.barbs, zorder=10)
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_barbs_from_file(self, nodeid):
         dews = _expected_barbs.T[:, :2]
@@ -303,34 +283,29 @@ class TestTephigramBarbs(tests.GraphicsTest):
         )
         profile = self.tephigram.plot(dews)
         profile.barbs(barbs, zorder=200)
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_gutter(self, nodeid):
         profile = self.tephigram.plot(self.temps)
         profile.barbs(self.barbs, gutter=0.5, zorder=10)
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_length(self, nodeid):
         profile = self.tephigram.plot(self.temps)
         profile.barbs(self.barbs, gutter=0.9, length=10, zorder=10)
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_color(self, nodeid):
         profile = self.tephigram.plot(self.temps)
         profile.barbs(self.barbs, color="green", zorder=10)
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
     def test_pivot(self, nodeid):
         tprofile = self.tephigram.plot(self.temps)
         tprofile.barbs(self.barbs, gutter=0.2, pivot="tip", length=8)
         dprofile = self.tephigram.plot(self.dews)
         dprofile.barbs(self.barbs, gutter=0.3, pivot="middle", length=8)
-        with pytest.raises(AssertionError, match="Bad phash"):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)
 
 class TestSubplots(tests.GraphicsTest):
     @pytest.fixture(autouse=True)
@@ -346,5 +321,4 @@ class TestSubplots(tests.GraphicsTest):
         tephi_one.plot(self.dews)
         tephi_two.plot(self.dews)
 
-        with pytest.raises(AssertionError):
-            self.check_graphic(nodeid)
+        self.check_graphic(nodeid)

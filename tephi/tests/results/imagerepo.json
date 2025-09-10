@@ -1,36 +1,79 @@
 {
+    "test_tephigram.TestSubplots.test_subplot.0": [
+        "https://scitools.github.io/test-tephi-imagehash/images/d9aaa4f6a2555b4a1cfee1a14b429a16f035254b875e5abc2de1cb43ea1ca5e1.png"
+    ],
+    "test_tephigram.TestTephigramAxes.test_add_humidity_mixing_ratios.0": [
+        "https://scitools.github.io/test-tephi-imagehash/images/bfa8907fc0574f801faab87de1c00783941f787c7be08787c41e7878b8e12b87.png"
+    ],
+    "test_tephigram.TestTephigramAxes.test_add_isobars.0": [
+        "https://scitools.github.io/test-tephi-imagehash/images/bea0907fc15f6f803eaa907de1c00783943f78787be08787c41e7c78b8e12b87.png"
+    ],
+    "test_tephigram.TestTephigramAxes.test_add_wet_adiabats.0": [
+        "https://scitools.github.io/test-tephi-imagehash/images/bfa8907fc0574f801eaab87de1d00783941f78787be08787c41e7c78b8e12b87.png"
+    ],
+    "test_tephigram.TestTephigramAxes.test_plot_dews_locator_adiabat_numeric.0": [
+        "https://scitools.github.io/test-tephi-imagehash/images/bc5ace0f91e46631cde5398c96589cc6cb3462619e9b3f139c6649896e733326.png"
+    ],
+    "test_tephigram.TestTephigramAxes.test_plot_dews_locator_adiabat_object.0": [
+        "https://scitools.github.io/test-tephi-imagehash/images/ea5a9f0d91e32639c5a5198d96729cc6cbb462619f9e3f1398646d093c736326.png"
+    ],
+    "test_tephigram.TestTephigramAxes.test_plot_dews_locator_isotherm_numeric.0": [
+        "https://scitools.github.io/test-tephi-imagehash/images/ea5a8f6d91e16630c5ed392c86599cc6cbb46a6196986a929d66ed893e23343e.png"
+    ],
+    "test_tephigram.TestTephigramAxes.test_plot_dews_locator_isotherm_object.0": [
+        "https://scitools.github.io/test-tephi-imagehash/images/ea5acf6c91e16630c5ed392c96599cc6cb947e6796986a9298662d893473e1e4.png"
+    ],
+    "test_tephigram.TestTephigramAxes.test_plot_dews_locator_numeric.0": [
+        "https://scitools.github.io/test-tephi-imagehash/images/bc0ece6f91e46630cde5398cd6589cc6cbbc6261929837b39c6649893e13363e.png"
+    ],
+    "test_tephigram.TestTephigramAxes.test_plot_dews_locator_object.0": [
+        "https://scitools.github.io/test-tephi-imagehash/images/ea5a8f2d91e36639c5e5198d86521cc7cb946e639adc273398646d09347961f6.png"
+    ],
+    "test_tephigram.TestTephigramAxes.test_plot_xylim.0": [
+        "https://scitools.github.io/test-tephi-imagehash/images/bfe8e15ee0451c03911a63e0063a6c6e79c09b9be335f073944f2ecc55f87ca3.png"
+    ],
     "test_tephigram.TestTephigramBarbs.test_barbs.0": [
-        "https://scitools.github.io/test-tephi-imagehash/images/e9259e5b92db6d249e9a3386c65969c7c330964f0c9c69233c646e19e5b3c786.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/e9259e5b92db6d249e9a3386c65969c7c330964f0c9c69233c646e19e5b3c786.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/e92d96da92d36d25849a938ec64969c7cb30964f8c9c6d339c643e19e1a3e786.png"
     ],
     "test_tephigram.TestTephigramBarbs.test_barbs_from_file.0": [
-        "https://scitools.github.io/test-tephi-imagehash/images/e96a9f3c92c36639c4a439ac96599cd6c3346261979d7a124966cd8d3c73b686.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/e96a9f3c92c36639c4a439ac96599cd6c3346261979d7a124966cd8d3c73b686.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/e95e8f2690d36639c4a4392c96599cc6cbb662619f9d5a12d9666d8d2c733686.png"
     ],
     "test_tephigram.TestTephigramBarbs.test_color.0": [
-        "https://scitools.github.io/test-tephi-imagehash/images/e92596db92db6d249e9a3386c64969c7c331964f0c9c69233c646e19e5b3c786.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/e92596db92db6d249e9a3386c64969c7c331964f0c9c69233c646e19e5b3c786.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/e92d96da92d36d25949a938ec64969c7cb30964f8c9c6d339c643a19e1a3e786.png"
     ],
     "test_tephigram.TestTephigramBarbs.test_gutter.0": [
-        "https://scitools.github.io/test-tephi-imagehash/images/e46499999b9b6666c999338ec65869c7c330d8cf34dc69233c246e19e5b3c786.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/e46499999b9b6666c999338ec65869c7c330d8cf34dc69233c246e19e5b3c786.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/e46c999991936666cd9b9b0ec65a69c7c33098cf96dc6d3398243e19e1a3a786.png"
     ],
     "test_tephigram.TestTephigramBarbs.test_length.0": [
-        "https://scitools.github.io/test-tephi-imagehash/images/b1ccce31ce73318ece119363929c69c7c330ce6d1cde69983c646e19e5b39586.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/b1ccce31ce73318ece119363929c69c7c330ce6d1cde69983c646e19e5b39586.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/b98cce71c673318ccc919a63921c79c7c338ce659cde69989c643e19e1e3b386.png"
     ],
     "test_tephigram.TestTephigramBarbs.test_pivot.0": [
-        "https://scitools.github.io/test-tephi-imagehash/images/edb09a6992cb65b69bcd334cc65a6dc6cf31924d3c9a49333c2c6319c5e72494.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/edb09a6992cb65b69bcd334cc65a6dc6cf31924d3c9a49333c2c6319c5e72494.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/edb0926992cb6db69bcd934cc65668c7cf30924d8c986d339c6c6199b1e72694.png"
     ],
     "test_tephigram.TestTephigramBarbs.test_rotate.0": [
-        "https://scitools.github.io/test-tephi-imagehash/images/e9259e5992cf64b69e9b3324865a69c3c334964f1c9c69333c646c19e5b3c786.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/e9259e5992cf64b69e9b3324865a69c3c334964f1c9c69333c646c19e5b3c786.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/e9399e5992c76436cc9b9b2cc65a69c3cb34964f8c986d339c642819b1e3e786.png"
     ],
     "test_tephigram.TestTephigramPlot.test_plot_anchor.0": [
         "https://scitools.github.io/test-tephi-imagehash/images/fba8c82d8a55b03da4dd2c2f899faf22827f03cad48a3ab0ba256f9c6a2970cb.png"
     ],
     "test_tephigram.TestTephigramPlot.test_plot_dews.0": [
-        "https://scitools.github.io/test-tephi-imagehash/images/e85a9f2d90c56630cce539ac96599ce6c734626197997a924966cd8dbc733686.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/e85a9f2d90c56630cce539ac96599ce6c734626197997a924966cd8dbc733686.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/ea5a8f2d91e16631c5ad392c96799ce6c9b46261979b5a9298662d893c7327a6.png"
     ],
     "test_tephigram.TestTephigramPlot.test_plot_dews_custom.0": [
-        "https://scitools.github.io/test-tephi-imagehash/images/e85a986d99e66631c66d698e971999a6c7966261979b7a9269668c893c7332a6.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/e85a986d99e66631c66d698e971999a6c7966261979b7a9269668c893c7332a6.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/e85b996d99a66631c66d398c921999e6cd967261979a5a9249666d896c736726.png"
     ],
     "test_tephigram.TestTephigramPlot.test_plot_dews_label.0": [
-        "https://scitools.github.io/test-tephi-imagehash/images/e85a992d90c56630cced39afc6198cf6c734e26197997a9269669d8d387330e6.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/e85a992d90c56630cced39afc6198cf6c734e26197997a9269669d8d387330e6.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/e85acd2d91e16631c5ed992c965198e6c3b4f261979b5a9249666d896c7365a6.png"
     ],
     "test_tephigram.TestTephigramPlot.test_plot_dews_locator_adiabat_numeric.0": [
         "https://scitools.github.io/test-tephi-imagehash/images/e85a9e0c91a3663ccda5398c965a9cf6cb3462619b9c3f134c66cd099e737346.png",
@@ -57,19 +100,24 @@
         "https://scitools.github.io/test-tephi-imagehash/images/e85a9f0991e76639c5a53989965d1cd6cf346a63939867b30c664bcc1e1b7216.png"
     ],
     "test_tephigram.TestTephigramPlot.test_plot_dews_temps.0": [
-        "https://scitools.github.io/test-tephi-imagehash/images/e969cc3992c76726cd973326c65869c6c3319e4d9c9849333c2c6399e5a7a7a4.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/e969cc3992c76726cd973326c65869c6c3319e4d9c9849333c2c6399e5a7a7a4.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/e978cc3492c76637cd87932cc65a69c6c3313e4f9c9869331c6c6099e1e73794.png"
     ],
     "test_tephigram.TestTephigramPlot.test_plot_dews_temps_custom.0": [
-        "https://scitools.github.io/test-tephi-imagehash/images/f1289c9996c76726cd9d333cc658cc66c731ce4c3cde499934247199b1e73326.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/f1289c9996c76726cd9d333cc658cc66c731ce4c3cde499934247199b1e73326.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/f338cc99c4e76627c98db32c925a98679331964c9c9e4d9924646199e5e76736.png"
     ],
     "test_tephigram.TestTephigramPlot.test_plot_temps.0": [
-        "https://scitools.github.io/test-tephi-imagehash/images/e9698e1892c76636cd9a3386c65a69c3c330de4f9c9869333c646e19e5b3c786.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/e9698e1892c76636cd9a3386c65a69c3c330de4f9c9869333c646e19e5b3c786.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/e969cc3c92c76636cd96930ec65a69c3c330664f9c986d339c643e19e1a3e786.png"
     ],
     "test_tephigram.TestTephigramPlot.test_plot_temps_custom.0": [
-        "https://scitools.github.io/test-tephi-imagehash/images/e161999996c76677c998330ec65a4c63c731ce4c8cde4d9b3c24399961b3b3a6.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/e161999996c76677c998330ec65a4c63c731ce4c8cde4d9b3c24399961b3b3a6.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/e969cc9884c76673c99c930e965a996393319a4c9cdc6d933c646c99e5a367a6.png"
     ],
     "test_tephigram.TestTephigramPlot.test_plot_temps_label.0": [
         "https://scitools.github.io/test-tephi-imagehash/images/e9699f1992c76636cd9e3326c65a6cc3c730ce6f9c9869333824321961b3b786.png",
-        "https://scitools.github.io/test-tephi-imagehash/images/e9699e1992cf6636cd9a3326c65a6cc3c730ce6f9c98693338243e1961b3b586.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/e9699e1992cf6636cd9a3326c65a6cc3c730ce6f9c98693338243e1961b3b586.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/e969ccbc96c76637cd96932e965a19c39330924f9c986d331c646c9965a36786.png"
     ]
 }
