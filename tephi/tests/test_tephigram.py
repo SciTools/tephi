@@ -15,7 +15,6 @@ import pytest
 
 import tephi
 from tephi import TephiAxes
-import matplotlib
 
 
 def _load_result(filename):
@@ -232,19 +231,25 @@ class TestTephigramAxes(tests.GraphicsTest):
             self.check_graphic(nodeid)
 
     def test_add_wet_adiabats(self, nodeid):
-        tephigram = TephiAxes()
+        # the xylim is needed so that the isopleths actually appear
+        tephigram = TephiAxes(xylim=[(0, 0), (40, 70)])
+
         tephigram.add_wet_adiabats()
         with pytest.raises(AssertionError):
             self.check_graphic(nodeid)
 
     def test_add_humidity_mixing_ratios(self, nodeid):
-        tephigram = TephiAxes()
+        # the xylim is needed so that the isopleths actually appear
+        tephigram = TephiAxes(xylim=[(0, 0), (40, 70)])
+
         tephigram.add_humidity_mixing_ratios()
         with pytest.raises(AssertionError):
             self.check_graphic(nodeid)
 
     def test_add_isobars(self, nodeid):
-        tephigram = TephiAxes()
+        # the xylim is needed so that the isopleths actually appear
+        tephigram = TephiAxes(xylim=[(0, 0), (40, 70)])
+
         tephigram.add_isobars()
         with pytest.raises(AssertionError):
             self.check_graphic(nodeid)

@@ -17,6 +17,8 @@ __version__ = "0.4.0.dev0"
 RESOURCES_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "etc")
 DATA_DIR = os.path.join(RESOURCES_DIR, "test_data")
 
+# TODO: Decide on whether to keep this, or come up with an alternate
+#  method of loading files
 def loadtxt(*filenames, **kwargs):
     """
     Load one or more text files of pressure, temperature, wind speed and wind
@@ -126,6 +128,7 @@ def loadtxt(*filenames, **kwargs):
 
     return data
 
+
 class _FormatterTheta(object):
     """
     Dry adiabats potential temperature axis tick formatter.
@@ -190,11 +193,15 @@ class TephiAxes(Subplot):
 
     def __init__(self, *args, **kwargs):
         # Validate the subplot arguments.
+
+        # TODO: Remove limit of super() behaviour.
+        #  Currently, it only accepts format of 123 or (1, 2, 3).
         if len(args) == 0:
             args = (1, 1, 1)
-        elif (len(args) == 1 and isinstance(args[0], tuple)
+        elif (len(args) == 1
+              and isinstance(args[0], tuple)
               and len(args[0]) == 3):
-                args = args[0]
+            args = args[0]
         elif len(args) == 1 and isinstance(args[0], int):
             args = tuple([int(c) for c in str(args[0])])
             if len(args) != 3:
@@ -207,15 +214,17 @@ class TephiAxes(Subplot):
             msg = "Invalid arguments: " + ", ".join(["{}" for _ in len(args)])
             raise ValueError(msg.format(*args))
 
-        # Process the kwargs.
+        # Process the kwargs
         figure = kwargs.get("figure")
-        xylim = kwargs.pop("xylim", None)
-
-        # Get the figure.
         if figure is None:
             figure = plt.gcf()
 
+        # TODO: xylim should be split, to mirror the super()
+        xylim = kwargs.pop("xylim", None)
+
+        dry_adiabat_locator = kwargs.pop("dry_adiabat_locator", None)
         isotherm_locator = kwargs.pop("isotherm_locator", None)
+
         if isotherm_locator and not isinstance(isotherm_locator, Locator):
             if isinstance(isotherm_locator, int):
                 locator_T = MaxNLocator(
@@ -228,7 +237,6 @@ class TephiAxes(Subplot):
         else:
             locator_T = isotherm_locator
 
-        dry_adiabat_locator = kwargs.pop("dry_adiabat_locator", None)
         if dry_adiabat_locator and not isinstance(dry_adiabat_locator, Locator):
             if isinstance(dry_adiabat_locator, int):
                 locator_theta = MaxNLocator(
@@ -254,6 +262,7 @@ class TephiAxes(Subplot):
 
         # The tephigram cache.
         transform = transforms.TephiTransform() + self.transData
+
         self.tephi = dict(
             xylim=xylim,
             figure=figure.add_subplot(self),
@@ -399,13 +408,13 @@ class TephiAxes(Subplot):
         return profile
 
     def add_isobars(
-        self,
-        ticks=None,
-        line=None,
-        text=None,
-        min_theta=None,
-        max_theta=None,
-        nbins=None,
+            self,
+            ticks=None,
+            line=None,
+            text=None,
+            min_theta=None,
+            max_theta=None,
+            nbins=None,
     ):
         artist = artists.IsobarArtist(
             ticks=ticks,
@@ -418,13 +427,13 @@ class TephiAxes(Subplot):
         self.add_artist(artist)
 
     def add_wet_adiabats(
-        self,
-        ticks=None,
-        line=None,
-        text=None,
-        min_temperature=None,
-        max_pressure=None,
-        nbins=None,
+            self,
+            ticks=None,
+            line=None,
+            text=None,
+            min_temperature=None,
+            max_pressure=None,
+            nbins=None,
     ):
         artist = artists.WetAdiabatArtist(
             ticks=ticks,
@@ -437,13 +446,13 @@ class TephiAxes(Subplot):
         self.add_artist(artist)
 
     def add_humidity_mixing_ratios(
-        self,
-        ticks=None,
-        line=None,
-        text=None,
-        min_pressure=None,
-        max_pressure=None,
-        nbins=None,
+            self,
+            ticks=None,
+            line=None,
+            text=None,
+            min_pressure=None,
+            max_pressure=None,
+            nbins=None,
     ):
         artist = artists.HumidityMixingRatioArtist(
             ticks=ticks,
