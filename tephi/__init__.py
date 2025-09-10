@@ -185,7 +185,7 @@ class Locator(object):
             >>> from tephi import Locator
             >>> locator = Locator(10)
             >>> locator(-45, 23)
-            (array([-50, -40, -30, -20, -10,   0,  10,  20]), 8, 1)
+            (array([-50, -40, -30, -20, -10,   0,  10,  30]), 9, 1)
 
         Args:
 

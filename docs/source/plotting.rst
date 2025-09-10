@@ -185,13 +185,13 @@ However, fixed axis tick locations can easily be configured for either axis if r
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
-   tpg = tephi.Tephigram(isotherm_locator=tephi.Locator(10), dry_adiabat_locator=tephi.Locator(20))
+   tpg = tephi.TephiAxes(isotherm_locator=tephi.Locator(10), dry_adiabat_locator=tephi.Locator(20))
    tpg.plot(dews)
    plt.show()
 
 The above may also be achieved without using a :class:`tephi.Locator`::
 
-   tpg = tephi.Tephigram(isotherm_locator=10, dry_adiabat_locator=20)
+   tpg = tephi.TephiAxes(isotherm_locator=10, dry_adiabat_locator=20)
 
 
 .. _plot-anchor:
@@ -202,7 +202,7 @@ Anchoring a plot
 By default, the tephigram will automatically center the plot around all temperature profiles. This behaviour may not be desirable
 when comparing separate tephigram plots against one another.
 
-To fix the extent of a plot, simply specify an :term:`anchor` point to the tephigram.
+To fix the extent of a plot, simply specify an :term:`xylim` point to the tephigram.
 
 .. plot::
    :include-source:
@@ -216,6 +216,6 @@ To fix the extent of a plot, simply specify an :term:`anchor` point to the tephi
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
-   tpg = tephi.Tephigram(anchor=[(1000, 0), (300, 0)])
+   tpg = tephi.TephiAxes(xylim=[(1000, 0), (300, 0)])
    tpg.plot(dews)
    plt.show()
