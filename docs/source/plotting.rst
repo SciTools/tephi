@@ -108,7 +108,7 @@ The temperature profile of a single tephigram data set can easily be plotted.
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
-   tpg = tephi.Tephigram()
+   tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
 
@@ -134,7 +134,7 @@ Plotting more than one data set is achieved by over-plotting each data set indiv
     dews = zip(dew_data.pressure, dew_data.dewpoint)
     temps = zip(temp_data.pressure, temp_data.temperature)
 
-    tpg = tephi.Tephigram()
+    tpg = tephi.TephiAxes()
     tpg.plot(dews)
     tpg.plot(temps)
     plt.show()
@@ -161,7 +161,7 @@ This transparency allows full control when plotting a temperature profile on the
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
-   tpg = tephi.Tephigram()
+   tpg = tephi.TephiAxes()
    tpg.plot(dews, label='Dew-point temperature', color='blue', linewidth=2, linestyle='--', marker='s')
    plt.show()
 

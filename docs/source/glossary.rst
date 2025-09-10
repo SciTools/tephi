@@ -7,7 +7,7 @@ Glossary
 .. glossary::
    :sorted:
 
-   anchor
+   xylim
       A sequence of two (pressure, temperature) pairs that specify the bottom left-hand corner and the
       top right-hand corner of the plot. The pressure data points must be in units of mb or hPa, and the
       temperature data points must be in units of :sup:`o`\ C.
