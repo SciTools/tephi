@@ -10,6 +10,7 @@ from mpl_toolkits.axisartist.grid_helper_curvelinear import (
 from mpl_toolkits.axisartist.grid_finder import MaxNLocator
 import numpy as np
 import os.path
+import math
 from . import artists, isopleths, transforms
 
 __version__ = "0.4.0.dev0"
@@ -200,8 +201,8 @@ class Locator(object):
 
         """
         step = self.step
-        start = (int(start) / step) * step
-        stop = (int(stop) / step) * step
+        start = math.floor(int(start) / step) * step
+        stop = math.ceil(int(stop) / step) * step
         ticks = np.arange(start, stop + step, step)
         return ticks, len(ticks), 1
 
