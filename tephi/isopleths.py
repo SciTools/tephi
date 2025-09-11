@@ -72,7 +72,7 @@ class BarbArtist(matplotlib.artist.Artist):
             common = set(alias).intersection(kwargs)
             if common:
                 self._path_kwargs[kwarg] = kwargs[sorted(common)[0]]
-        barbs = np.asarray(barbs)
+        barbs = np.asarray(list(barbs))
         if barbs.ndim != 2 or barbs.shape[-1] != 3:
             msg = (
                 "The barbs require to be a sequence of wind speed, "
