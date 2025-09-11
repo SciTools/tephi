@@ -62,7 +62,7 @@ Note that, the barbs default to the same colour as their associated profile.
    column_titles = [('pressure', 'dewpoint'), ('pressure', 'temperature')]
    dew_data, temp_data = tephi.loadtxt(dew_point, dry_bulb, column_titles=column_titles)
    dews = zip(dew_data.pressure, dew_data.dewpoint)
-   temps = zip(temp_data.pressure, temp_data.temperature))
+   temps = zip(temp_data.pressure, temp_data.temperature)
 
    tpg = tephi.TephiAxes()
    dprofile = tpg.plot(dews)
@@ -88,7 +88,7 @@ Barbs may also be plotted using wind speed and wind direction data (associated w
     column_titles = ('pressure', 'dewpoint', 'wind_speed', 'wind_direction')
     barb_data = tephi.loadtxt(winds, column_titles=column_titles)
     dews = zip(barb_data.pressure, barb_data.dewpoint)
-    barbs = zip(barb_data.wind_speed, barb_data.wind_direction, barb_data.pressure))
+    barbs = zip(barb_data.wind_speed, barb_data.wind_direction, barb_data.pressure)
     tpg = tephi.TephiAxes()
     profile = tpg.plot(dews)
     profile.barbs(barbs)

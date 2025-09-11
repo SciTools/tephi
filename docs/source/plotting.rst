@@ -132,7 +132,7 @@ Plotting more than one data set is achieved by over-plotting each data set indiv
     column_titles = [('pressure', 'dewpoint'), ('pressure', 'temperature')]
     dew_data, temp_data = tephi.loadtxt(dew_point, dry_bulb, column_titles=column_titles)
     dews = zip(dew_data.pressure, dew_data.dewpoint)
-    temps = zip(temp_data.pressure, temp_data.temperature))
+    temps = zip(temp_data.pressure, temp_data.temperature)
 
     tpg = tephi.TephiAxes()
     tpg.plot(dews)
