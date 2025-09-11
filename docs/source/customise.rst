@@ -37,7 +37,7 @@ Updating the ``ISOBAR_LINE`` dictionary will subsequently change the default beh
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint)
+   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.ISOBAR_LINE.update({'color': 'purple', 'linewidth': 3, 'linestyle': '--'})
    tpg = tephi.Tephigram()
    tpg.plot(dews)
@@ -72,7 +72,7 @@ Updating the ``ISOBAR_TEXT`` dictionary will change the default behaviour of how
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint)
+   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.ISOBAR_TEXT.update({'color': 'purple', 'size': 12})
    tpg = tephi.Tephigram()
    tpg.plot(dews)
@@ -121,7 +121,7 @@ For example, to **always** show isobar lines that are a multiple of 50 mb, irres
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint)
+   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.ISOBAR_SPEC = [(50, None)]
    tpg = tephi.Tephigram()
    tpg.plot(dews)
@@ -164,7 +164,7 @@ For example, to change the isobar line extent behaviour to be between 15 :sup:`o
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint)
+   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.MIN_THETA = 15
    tephi.MAX_THETA = 60
    tpg = tephi.Tephigram()
@@ -204,7 +204,7 @@ Updating the ``WET_ADIABAT_LINE`` dictionary will change the default behaviour o
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint)
+   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.WET_ADIABAT_LINE.update({'color': 'purple', 'linewidth': 3, 'linestyle': '--'})
    tpg = tephi.Tephigram()
    tpg.plot(dews)
@@ -239,7 +239,7 @@ Updating the ``WET_ADIABAT_TEXT`` dictionary will change the default behaviour o
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint)
+   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.WET_ADIABAT_TEXT.update({'color': 'purple', 'size': 12})
    tpg = tephi.Tephigram()
    tpg.plot(dews)
@@ -289,7 +289,7 @@ For example, to **always** show saturated adiabat lines that are a multiple of 5
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint)
+   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.WET_ADIABAT_SPEC = [(5, None)]
    tpg = tephi.Tephigram()
    tpg.plot(dews)
@@ -319,7 +319,7 @@ always to be plotted,
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint)
+   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.WET_ADIABAT_FIXED = [15, 17]
    tpg = tephi.Tephigram()
    tpg.plot(dews)
@@ -357,7 +357,7 @@ Updating the ``MIXING_RATIO_LINE`` dictionary will change the default behaviour 
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint)
+   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.MIXING_RATIO_LINE.update({'color': 'purple', 'linewidth': 3, 'linestyle': '--'})
    tpg = tephi.Tephigram()
    tpg.plot(dews)
@@ -392,7 +392,7 @@ Updating the ``MIXING_RATIO_TEXT`` dictionary will change the default behaviour 
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint)
+   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.MIXING_RATIO_TEXT.update({'color': 'purple', 'size': 12})
    tpg = tephi.Tephigram()
    tpg.plot(dews)
@@ -442,7 +442,7 @@ always to be plotted independent of the :term:`zoom level`,
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint)
+   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.MIXING_RATIO_FIXED = [4.0, 6.0]
    tpg = tephi.Tephigram()
    tpg.plot(dews)
