@@ -15,6 +15,8 @@ from . import artists, isopleths, transforms
 
 __version__ = "0.4.0.dev0"
 
+from .artists import WetAdiabatArtist, IsobarArtist, HumidityMixingRatioArtist
+
 RESOURCES_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "etc")
 DATA_DIR = os.path.join(RESOURCES_DIR, "test_data")
 
@@ -362,6 +364,54 @@ class TephiAxes(Subplot):
             self.set_ylim(ylim)
             self.tephi["xylim"] = xlim, ylim
 
+    def _search_artists(self, artist):
+        list_of_relevant_artists = [a for a in self.artists if type(a) == artist]
+        if len(list_of_relevant_artists) == 1:
+            return list_of_relevant_artists[0]
+        elif len(list_of_relevant_artists) == 0:
+            return None
+        else:
+            raise ValueError(f"Found more than one {artist} artist.")
+
+    @property
+    def wet_adiabat(self):
+        return self._search_artists(WetAdiabatArtist)
+
+    @wet_adiabat.setter
+    def wet_adiabat(self, artist):
+        if type(artist) is WetAdiabatArtist:
+            old_artist = self._search_artists(WetAdiabatArtist)
+            old_artist.remove()
+            self.add_artist(artist)
+        else:
+            raise ValueError(f"Artist {artist} is not of type {WetAdiabatArtist}.")
+
+    @property
+    def isobar(self):
+        return self._search_artists(IsobarArtist)
+
+    @isobar.setter
+    def isobar(self, artist):
+        if type(artist) is IsobarArtist:
+            old_artist = self._search_artists(IsobarArtist)
+            old_artist.remove()
+            self.add_artist(artist)
+        else:
+            raise ValueError(f"Artist {artist} is not of type {IsobarArtist}.")
+
+    @property
+    def humidity_mixing_ratio(self):
+        return self._search_artists(HumidityMixingRatioArtist)
+
+    @humidity_mixing_ratio.setter
+    def humidity_mixing_ratio(self, artist):
+        if type(artist) is HumidityMixingRatioArtist:
+            old_artist = self._search_artists(HumidityMixingRatioArtist)
+            old_artist.remove()
+            self.add_artist(artist)
+        else:
+            raise ValueError(f"Artist {artist} is not of type {HumidityMixingRatioArtist}.")
+
     def plot(self, data, **kwargs):
         """
         Plot the profile of the pressure and temperature data points.
@@ -463,6 +513,7 @@ class TephiAxes(Subplot):
             nbins=nbins,
         )
         self.add_artist(artist)
+        self.WET_ADIABAT = artist
 
     def add_humidity_mixing_ratios(
             self,

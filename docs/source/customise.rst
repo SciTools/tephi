@@ -39,7 +39,7 @@ Updating the ``ISOBAR_LINE`` dictionary will subsequently change the default beh
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.ISOBAR_LINE.update({'color': 'purple', 'linewidth': 3, 'linestyle': '--'})
-   tpg = tephi.Tephigram()
+   tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
 
@@ -74,7 +74,7 @@ Updating the ``ISOBAR_TEXT`` dictionary will change the default behaviour of how
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.ISOBAR_TEXT.update({'color': 'purple', 'size': 12})
-   tpg = tephi.Tephigram()
+   tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
 
@@ -123,7 +123,7 @@ For example, to **always** show isobar lines that are a multiple of 50 mb, irres
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.ISOBAR_SPEC = [(50, None)]
-   tpg = tephi.Tephigram()
+   tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
 
@@ -167,7 +167,7 @@ For example, to change the isobar line extent behaviour to be between 15 :sup:`o
    dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.MIN_THETA = 15
    tephi.MAX_THETA = 60
-   tpg = tephi.Tephigram()
+   tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
 
@@ -206,7 +206,7 @@ Updating the ``WET_ADIABAT_LINE`` dictionary will change the default behaviour o
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.WET_ADIABAT_LINE.update({'color': 'purple', 'linewidth': 3, 'linestyle': '--'})
-   tpg = tephi.Tephigram()
+   tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
 
@@ -241,7 +241,7 @@ Updating the ``WET_ADIABAT_TEXT`` dictionary will change the default behaviour o
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.WET_ADIABAT_TEXT.update({'color': 'purple', 'size': 12})
-   tpg = tephi.Tephigram()
+   tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
 
@@ -291,7 +291,7 @@ For example, to **always** show saturated adiabat lines that are a multiple of 5
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.WET_ADIABAT_SPEC = [(5, None)]
-   tpg = tephi.Tephigram()
+   tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
 
@@ -321,7 +321,7 @@ always to be plotted,
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.WET_ADIABAT_FIXED = [15, 17]
-   tpg = tephi.Tephigram()
+   tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
 
@@ -359,7 +359,7 @@ Updating the ``MIXING_RATIO_LINE`` dictionary will change the default behaviour 
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.MIXING_RATIO_LINE.update({'color': 'purple', 'linewidth': 3, 'linestyle': '--'})
-   tpg = tephi.Tephigram()
+   tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
 
@@ -394,7 +394,7 @@ Updating the ``MIXING_RATIO_TEXT`` dictionary will change the default behaviour 
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.MIXING_RATIO_TEXT.update({'color': 'purple', 'size': 12})
-   tpg = tephi.Tephigram()
+   tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
 
@@ -444,7 +444,7 @@ always to be plotted independent of the :term:`zoom level`,
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = list(zip(dew_data.pressure, dew_data.dewpoint))
    tephi.MIXING_RATIO_FIXED = [4.0, 6.0]
-   tpg = tephi.Tephigram()
+   tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
 
