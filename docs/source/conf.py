@@ -42,7 +42,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "matplotlib.sphinxext.mathmpl",
     "matplotlib.sphinxext.plot_directive",
-    'matplotlib.sphinxext.roles',
+    "matplotlib.sphinxext.roles",
     "sphinx_copybutton",
 ]
 
