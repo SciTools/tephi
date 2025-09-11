@@ -107,7 +107,7 @@ The temperature profile of a single tephigram data set can easily be plotted.
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint))
+   dews = zip(dew_data.pressure, dew_data.dewpoint)
    tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
@@ -131,7 +131,7 @@ Plotting more than one data set is achieved by over-plotting each data set indiv
     dry_bulb = os.path.join(tephi.DATA_DIR, 'temps.txt')
     column_titles = [('pressure', 'dewpoint'), ('pressure', 'temperature')]
     dew_data, temp_data = tephi.loadtxt(dew_point, dry_bulb, column_titles=column_titles)
-    dews = zip(dew_data.pressure, dew_data.dewpoint))
+    dews = zip(dew_data.pressure, dew_data.dewpoint)
     temps = zip(temp_data.pressure, temp_data.temperature))
 
     tpg = tephi.TephiAxes()
@@ -160,7 +160,7 @@ This transparency allows full control when plotting a temperature profile on the
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint))
+   dews = zip(dew_data.pressure, dew_data.dewpoint)
    tpg = tephi.TephiAxes()
    tpg.plot(dews, label='Dew-point temperature', color='blue', linewidth=2, linestyle='--', marker='s')
    plt.show()
@@ -184,7 +184,7 @@ However, fixed axis tick locations can easily be configured for either axis if r
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint))
+   dews = zip(dew_data.pressure, dew_data.dewpoint)
    tpg = tephi.TephiAxes(isotherm_locator=tephi.Locator(10), dry_adiabat_locator=tephi.Locator(20))
    tpg.plot(dews)
    plt.show()
@@ -215,7 +215,7 @@ To fix the extent of a plot, simply specify an :term:`xylim` point to the tephig
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint))
+   dews = zip(dew_data.pressure, dew_data.dewpoint)
    tpg = tephi.TephiAxes(xylim=[(1000, 0), (300, 0)])
    tpg.plot(dews)
    plt.show()
