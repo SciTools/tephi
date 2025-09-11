@@ -15,7 +15,7 @@ Defaults
 --------
 
 The default values of barbs, isobars, mixing ratios, isopleths and wet adiabats are stored in the
-`constants.defaults` dictionary. Changing these values will change the default behaviour of the tephigram.
+``constants.defaults`` dictionary. Changing these values will change the default behaviour of the tephigram.
 
 barbs_gutter
 barbs_length
