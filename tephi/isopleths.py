@@ -391,7 +391,7 @@ class Profile(Isopleth):
             the profile.
 
         """
-        self.data = np.asarray(data)
+        self.data = np.asarray(list(data))
         super(Profile, self).__init__(axes)
         self._barbs = None
         self._highlight = None

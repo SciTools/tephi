@@ -33,7 +33,7 @@ A profile must be first plotted before the barbs are associated with that profil
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
+   dews = zip(dew_data.pressure, dew_data.dewpoint))
    tpg = tephi.TephiAxes()
    profile = tpg.plot(dews)
    barbs = [(0, 0, 900), (1, 30, 850), (5, 60, 800),
@@ -61,8 +61,8 @@ Note that, the barbs default to the same colour as their associated profile.
    dry_bulb = os.path.join(tephi.DATA_DIR, 'temps.txt')
    column_titles = [('pressure', 'dewpoint'), ('pressure', 'temperature')]
    dew_data, temp_data = tephi.loadtxt(dew_point, dry_bulb, column_titles=column_titles)
-   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
-   temps = list(zip(temp_data.pressure, temp_data.temperature))
+   dews = zip(dew_data.pressure, dew_data.dewpoint))
+   temps = zip(temp_data.pressure, temp_data.temperature))
 
    tpg = tephi.TephiAxes()
    dprofile = tpg.plot(dews)
@@ -87,8 +87,8 @@ Barbs may also be plotted using wind speed and wind direction data (associated w
     winds = os.path.join(tephi.DATA_DIR, 'barbs.txt')
     column_titles = ('pressure', 'dewpoint', 'wind_speed', 'wind_direction')
     barb_data = tephi.loadtxt(winds, column_titles=column_titles)
-    dews = list(zip(barb_data.pressure, barb_data.dewpoint))
-    barbs = list(zip(barb_data.wind_speed, barb_data.wind_direction, barb_data.pressure))
+    dews = zip(barb_data.pressure, barb_data.dewpoint))
+    barbs = zip(barb_data.wind_speed, barb_data.wind_direction, barb_data.pressure))
     tpg = tephi.TephiAxes()
     profile = tpg.plot(dews)
     profile.barbs(barbs)
@@ -112,7 +112,7 @@ This transparency allows full control when plotting barbs on the tephigram.
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
+   dews = zip(dew_data.pressure, dew_data.dewpoint))
    tpg = tephi.TephiAxes()
    profile = tpg.plot(dews)
    barbs = [(0, 0, 900), (1, 30, 850), (5, 60, 800),
@@ -140,7 +140,7 @@ By default, the barbs are plotted on the right hand side of the tephigram. The p
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = list(zip(dew_data.pressure, dew_data.dewpoint))
+   dews = zip(dew_data.pressure, dew_data.dewpoint))
    tpg = tephi.TephiAxes()
    profile = tpg.plot(dews)
    barbs = [(0, 0, 900), (1, 30, 850), (5, 60, 800),

@@ -381,7 +381,8 @@ class TephiAxes(Subplot):
     def wet_adiabat(self, artist):
         if type(artist) is WetAdiabatArtist:
             old_artist = self._search_artists(WetAdiabatArtist)
-            old_artist.remove()
+            if old_artist:
+                old_artist.remove()
             self.add_artist(artist)
         else:
             raise ValueError(f"Artist {artist} is not of type {WetAdiabatArtist}.")
@@ -394,7 +395,8 @@ class TephiAxes(Subplot):
     def isobar(self, artist):
         if type(artist) is IsobarArtist:
             old_artist = self._search_artists(IsobarArtist)
-            old_artist.remove()
+            if old_artist:
+                old_artist.remove()
             self.add_artist(artist)
         else:
             raise ValueError(f"Artist {artist} is not of type {IsobarArtist}.")
@@ -407,7 +409,8 @@ class TephiAxes(Subplot):
     def humidity_mixing_ratio(self, artist):
         if type(artist) is HumidityMixingRatioArtist:
             old_artist = self._search_artists(HumidityMixingRatioArtist)
-            old_artist.remove()
+            if old_artist:
+                old_artist.remove()
             self.add_artist(artist)
         else:
             raise ValueError(f"Artist {artist} is not of type {HumidityMixingRatioArtist}.")
@@ -485,7 +488,7 @@ class TephiAxes(Subplot):
             max_theta=None,
             nbins=None,
     ):
-        artist = artists.IsobarArtist(
+        self.isobar = artists.IsobarArtist(
             ticks=ticks,
             line=line,
             text=text,
@@ -493,7 +496,6 @@ class TephiAxes(Subplot):
             max_theta=max_theta,
             nbins=nbins,
         )
-        self.add_artist(artist)
 
     def add_wet_adiabats(
             self,
@@ -504,7 +506,7 @@ class TephiAxes(Subplot):
             max_pressure=None,
             nbins=None,
     ):
-        artist = artists.WetAdiabatArtist(
+        self.wet_adiabat = artists.WetAdiabatArtist(
             ticks=ticks,
             line=line,
             text=text,
@@ -512,8 +514,6 @@ class TephiAxes(Subplot):
             max_pressure=max_pressure,
             nbins=nbins,
         )
-        self.add_artist(artist)
-        self.WET_ADIABAT = artist
 
     def add_humidity_mixing_ratios(
             self,
@@ -524,7 +524,7 @@ class TephiAxes(Subplot):
             max_pressure=None,
             nbins=None,
     ):
-        artist = artists.HumidityMixingRatioArtist(
+        self.humidity_mixing_ratio = artists.HumidityMixingRatioArtist(
             ticks=ticks,
             line=line,
             text=text,
@@ -532,7 +532,6 @@ class TephiAxes(Subplot):
             max_pressure=max_pressure,
             nbins=nbins,
         )
-        self.add_artist(artist)
 
     def _status_bar(self, x_point, y_point):
         """
