@@ -4,6 +4,7 @@ channels:
   - nodefaults
 dependencies:
   - matplotlib
+  - shapely
   - numpy
   - scipy
   - sphinx
