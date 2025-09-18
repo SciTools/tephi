@@ -402,11 +402,11 @@ class TephiAxes(Subplot):
             raise ValueError(f"Artist {artist} is not of type {IsobarArtist}.")
 
     @property
-    def humidity_mixing_ratio(self):
+    def mixing_ratio(self):
         return self._search_artists(HumidityMixingRatioArtist)
 
-    @humidity_mixing_ratio.setter
-    def humidity_mixing_ratio(self, artist):
+    @mixing_ratio.setter
+    def mixing_ratio(self, artist):
         if type(artist) is HumidityMixingRatioArtist:
             old_artist = self._search_artists(HumidityMixingRatioArtist)
             if old_artist:
@@ -515,7 +515,7 @@ class TephiAxes(Subplot):
             nbins=nbins,
         )
 
-    def add_humidity_mixing_ratios(
+    def add_mixing_ratios(
             self,
             ticks=None,
             line=None,

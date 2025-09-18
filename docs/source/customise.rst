@@ -10,45 +10,54 @@ This section discusses how finer control of the tephigram isobars, saturated adi
    import tephi
    from pprint import pprint
 
-
-Defaults
---------
+There are two main methods to customise tephigram lines: default values, and individual values. Default values apply to
+ALL axes by default, whereas individual values affect only the axes you change them on.
 
 The default values of barbs, isobars, mixing ratios, isopleths and wet adiabats are stored in the
 ``constants.defaults`` dictionary. Changing these values will change the default behaviour of the tephigram.
 
-barbs_gutter
-barbs_length
-barbs_linewidth
-barbs_zorder
+Individual values can only be changed for the three adjustable isopleths (isobars, humidity mixing ratios, and wet
+adiabats.
 
-isobar_line
-isobar_min_theta
-isobar_max_theta
-isobar_nbins
-isobar_text
-isobar_ticks
+Barbs
+-----
+Barb defaults can be altered via the ``constants.defaults`` dictionary.
 
-isopleth_picker
-isopleth_zorder
+from tephi.constants import defaults
+defaults["barbs_gutter"]
+defaults["barbs_length"]
+defaults["barbs_linewidth"]
+defaults["barbs_zorder"]
 
-mixing_ratio_line
-mixing_ratio_text
-mixing_ratio_min_pressure
-mixing_ratio_max_pressure
-mixing_ratio_nbins
-mixing_ratio_ticks
+Isopleths
+---------
 
-wet_adiabat_line
-wet_adiabat_min_temperature
-wet_adiabat_max_pressure
-wet_adiabat_nbins
-wet_adiabat_text
-wet_adiabat_ticks
+Defaults
+^^^^^^^^
+.. note::
+    "<isopleth>" can be replaced by any of "isobar", "mixing_ratio" and "wet_adiabat", to change the
+    respective isopleth defaults.
+
+from tephi.constants import defaults
+defaults["<isopleth>_line"]
+defaults["<isopleth>_nbins"]
+defaults["<isopleth>_text"]
+defaults["<isopleth>_ticks"]
+defaults["<isopleth>_min_<axis_measurement>"]
+defaults["<isopleth>_max_<axis_measurement>"]
 
 Individual
-----------
+^^^^^^^^^^
 
 If you wish to change the behaviour of the three additional gridlines (isobars, wet adiabats, humidity mixing ratios)
-for a specific axes, you can edit the gridline artist properties. Currently, you can only change some of these
-values.
+for a specific axes, you can edit the gridline artist properties.
+
+tephigram = TephiAxes()
+tephigram.add_<isopleth>()
+tephigram.<isopleth>
+
+.. note::
+    Currently, the only directly editable values are nbins, ticks, and the max\_ and min\_ values for the respective.
+    isopleth. Other values can be changed through the ``_kwarg`` dictionary, although this should be improved
+    in the future.
+
