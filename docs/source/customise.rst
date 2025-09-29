@@ -38,34 +38,44 @@ Isopleths
 Defaults
 ^^^^^^^^
 
-    >>> from tephi.constants import default
+.. code:: python
 
-    >>> default["isobar_line"]
-    >>> default["isobar_nbins"]
-    >>> default["isobar_text"]
-    >>> default["isobar_ticks"]
+    from tephi.constants import default
 
-    >>> default["mixing_ratio_line"]
-    >>> default["mixing_ratio_nbins"]
-    >>> default["mixing_ratio_text"]
-    >>> default["mixing_ratio_ticks"]
+    # isobars
+    default["isobar_line"]
+    default["isobar_nbins"]
+    default["isobar_text"]
+    default["isobar_ticks"]
 
-    >>> default["wet_adiabat_line"]
-    >>> default["wet_adiabat_nbins"]
-    >>> default["wet_adiabat_text"]
-    >>> default["wet_adiabat_ticks"]
+    # mixing ratios
+    default["mixing_ratio_line"]
+    default["mixing_ratio_nbins"]
+    default["mixing_ratio_text"]
+    default["mixing_ratio_ticks"]
+
+    # wet adiabats
+    default["wet_adiabat_line"]
+    default["wet_adiabat_nbins"]
+    default["wet_adiabat_text"]
+    default["wet_adiabat_ticks"]
 
 You can also change the default min and max axis measurement for each isopleth. These change
 depending on the isopleth.
 
-    >>> default["isobar_min_theta"]
-    >>> default["isobar_max_theta"]
+.. code:: python
 
-    >>> default["mixing_ratio_min_pressure"]
-    >>> default["mixing_ratio_max_pressure"]
+    # isobars
+    default["isobar_min_theta"]
+    default["isobar_max_theta"]
 
-    >>> default["wet_adiabat_min_temperature"]
-    >>> default["wet_adiabat_max_pressure"]
+    # mixing ratios
+    default["mixing_ratio_min_pressure"]
+    default["mixing_ratio_max_pressure"]
+
+    # wet adiabats
+    default["wet_adiabat_min_temperature"]
+    default["wet_adiabat_max_pressure"]
 
 
 Individual
@@ -79,18 +89,16 @@ for a specific axes, you can edit the gridline artist properties.
     from tephi import TephiAxes
 
     tephigram = TephiAxes()
+
+    # isobars
     tephigram.add_isobars()
     tephigram.isobar
 
-    from tephi import TephiAxes
-
-    tephigram = TephiAxes()
+    # wet adiabats
     tephigram.add_wet_adiabats()
     tephigram.wet_adiabat
 
-    from tephi import TephiAxes
-
-    tephigram = TephiAxes()
+    # mixing ratios
     tephigram.add_mixing_ratios()
     tephigram.mixing_ratio
 
