@@ -169,7 +169,7 @@ class _FormatterTheta(object):
     """
 
     def __call__(self, direction, factor, values):
-        return [r"$\theta={}$".format(value) for value in values]
+        return [r"$\theta={:.1f}$".format(value) for value in values]
 
 
 class _FormatterIsotherm(object):
@@ -179,7 +179,7 @@ class _FormatterIsotherm(object):
     """
 
     def __call__(self, direction, factor, values):
-        return [r"$T={}$".format(value) for value in values]
+        return [r"$T={:.1f}$".format(value) for value in values]
 
 
 class Locator(object):
