@@ -106,4 +106,7 @@ for a specific axes, you can edit the gridline artist properties.
     Currently, the only directly editable values are nbins, ticks, and the max\_ and min\_ values for the respective
     isopleth. Other values can be changed through the ``_kwargs`` dictionary, although this should be improved
     in the future.
-    >>> tephigram.isobar._kwargs["line"]["color"] = "green"
+
+    .. code:: python
+
+        tephigram.isobar._kwargs["line"]["color"] = "green"
