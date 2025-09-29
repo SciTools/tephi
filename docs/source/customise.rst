@@ -77,12 +77,12 @@ depending on the isopleth.
     default["wet_adiabat_min_temperature"]
     default["wet_adiabat_max_pressure"]
 
-
 Individual
 ^^^^^^^^^^
 
 If you wish to change the behaviour of the three additional gridlines (isobars, wet adiabats, humidity mixing ratios)
 for a specific axes, you can edit the gridline artist properties.
+
 
 .. code:: python
 
@@ -106,4 +106,5 @@ for a specific axes, you can edit the gridline artist properties.
     Currently, the only directly editable values are nbins, ticks, and the max\_ and min\_ values for the respective
     isopleth. Other values can be changed through the ``_kwargs`` dictionary, although this should be improved
     in the future.
+    
     >>> tephigram.isobar._kwargs["line"]["color"] = "green"
