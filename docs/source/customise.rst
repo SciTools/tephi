@@ -60,4 +60,3 @@ tephigram.<isopleth>
     Currently, the only directly editable values are nbins, ticks, and the max\_ and min\_ values for the respective.
     isopleth. Other values can be changed through the ``_kwarg`` dictionary, although this should be improved
     in the future.
-
