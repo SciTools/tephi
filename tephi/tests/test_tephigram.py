@@ -228,7 +228,7 @@ class TestTephigramAxes(tests.GraphicsTest):
         # the xylim is needed so that the isopleths actually appear
         tephigram = TephiAxes(xylim=[(0, 0), (40, 70)])
 
-        tephigram.add_humidity_mixing_ratios()
+        tephigram.add_mixing_ratios()
         self.check_graphic(nodeid)
 
     def test_add_isobars(self, nodeid):

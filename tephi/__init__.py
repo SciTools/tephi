@@ -524,7 +524,7 @@ class TephiAxes(Subplot):
             max_pressure=None,
             nbins=None,
     ):
-        self.humidity_mixing_ratio = artists.HumidityMixingRatioArtist(
+        self.mixing_ratio = artists.HumidityMixingRatioArtist(
             ticks=ticks,
             line=line,
             text=text,
