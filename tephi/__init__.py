@@ -5,8 +5,10 @@
 """
 The tephi module provides tephigram plotting of pressure, temperature and wind
 barb data.
+
 .. warning::
     This is a beta release module and is liable to change.
+
 """
 from collections import namedtuple
 from collections.abc import Iterable
