@@ -24,6 +24,7 @@ Barbs
 Barb defaults can be altered via the ``constants.default`` dictionary.
 
 .. code:: python
+
     from tephi.constants import default
 
     default["barbs_gutter"]
@@ -74,6 +75,7 @@ If you wish to change the behaviour of the three additional gridlines (isobars, 
 for a specific axes, you can edit the gridline artist properties.
 
 .. code:: python
+
     from tephi import TephiAxes
 
     tephigram = TephiAxes()
