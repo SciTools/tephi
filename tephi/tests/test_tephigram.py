@@ -39,7 +39,6 @@ class TestTephigramLoadTxt(tests.TephiTest):
         self.filename_temps = tephi.tests.get_data_path("temps.txt")
         self.filename_barbs = tephi.tests.get_data_path("barbs.txt")
         self.filename_comma = tephi.tests.get_data_path("comma_sep.txt")
-        print(self.filename_dews)
 
     def test_is_not_file(self):
         with pytest.raises(OSError):

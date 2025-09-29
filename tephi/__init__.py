@@ -1,3 +1,13 @@
+# Copyright Tephi contributors
+#
+# This file is part of Tephi and is released under the BSD license.
+# See LICENSE in the root of the repository for full licensing details.
+"""
+The tephi module provides tephigram plotting of pressure, temperature and wind
+barb data.
+.. warning::
+    This is a beta release module and is liable to change.
+"""
 from collections import namedtuple
 from collections.abc import Iterable
 
