@@ -96,19 +96,19 @@ Isobar frequency
 ^^^^^^^^^^^^^^^^
 
 The values at which isobars lines can be created is controlled by the
-:data:`tephi.common.default["isobar_ticks"]` value:
+:data:`tephi.constants.default["isobar_ticks"]` value:
 
-   >>> print(tephi.common.default["isobar_ticks"])
+   >>> print(tephi.constants.default["isobar_ticks"])
    [1050, 1000, 950, 900, 850, 800, 700, 600, 500, 400, 300, 250, 200, 150, 100, 70, 50, 40, 30, 20, 10]
 
 The *frequency* at which isobar lines are plotted on the tephigram is controlled by the
-:data:`tephi.common.default["isobar_nbins"]` value:
+:data:`tephi.constants.default["isobar_nbins"]` value:
 
-   >>> print(tephi.common.default["isobar_nbins"])
+   >>> print(tephi.constants.default["isobar_nbins"])
    None
 
 ``nbins`` controls the maximum number of lines plotted at one time. It can either be an integer value, or a ``None``
-value, which means that a line will be shown for every tick in :data:`tephi.common.default["isobar_ticks"]`.
+value, which means that a line will be shown for every tick in :data:`tephi.constants.default["isobar_ticks"]`.
 
 .. plot::
    :include-source:
@@ -186,7 +186,7 @@ Saturated adiabat lines
 The values at which pseudo saturated adiabat lines can be created is controlled by the
 :data:`tephi.constants.default["wet_adiabat_line"]` dictionary:
 
-   >>> print(`tephi.constants.default["wet_adiabat_line"]`)
+   >>> print(tephi.constants.default["wet_adiabat_line"])
    {'color': 'orange', 'linewidth': 0.5, 'clip_on': True}
 
 This is a dictionary of *key* and *value* pairs that are passed through as keyword arguments to :func:`matplotlib.pyplot.plot`.
@@ -225,7 +225,7 @@ The default behaviour of the tephigram *saturated adiabat text* is controlled by
 :data:`tephi.constants.default["wet_adiabat_text"]` dictionary:
 
    >>> pprint(tephi.constants.default["wet_adiabat_text"])
-   {'clip_on': True, 'color': 'orange', 'ha': 'left', 'size': 8, 'va': 'bottom'}
+   {'clip_on': True, 'color': 'orange', 'ha': 'left', 'size': 8, 'va': 'top'}
 
 This is a dictionary of *key* and *value* pairs that are passed through as keyword arguments to :func:`matplotlib.pyplot.text`.
 
@@ -261,19 +261,19 @@ Saturated adiabat line frequency
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The values at which pseudo saturated adiabat lines can be created is controlled by the
-:data:`tephi.common.default["wet_adiabat_ticks"]` value:
+:data:`tephi.constants.default["wet_adiabat_ticks"]` value:
 
-   >>> print(tephi.common.default["wet_adiabat_ticks"])
+   >>> print(tephi.constants.default["wet_adiabat_ticks"])
    range(1, 61)
 
 The *frequency* at which wet adiabat lines are plotted on the tephigram is controlled by the
-:data:`tephi.common.default["wet_adiabat_nbins"]` value:
+:data:`tephi.constants.default["wet_adiabat_nbins"]` value:
 
-   >>> print(tephi.common.default["wet_adiabat_nbins"])
+   >>> print(tephi.constants.default["wet_adiabat_nbins"])
    10
 
 ``nbins`` controls the maximum number of lines plotted at one time. It can either be an integer value, or a ``None``
-value, which means that a line will be shown for every tick in :data:`tephi.common.default["wet_adiabat_ticks"]`.
+value, which means that a line will be shown for every tick in :data:`tephi.constants.default["wet_adiabat_ticks"]`.
 
 Saturated Adiabat Extents
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -285,7 +285,7 @@ The extent of each tephigram *saturated adiabat line* is controlled by the
    >>> print(tephi.constants.default["wet_adiabat_min_temperature"])
    -50
    >>> print(tephi.constants.default["wet_adiabat_max_pressure"])
-   1000
+   1000.0
 
 For example, to change the wet adiabat line extent behaviour to be between -10 :sup:`o`\ C and 900 mbar,
 
@@ -400,19 +400,19 @@ Mixing Ratio line frequency
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The values at which mixing ratio lines can be created is controlled by the
-:data:`tephi.common.default["mixing_ratio_ticks"]` value:
+:data:`tephi.constants.default["mixing_ratio_ticks"]` value:
 
-   >>> print(tephi.common.default["mixing_ratio_ticks"])
+   >>> print(tephi.constants.default["mixing_ratio_ticks"])
    [0.001, 0.002, 0.005, 0.01, 0.02, 0.03, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0, 24.0, 28.0, 32.0, 36.0, 40.0, 44.0, 48.0, 52.0, 56.0, 60.0, 68.0, 80.0,],
 
 The *frequency* at which mixing ratio lines are plotted on the tephigram is controlled by the
-:data:`tephi.common.default["mixing_ratio_nbins"]` value:
+:data:`tephi.constants.default["mixing_ratio_nbins"]` value:
 
-   >>> print(tephi.common.default["mixing_ratio_nbins"])
+   >>> print(tephi.constants.default["mixing_ratio_nbins"])
    10
 
 ``nbins`` controls the maximum number of lines plotted at one time. It can either be an integer value, or a ``None``
-value, which means that a line will be shown for every tick in :data:`tephi.common.default["mixing_ratio_ticks"]`.
+value, which means that a line will be shown for every tick in :data:`tephi.constants.default["mixing_ratio_ticks"]`.
 
 Mixing Ratio Extents
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -424,7 +424,7 @@ The extent of each tephigram *mixing ratio line* is controlled by the
    >>> print(tephi.constants.default["mixing_ratio_min_pressure"])
    10
    >>> print(tephi.constants.default["mixing_ratio_max_pressure"])
-   1000
+   1000.0
 
 For example, to change the wet adiabat line extent behaviour to be between 100 mbar and 500 mbar,
 
