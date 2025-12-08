@@ -262,6 +262,7 @@ Saturated adiabat line frequency
 
 The values at which pseudo saturated adiabat lines can be created is controlled by the
 :data:`tephi.common.default["wet_adiabat_ticks"]` value:
+
    >>> print(tephi.common.default["wet_adiabat_ticks"])
    range(1, 61)
 
@@ -378,6 +379,7 @@ humidity mixing ratio lines are plotted.
    import os.path
 
    import tephi
+   from tephi.constants import default
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
@@ -399,6 +401,7 @@ Mixing Ratio line frequency
 
 The values at which mixing ratio lines can be created is controlled by the
 :data:`tephi.common.default["mixing_ratio_ticks"]` value:
+
    >>> print(tephi.common.default["mixing_ratio_ticks"])
    [0.001, 0.002, 0.005, 0.01, 0.02, 0.03, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0, 24.0, 28.0, 32.0, 36.0, 40.0, 44.0, 48.0, 52.0, 56.0, 60.0, 68.0, 80.0,],
 
