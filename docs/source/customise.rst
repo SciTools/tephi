@@ -118,7 +118,7 @@ value, which means that a line will be shown for every tick in :data:`tephi.comm
    import os.path
 
    import tephi
-   from tephi.common import default
+   from tephi.constants import default
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
@@ -163,7 +163,7 @@ For example, to change the isobar line extent behaviour to be between 15 :sup:`o
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
-   default["isobar_max_theta"] = 15
+   default["isobar_min_theta"] = 15
    default["isobar_max_theta"] = 60
    tpg = tephi.TephiAxes()
    tpg.plot(dews)
@@ -173,7 +173,7 @@ For example, to change the isobar line extent behaviour to be between 15 :sup:`o
 
    import tephi
    from tephi.constants import default
-   default["isobar_max_theta"] = 0
+   default["isobar_min_theta"] = 0
    default["isobar_max_theta"] = 250
 
 
@@ -183,14 +183,15 @@ Saturated adiabat control
 Saturated adiabat lines
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The default behaviour of the tephigram *pseudo saturated wet adiabat line* is controlled by the :data:`tephi.WET_ADIABAT_LINE` dictionary:
+The values at which pseudo saturated adiabat lines can be created is controlled by the
+:data:`tephi.constants.default["wet_adiabat_line"]` dictionary:
 
-   >>> print(tephi.WET_ADIABAT_LINE)
+   >>> print(`tephi.constants.default["wet_adiabat_line"]`)
    {'color': 'orange', 'linewidth': 0.5, 'clip_on': True}
 
 This is a dictionary of *key* and *value* pairs that are passed through as keyword arguments to :func:`matplotlib.pyplot.plot`.
 
-Updating the ``WET_ADIABAT_LINE`` dictionary will change the default behaviour of **all** saturated adiabat line plotting.
+Updating the ``default["wet_adiabat_line"]`` dictionary will change the default behaviour of **all** saturated adiabat line plotting.
 
 .. plot::
    :include-source:
@@ -200,11 +201,12 @@ Updating the ``WET_ADIABAT_LINE`` dictionary will change the default behaviour o
    import os.path
 
    import tephi
+   from tephi.constants import default
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
-   tephi.WET_ADIABAT_LINE.update({'color': 'purple', 'linewidth': 3, 'linestyle': '--'})
+   default["wet_adiabat_line"].update({'color': 'purple', 'linewidth': 3, 'linestyle': '--'})
    tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
@@ -212,20 +214,22 @@ Updating the ``WET_ADIABAT_LINE`` dictionary will change the default behaviour o
 .. plot::
 
    import tephi
-   tephi.WET_ADIABAT_LINE = {'color': 'orange', 'linewidth': 0.5, 'clip_on': True}
+   from tephi.constants import default
+   default["wet_adiabat_line"] = {'color': 'orange', 'linewidth': 0.5, 'clip_on': True}
 
 
 Saturated adiabat text
 ^^^^^^^^^^^^^^^^^^^^^^
 
-The default behaviour of the tephigram *saturated adiabat text* is controlled by the :data:`tephi.WET_ADIABAT_TEXT` dictionary:
+The default behaviour of the tephigram *saturated adiabat text* is controlled by the
+:data:`tephi.constants.default["wet_adiabat_text"]` dictionary:
 
-   >>> pprint(tephi.WET_ADIABAT_TEXT)
+   >>> pprint(tephi.constants.default["wet_adiabat_text"])
    {'clip_on': True, 'color': 'orange', 'ha': 'left', 'size': 8, 'va': 'bottom'}
 
 This is a dictionary of *key* and *value* pairs that are passed through as keyword arguments to :func:`matplotlib.pyplot.text`.
 
-Updating the ``WET_ADIABAT_TEXT`` dictionary will change the default behaviour of how the text of associated saturated adiabat lines are plotted.
+Updating the ``default["wet_adiabat_text"]`` dictionary will change the default behaviour of how the text of associated saturated adiabat lines are plotted.
 
 .. plot::
    :include-source:
@@ -235,11 +239,12 @@ Updating the ``WET_ADIABAT_TEXT`` dictionary will change the default behaviour o
    import os.path
 
    import tephi
+   from tephi.constants import default
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
-   tephi.WET_ADIABAT_TEXT.update({'color': 'purple', 'size': 12})
+   default["wet_adiabat_text"].update({'color': 'purple', 'size': 12})
    tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
@@ -247,65 +252,41 @@ Updating the ``WET_ADIABAT_TEXT`` dictionary will change the default behaviour o
 .. plot::
 
    import tephi
-   tephi.WET_ADIABAT_TEXT = {'color': 'orange', 'va': 'bottom', 'ha': 'left', 'clip_on': True, 'size': 8}
+   from tephi.constants import default
+
+   default["wet_adiabat_text"] = {'color': 'orange', 'va': 'bottom', 'ha': 'left', 'clip_on': True, 'size': 8}
 
 
 Saturated adiabat line frequency
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The *frequency* at which saturated adiabat lines are plotted on the tephigram is controlled by the :data:`tephi.WET_ADIABAT_SPEC` list:
+The values at which pseudo saturated adiabat lines can be created is controlled by the
+:data:`tephi.common.default["wet_adiabat_ticks"]` value:
+   >>> print(tephi.common.default["wet_adiabat_ticks"])
+   range(1, 61)
 
-   >>> print(tephi.WET_ADIABAT_SPEC)
-   [(1, 0.05), (2, 0.15), (4, 1.5)]
+The *frequency* at which wet adiabat lines are plotted on the tephigram is controlled by the
+:data:`tephi.common.default["wet_adiabat_nbins"]` value:
 
-This :term:`line specification` is a sequence of one or more tuple pairs that contain a saturated adiabat temperature :term:`line step` and a
-:term:`zoom level`.
+   >>> print(tephi.common.default["wet_adiabat_nbins"])
+   10
 
-For example, ``(2, 0.15)`` states that all saturated adiabat lines that are a multiple of ``2`` :sup:`o`\ C will be plotted i.e. visible,
-when the :term:`zoom level` is at or below ``0.15``.
+``nbins`` controls the maximum number of lines plotted at one time. It can either be an integer value, or a ``None``
+value, which means that a line will be shown for every tick in :data:`tephi.common.default["wet_adiabat_ticks"]`.
 
-The *overall range* of saturated adiabat levels that may be plotted is controlled by the :data:`tephi.MIN_WET_ADIABAT` and
-:data:`tephi.MAX_WET_ADIABAT` variables:
+Saturated Adiabat Extents
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   >>> print(tephi.MIN_WET_ADIABAT)
-   1
-   >>> print(tephi.MAX_WET_ADIABAT)
-   60
+The extent of each tephigram *saturated adiabat line* is controlled by the
+:data:`tephi.constants.default["wet_adiabat_min_temperature"]` and
+:data:`tephi.constants.default["wet_adiabat_max_pressure"]` variables:
 
-Note that, it is possible to set a *fixed* saturated adiabat temperature :term:`line step` for a tephigram plot by setting the
-associated :term:`zoom level` to ``None``.
+   >>> print(tephi.constants.default["wet_adiabat_min_temperature"])
+   -50
+   >>> print(tephi.constants.default["wet_adiabat_max_pressure"])
+   1000
 
-For example, to **always** show saturated adiabat lines that are a multiple of 5 :sup:`o`\ C, irrespective of the :term:`zoom level`,
-
-.. plot::
-   :include-source:
-   :align: center
-
-   import matplotlib.pyplot as plt
-   import os.path
-
-   import tephi
-
-   dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
-   dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
-   dews = zip(dew_data.pressure, dew_data.dewpoint)
-   tephi.WET_ADIABAT_SPEC = [(5, None)]
-   tpg = tephi.TephiAxes()
-   tpg.plot(dews)
-   plt.show()
-
-.. plot::
-
-   import tephi
-   tephi.WET_ADIABAT_SPEC = [(1, 0.05), (2, 0.15), (4, 1.5)]
-
-It is also possible to control which *individual* saturated adiabat lines should be *fixed* via the :data:`tephi.WET_ADIABAT_FIXED` variable:
-
-   >>> print(tephi.WET_ADIABAT_FIXED)
-   None
-
-By default, no saturated adiabat lines are fixed. To force saturated adiabat lines with a temperature of ``15`` :sup:`o`\ C and ``17`` :sup:`o`\ C
-always to be plotted,
+For example, to change the wet adiabat line extent behaviour to be between -10 :sup:`o`\ C and 900 mbar,
 
 .. plot::
    :include-source:
@@ -315,11 +296,13 @@ always to be plotted,
    import os.path
 
    import tephi
+   from tephi.constants import default
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
-   tephi.WET_ADIABAT_FIXED = [15, 17]
+   default["wet_adiabat_min_temperature"] = -10
+   default["wet_adiabat_max_pressure"] = 900
    tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
@@ -327,7 +310,9 @@ always to be plotted,
 .. plot::
 
    import tephi
-   tephi.WET_ADIABAT_FIXED = None
+   from tephi.constants import default
+   default["wet_adiabat_min_temperature"] = -10
+   default["wet_adiabat_max_pressure"] = 900
 
 
 Humidity mixing ratio control
@@ -336,14 +321,15 @@ Humidity mixing ratio control
 Humidity mixing ratio lines
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The default behaviour of the tephigram *humidity mixing ratio line* is controlled by the :data:`tephi.MIXING_RATIO_LINE` dictionary:
+The default behaviour of the tephigram *humidity mixing ratio line* is controlled by the
+:data:`tephi.constants.default["mixing_ratio_line"]` dictionary:
 
-   >>> print(tephi.MIXING_RATIO_LINE)
+   >>> print(tephi.constants.default["mixing_ratio_line"])
    {'color': 'green', 'linewidth': 0.5, 'clip_on': True}
 
 This is a dictionary of *key* and *value* pairs that are passed through as keyword arguments to :func:`matplotlib.pyplot.plot`.
 
-Updating the ``MIXING_RATIO_LINE`` dictionary will change the default behaviour of **all** humidity mixing ratio line plotting.
+Updating the ``default["mixing_ratio_line"]`` dictionary will change the default behaviour of **all** humidity mixing ratio line plotting.
 
 .. plot::
    :include-source:
@@ -353,11 +339,12 @@ Updating the ``MIXING_RATIO_LINE`` dictionary will change the default behaviour 
    import os.path
 
    import tephi
+   from tephi.constants import default
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
-   tephi.MIXING_RATIO_LINE.update({'color': 'purple', 'linewidth': 3, 'linestyle': '--'})
+   default["mixing_ratio_line"].update({'color': 'purple', 'linewidth': 3, 'linestyle': '--'})
    tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
@@ -365,20 +352,23 @@ Updating the ``MIXING_RATIO_LINE`` dictionary will change the default behaviour 
 .. plot::
 
    import tephi
-   tephi.MIXING_RATIO_LINE = {'color': 'green', 'linewidth': 0.5, 'clip_on': True}
+   from tephi.constants import default
+   default["mixing_ratio_line"] = {'color': 'green', 'linewidth': 0.5, 'clip_on': True}
 
 
 Humidity mixing ratio text
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The default behaviour of the tephigram *humidity mixing ratio text* is controlled by the :data:`tephi.MIXING_RATIO_TEXT` dictionary:
+The default behaviour of the tephigram *humidity mixing ratio text* is controlled by the
+:data:`tephi.constants.default["mixing_ratio_text"]` dictionary:
 
-   >>> pprint(tephi.MIXING_RATIO_TEXT)
+   >>> pprint(tephi.constants.default["mixing_ratio_text"])
    {'clip_on': True, 'color': 'green', 'ha': 'right', 'size': 8, 'va': 'bottom'}
 
 This is a dictionary of *key* and *value* pairs that are passed through as keyword arguments to :func:`matplotlib.pyplot.text`.
 
-Updating the ``MIXING_RATIO_TEXT`` dictionary will change the default behaviour of how the text of associated humidity mixing ratio lines are plotted.
+Updating the ``default["mixing_ratio_text"]`` dictionary will change the default behaviour of how the text of associated
+humidity mixing ratio lines are plotted.
 
 .. plot::
    :include-source:
@@ -392,7 +382,7 @@ Updating the ``MIXING_RATIO_TEXT`` dictionary will change the default behaviour 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
-   tephi.MIXING_RATIO_TEXT.update({'color': 'purple', 'size': 12})
+   default["mixing_ratio_text"].update({'color': 'purple', 'size': 12})
    tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
@@ -400,35 +390,40 @@ Updating the ``MIXING_RATIO_TEXT`` dictionary will change the default behaviour 
 .. plot::
 
    import tephi
-   tephi.MIXING_RATIO_TEXT = {'color': 'green', 'va': 'bottom', 'ha': 'right', 'clip_on': True, 'size': 8}
+   from tephi.constants import default
+   default["mixing_ratio_text"] = {'color': 'green', 'va': 'bottom', 'ha': 'right', 'clip_on': True, 'size': 8}
 
 
-Humidity mixing ratio line frequency
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Mixing Ratio line frequency
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The *frequency* at which humidity mixing ratio lines are plotted on the tephigram is controlled by the :data:`tephi.MIXING_RATIO_SPEC` list:
+The values at which mixing ratio lines can be created is controlled by the
+:data:`tephi.common.default["mixing_ratio_ticks"]` value:
+   >>> print(tephi.common.default["mixing_ratio_ticks"])
+   [0.001, 0.002, 0.005, 0.01, 0.02, 0.03, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0, 24.0, 28.0, 32.0, 36.0, 40.0, 44.0, 48.0, 52.0, 56.0, 60.0, 68.0, 80.0,],
 
-   >>> print(tephi.MIXING_RATIO_SPEC)
-   [(1, 0.05), (2, 0.18), (4, 0.3), (8, 1.5)]
+The *frequency* at which mixing ratio lines are plotted on the tephigram is controlled by the
+:data:`tephi.common.default["mixing_ratio_nbins"]` value:
 
-This :term:`line specification` is a sequence of one or more tuple pairs that contain a humidity mixing ratio :term:`line step` and a
-:term:`zoom level`.
+   >>> print(tephi.common.default["mixing_ratio_nbins"])
+   10
 
-For example, ``(4, 0.3)`` states that every *fourth* humidity mixing ratio line will be plotted i.e. visible, when the :term:`zoom level`
-is at or below ``0.3``.
+``nbins`` controls the maximum number of lines plotted at one time. It can either be an integer value, or a ``None``
+value, which means that a line will be shown for every tick in :data:`tephi.common.default["mixing_ratio_ticks"]`.
 
-The *overall range* of humidity mixing ratio levels that may be plotted is controlled by the :data:`tephi.MIXING_RATIOS` list:
+Mixing Ratio Extents
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   >>> print(tephi.MIXING_RATIOS)
-   [0.001, 0.002, 0.005, 0.01, 0.02, 0.03, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0, 24.0, 28.0, 32.0, 36.0, 40.0, 44.0, 48.0, 52.0, 56.0, 60.0, 68.0, 80.0]
+The extent of each tephigram *mixing ratio line* is controlled by the
+:data:`tephi.constants.default["mixing_ratio_min_pressure"]` and
+:data:`tephi.constants.default["mixing_ratio_max_pressure"]` variables:
 
-Note that, it is possible to control which *individual* humidity mixing ratio lines should be *fixed* i.e. **always** visible, via the :data:`tephi.MIXING_RATIO_FIXED` variable:
+   >>> print(tephi.constants.default["mixing_ratio_min_pressure"])
+   10
+   >>> print(tephi.constants.default["mixing_ratio_max_pressure"])
+   1000
 
-   >>> print(tephi.MIXING_RATIO_FIXED)
-   None
-
-By default, no humidity mixing ratio lines are fixed. To force humidity mixing ratio lines ``4.0`` g kg\ :sup:`-1`\  and ``6.0`` g kg\ :sup:`-1`\
-always to be plotted independent of the :term:`zoom level`,
+For example, to change the wet adiabat line extent behaviour to be between 100 mbar and 500 mbar,
 
 .. plot::
    :include-source:
@@ -438,11 +433,13 @@ always to be plotted independent of the :term:`zoom level`,
    import os.path
 
    import tephi
+   from tephi.constants import default
 
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
-   tephi.MIXING_RATIO_FIXED = [4.0, 6.0]
+   default["mixing_ratio_min_pressure"] = 100
+   default["mixing_ratio_max_pressure"] = 500
    tpg = tephi.TephiAxes()
    tpg.plot(dews)
    plt.show()
@@ -450,4 +447,6 @@ always to be plotted independent of the :term:`zoom level`,
 .. plot::
 
    import tephi
-   tephi.MIXING_RATIO_FIXED = None
+   from tephi.constants import default
+   default["mixing_ratio_min_temperature"] = -10
+   default["mixing_ratio_max_pressure"] = 900
