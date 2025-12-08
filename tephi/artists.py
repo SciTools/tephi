@@ -46,13 +46,12 @@ class IsobarArtist(IsoplethArtist):
         if ticks is None:
             ticks = default.get("isobar_ticks")
         self.ticks = ticks
-        self._kwargs = {}
         if line is None:
             line = default.get("isobar_line")
-        self._kwargs["line"] = line
+        self.line_config = line
         if text is None:
             text = default.get("isobar_text")
-        self._kwargs["text"] = text
+        self.text_config = text
         if min_theta is None:
             min_theta = default.get("isobar_min_theta")
         self.min_theta = min_theta
@@ -72,10 +71,10 @@ class IsobarArtist(IsoplethArtist):
         if not self.get_visible():
             return
         axes = self.axes
-        draw_kwargs = dict(self._kwargs["line"])
+        draw_kwargs = dict(self.line_config)
         if line is not None:
             draw_kwargs.update(line)
-        text_kwargs = dict(self._kwargs["text"])
+        text_kwargs = dict(self.text_config)
         if text is not None:
             text_kwargs.update(text)
         if min_theta is None:
@@ -131,13 +130,12 @@ class WetAdiabatArtist(IsoplethArtist):
         if ticks is None:
             ticks = default.get("wet_adiabat_ticks")
         self.ticks = sorted(ticks)
-        self._kwargs = {}
         if line is None:
             line = default.get("wet_adiabat_line")
-        self._kwargs["line"] = line
+        self.line_config = line
         if text is None:
             text = default.get("wet_adiabat_text")
-        self._kwargs["text"] = text
+        self.text_config = text
         if min_temperature is None:
             min_temperature = default.get("wet_adiabat_min_temperature")
         self.min_temperature = min_temperature
@@ -162,10 +160,10 @@ class WetAdiabatArtist(IsoplethArtist):
         if not self.get_visible():
             return
         axes = self.axes
-        draw_kwargs = dict(self._kwargs["line"])
+        draw_kwargs = dict(self.line_config)
         if line is not None:
             draw_kwargs.update(line)
-        text_kwargs = dict(self._kwargs["text"])
+        text_kwargs = dict(self.text_config)
         if text is not None:
             text_kwargs.update(text)
         if min_temperature is None:
@@ -226,13 +224,12 @@ class HumidityMixingRatioArtist(IsoplethArtist):
         if ticks is None:
             ticks = default.get("mixing_ratio_ticks")
         self.ticks = ticks
-        self._kwargs = {}
         if line is None:
             line = default.get("mixing_ratio_line")
-        self._kwargs["line"] = line
+        self.line_config = line
         if text is None:
             text = default.get("mixing_ratio_text")
-        self._kwargs["text"] = text
+        self.text_config = text
         if min_pressure is None:
             min_pressure = default.get("mixing_ratio_min_pressure")
         self.min_pressure = min_pressure
@@ -257,10 +254,10 @@ class HumidityMixingRatioArtist(IsoplethArtist):
         if not self.get_visible():
             return
         axes = self.axes
-        draw_kwargs = dict(self._kwargs["line"])
+        draw_kwargs = dict(self.line_config)
         if line is not None:
             draw_kwargs.update(line)
-        text_kwargs = dict(self._kwargs["text"])
+        text_kwargs = dict(self.text_config)
         if text is not None:
             text_kwargs.update(text)
         if min_pressure is None:

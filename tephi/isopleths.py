@@ -197,7 +197,8 @@ class Isopleth(object):
         )
         self.line = None
         self.label = None
-        self._kwargs = dict(line={}, text={})
+        self.line_config = {}
+        self.text_config = {}
         Tmin, Tmax = (
             np.argmin(self.points.temperature),
             np.argmax(self.points.temperature),
@@ -229,7 +230,7 @@ class Isopleth(object):
         if self.line is None:
             if "zorder" not in kwargs:
                 kwargs["zorder"] = default.get("isopleth_zorder")
-            draw_kwargs = dict(self._kwargs["line"])
+            draw_kwargs = dict(self.line_config)
             draw_kwargs.update(kwargs)
             self.line = plt.Line2D(
                 self.points.temperature,
@@ -259,7 +260,7 @@ class Isopleth(object):
             kwargs["zorder"] = default.get("isopleth_zorder")
         if "picker" not in kwargs:
             kwargs["picker"] = default.get("isopleth_picker")
-        plot_kwargs = dict(self._kwargs["line"])
+        plot_kwargs = dict(self.line_config)
         plot_kwargs.update(kwargs)
         (self.line,) = Subplot.plot(
             self.axes,
@@ -273,7 +274,7 @@ class Isopleth(object):
     def text(self, temperature, theta, text, **kwargs):
         if "zorder" not in kwargs:
             kwargs["zorder"] = default.get("isopleth_zorder", 10) + 1
-        text_kwargs = dict(self._kwargs["text"])
+        text_kwargs = dict(self.text_config)
         text_kwargs.update(kwargs)
         if self.label is not None and self.label in self.axes.texts:
             self.axes.lines.remove(self.label)
@@ -350,8 +351,8 @@ class Isobar(Isopleth):
         self.bounds = BOUNDS(min_theta, max_theta)
         self._steps = _ISOBAR_STEPS
         super(Isobar, self).__init__(axes)
-        self._kwargs["line"] = default.get("isobar_line")
-        self._kwargs["text"] = default.get("isobar_text")
+        self.line_config = default.get("isobar_line")
+        self.text_config = default.get("isobar_text")
 
     def _generate_points(self):
         pressure = np.asarray([self.data] * self._steps)
