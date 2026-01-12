@@ -16,7 +16,8 @@
     ],
     "test_tephigram.TestTephigramAxes.test_plot_dews_locator_adiabat_object.0": [
         "https://scitools.github.io/test-tephi-imagehash/images/ea5a9f0d91e32639c5a5198d96729cc6cbb462619f9e3f1398646d093c736326.png",
-        "https://scitools.github.io/test-tephi-imagehash/images/ea5a9f0d91e46639c5a5398996759cc6cbb462619f8b3f1298646bcc3c736216.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/ea5a9f0d91e46639c5a5398996759cc6cbb462619f8b3f1298646bcc3c736216.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/ea5e9f0991e42639c5a51989967d98d6cbb462619f8b3f1298666bcc3c736216.png"
     ],
     "test_tephigram.TestTephigramAxes.test_plot_dews_locator_isotherm_numeric.0": [
         "https://scitools.github.io/test-tephi-imagehash/images/ea5a8f6d91e16630c5ed392c86599cc6cbb46a6196986a929d66ed893e23343e.png"
@@ -30,7 +31,8 @@
     ],
     "test_tephigram.TestTephigramAxes.test_plot_dews_locator_object.0": [
         "https://scitools.github.io/test-tephi-imagehash/images/ea5a8f2d91e36639c5e5198d86521cc7cb946e639adc273398646d09347961f6.png",
-        "https://scitools.github.io/test-tephi-imagehash/images/ea5a8f4d91e46639c5a5398996751cd6cbbc6a61929863b29c664bc93e137616.png"
+        "https://scitools.github.io/test-tephi-imagehash/images/ea5a8f4d91e46639c5a5398996751cd6cbbc6a61929863b29c664bc93e137616.png",
+        "https://scitools.github.io/test-tephi-imagehash/images/ea5e8f4991e42639c5a51989866d9cd6cbbc6a61929863b29c666bc93e1b721e.png"
     ],
     "test_tephigram.TestTephigramAxes.test_plot_xylim.0": [
         "https://scitools.github.io/test-tephi-imagehash/images/bfe8e15ee0451c03911a63e0063a6c6e79c09b9be335f073944f2ecc55f87ca3.png"
