@@ -14,6 +14,7 @@ from abc import ABCMeta, abstractmethod
 from collections import namedtuple
 import math
 import matplotlib.artist
+from matplotlib.text import Text
 from matplotlib.collections import PathCollection
 from matplotlib.path import Path
 import matplotlib.pyplot as plt
@@ -276,13 +277,12 @@ class Isopleth(object):
             kwargs["zorder"] = default.get("isopleth_zorder", 10) + 1
         text_kwargs = dict(self.text_config)
         text_kwargs.update(kwargs)
-        if self.label is not None and self.label in self.axes.texts:
-            self.axes.lines.remove(self.label)
-        self.label = self.axes.text(
+        self.label = Text(
             temperature,
             theta,
             str(text),
             transform=self._transform,
+            figure=self.axes.figure,
             **text_kwargs,
         )
         self.label.set_bbox(
@@ -298,17 +298,7 @@ class Isopleth(object):
         return self.label
 
     def refresh(self, temperature, theta, renderer=None, **kwargs):
-        if self.label is None:
-            self.text(temperature, theta, self.data, **kwargs)
-            if renderer is not None:
-                try:
-                    self.axes.tests = tuple(
-                        list(self.axes.texts).remove(self.label)
-                    )
-                except TypeError:
-                    self.axes.tests = None
-        else:
-            self.label.set_position((temperature, theta))
+        self.text(temperature, theta, self.data, **kwargs)
         if renderer is not None:
             self.label.draw(renderer)
 

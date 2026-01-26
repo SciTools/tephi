@@ -144,7 +144,7 @@ class WetAdiabatArtist(IsoplethArtist):
         self.max_pressure = max_pressure
         if nbins is None:
             nbins = default.get("wet_adiabat_nbins")
-        if nbins < 2 or isinstance(nbins, str):
+        if nbins is None or (nbins < 2 or isinstance(nbins, str)):
             nbins = None
         self.nbins = nbins
 
@@ -238,7 +238,7 @@ class HumidityMixingRatioArtist(IsoplethArtist):
         self.max_pressure = max_pressure
         if nbins is None:
             nbins = default.get("mixing_ratio_nbins")
-        if nbins < 2 or isinstance(nbins, str):
+        if nbins is None or (nbins < 2 or isinstance(nbins, str)):
             nbins = None
         self.nbins = nbins
 
