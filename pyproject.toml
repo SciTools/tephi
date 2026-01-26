@@ -110,6 +110,7 @@ addopts = ["-ra",
            "--strict-config"
     ]
 xfail_strict = true
+log_level = "INFO"
 log_cli_level = "info"
 testpaths = [
   "tephi/",
@@ -122,6 +123,9 @@ filterwarnings = ["default"]
 ignore = [
     # https://learn.scientific-python.org/development/guides/style/#PC180
     "PC180",  # Uses prettier
+
+    # https://learn.scientific-python.org/development/guides/packaging-simple#PP006
+    "PP006",  # Uses dev dependency group
 
     # https://learn.scientific-python.org/development/guides/packaging-simple/#PY005
     "PY005",  # Has tests folder
