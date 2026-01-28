@@ -6,6 +6,8 @@
 Tests the tephigram plotting capability provided by tephi.
 
 """
+import matplotlib
+
 # Import tephi test package first so that some things can be initialised
 # before importing anything else.
 import tephi.tests as tests
@@ -14,7 +16,7 @@ import numpy as np
 import pytest
 
 import tephi
-from tephi import Tephigram
+from tephi import TephiAxes
 
 
 def _load_result(filename):
@@ -27,10 +29,12 @@ _expected_dews = _load_result("dews.npz")
 _expected_temps = _load_result("temps.npz")
 _expected_barbs = _load_result("barbs.npz")
 
+# make the default size for this session 8x8in
+matplotlib.rcParams['figure.figsize'] = (8, 8)
 
 class TestTephigramLoadTxt(tests.TephiTest):
     @pytest.fixture(autouse=True)
-    def setup(self):
+    def _setup(self):
         self.filename_dews = tephi.tests.get_data_path("dews.txt")
         self.filename_temps = tephi.tests.get_data_path("temps.txt")
         self.filename_barbs = tephi.tests.get_data_path("barbs.txt")
@@ -98,44 +102,39 @@ class TestTephigramLoadTxt(tests.TephiTest):
         assert dews.pressure[0].dtype == np.int32
         assert dews.temperature[0].dtype == np.int32
 
-
 @pytest.mark.graphical
 @pytest.mark.usefixtures("close_plot", "nodeid")
 class TestTephigramPlot(tests.GraphicsTest):
     @pytest.fixture(autouse=True)
-    def setup(self):
+    def _setup(self):
         self.dews = _expected_dews.T
         self.temps = _expected_temps.T
 
+        self.tephigram = TephiAxes()
+
     def test_plot_dews(self, nodeid):
-        tephigram = Tephigram()
-        tephigram.plot(self.dews)
+        self.tephigram.plot(self.dews)
         self.check_graphic(nodeid)
 
     def test_plot_temps(self, nodeid):
-        tephigram = Tephigram()
-        tephigram.plot(self.temps)
+        self.tephigram.plot(self.temps)
         self.check_graphic(nodeid)
 
     def test_plot_dews_temps(self, nodeid):
-        tephigram = Tephigram()
-        tephigram.plot(self.dews)
-        tephigram.plot(self.temps)
+        self.tephigram.plot(self.dews)
+        self.tephigram.plot(self.temps)
         self.check_graphic(nodeid)
 
     def test_plot_dews_label(self, nodeid):
-        tephigram = Tephigram()
-        tephigram.plot(self.dews, label="Dew-point temperature")
+        self.tephigram.plot(self.dews, label="Dew-point temperature")
         self.check_graphic(nodeid)
 
     def test_plot_temps_label(self, nodeid):
-        tephigram = Tephigram()
-        tephigram.plot(self.temps, label="Dry-bulb temperature")
+        self.tephigram.plot(self.temps, label="Dry-bulb temperature")
         self.check_graphic(nodeid)
 
     def test_plot_dews_custom(self, nodeid):
-        tephigram = Tephigram()
-        tephigram.plot(
+        self.tephigram.plot(
             self.dews,
             label="Dew-point temperature",
             linewidth=2,
@@ -145,8 +144,7 @@ class TestTephigramPlot(tests.GraphicsTest):
         self.check_graphic(nodeid)
 
     def test_plot_temps_custom(self, nodeid):
-        tephigram = Tephigram()
-        tephigram.plot(
+        self.tephigram.plot(
             self.temps,
             label="Dry-bulb temperature",
             linewidth=2,
@@ -156,15 +154,14 @@ class TestTephigramPlot(tests.GraphicsTest):
         self.check_graphic(nodeid)
 
     def test_plot_dews_temps_custom(self, nodeid):
-        tephigram = Tephigram()
-        tephigram.plot(
+        self.tephigram.plot(
             self.dews,
             label="Dew-point temperature",
             linewidth=2,
             color="blue",
             marker="s",
         )
-        tephigram.plot(
+        self.tephigram.plot(
             self.temps,
             label="Dry-bulb temperature",
             linewidth=2,
@@ -173,58 +170,86 @@ class TestTephigramPlot(tests.GraphicsTest):
         )
         self.check_graphic(nodeid)
 
+@pytest.mark.graphical
+@pytest.mark.usefixtures("close_plot", "nodeid")
+class TestTephigramAxes(tests.GraphicsTest):
+    @pytest.fixture(autouse=True)
+    def _setup(self):
+        self.dews = _expected_dews.T
+        self.temps = _expected_temps.T
+
     def test_plot_dews_locator_isotherm_numeric(self, nodeid):
-        tephigram = Tephigram(isotherm_locator=10)
+        tephigram = TephiAxes(isotherm_locator=30)
         tephigram.plot(self.dews)
         self.check_graphic(nodeid)
 
     def test_plot_dews_locator_isotherm_object(self, nodeid):
-        tephigram = Tephigram(isotherm_locator=tephi.Locator(10))
+        tephigram = TephiAxes(isotherm_locator=tephi.Locator(10))
         tephigram.plot(self.dews)
         self.check_graphic(nodeid)
 
     def test_plot_dews_locator_adiabat_numeric(self, nodeid):
-        tephigram = Tephigram(dry_adiabat_locator=10)
+        tephigram = TephiAxes(dry_adiabat_locator=10)
         tephigram.plot(self.dews)
         self.check_graphic(nodeid)
 
     def test_plot_dews_locator_adiabat_object(self, nodeid):
-        tephigram = Tephigram(dry_adiabat_locator=tephi.Locator(10))
+        tephigram = TephiAxes(dry_adiabat_locator=tephi.Locator(10))
         tephigram.plot(self.dews)
         self.check_graphic(nodeid)
 
     def test_plot_dews_locator_numeric(self, nodeid):
-        tephigram = Tephigram(isotherm_locator=10, dry_adiabat_locator=10)
+        tephigram = TephiAxes(isotherm_locator=10, dry_adiabat_locator=10)
         tephigram.plot(self.dews)
         self.check_graphic(nodeid)
 
     def test_plot_dews_locator_object(self, nodeid):
         locator = tephi.Locator(10)
-        tephigram = Tephigram(
+        tephigram = TephiAxes(
             isotherm_locator=locator, dry_adiabat_locator=locator
         )
         tephigram.plot(self.dews)
         self.check_graphic(nodeid)
 
-    def test_plot_anchor(self, nodeid):
-        tephigram = Tephigram(anchor=[(1000, 0), (300, 0)])
+    def test_plot_xylim(self, nodeid):
+        tephigram = TephiAxes(xylim=[(0, 0), (40, 200)])
         tephigram.plot(self.dews)
         self.check_graphic(nodeid)
 
+    def test_add_wet_adiabats(self, nodeid):
+        # the xylim is needed so that the isopleths actually appear
+        tephigram = TephiAxes(xylim=[(0, 0), (40, 70)])
+
+        tephigram.add_wet_adiabats()
+        self.check_graphic(nodeid)
+
+    def test_add_humidity_mixing_ratios(self, nodeid):
+        # the xylim is needed so that the isopleths actually appear
+        tephigram = TephiAxes(xylim=[(0, 0), (40, 70)])
+
+        tephigram.add_mixing_ratios()
+        self.check_graphic(nodeid)
+
+    def test_add_isobars(self, nodeid):
+        # the xylim is needed so that the isopleths actually appear
+        tephigram = TephiAxes(xylim=[(0, 0), (40, 70)])
+
+        tephigram.add_isobars()
+        self.check_graphic(nodeid)
 
 @pytest.mark.graphical
 @pytest.mark.usefixtures("close_plot", "nodeid")
 class TestTephigramBarbs(tests.GraphicsTest):
     @pytest.fixture(autouse=True)
-    def setup(self):
+    def _setup(self):
         self.dews = _expected_dews.T
         self.temps = _expected_temps.T
         magnitude = np.hstack(([0], np.arange(20) * 5 + 2, [102]))
         self.barbs = [(m, 45, 1000 - i * 35) for i, m in enumerate(magnitude)]
+        self.tephigram = TephiAxes()
 
     def test_rotate(self, nodeid):
-        tephigram = Tephigram()
-        profile = tephigram.plot(self.temps)
+        profile = self.tephigram.plot(self.temps)
         profile.barbs(
             [
                 (0, 0, 900),
@@ -246,43 +271,53 @@ class TestTephigramBarbs(tests.GraphicsTest):
         self.check_graphic(nodeid)
 
     def test_barbs(self, nodeid):
-        tephigram = Tephigram()
-        profile = tephigram.plot(self.temps)
+        profile = self.tephigram.plot(self.temps)
         profile.barbs(self.barbs, zorder=10)
         self.check_graphic(nodeid)
 
     def test_barbs_from_file(self, nodeid):
-        tephigram = Tephigram()
         dews = _expected_barbs.T[:, :2]
         barbs = np.column_stack(
             (_expected_barbs[2], _expected_barbs[3], _expected_barbs[0])
         )
-        profile = tephigram.plot(dews)
-        profile.barbs(barbs, zorder=10)
+        profile = self.tephigram.plot(dews)
+        profile.barbs(barbs, zorder=200)
         self.check_graphic(nodeid)
 
     def test_gutter(self, nodeid):
-        tephigram = Tephigram()
-        profile = tephigram.plot(self.temps)
+        profile = self.tephigram.plot(self.temps)
         profile.barbs(self.barbs, gutter=0.5, zorder=10)
         self.check_graphic(nodeid)
 
     def test_length(self, nodeid):
-        tephigram = Tephigram()
-        profile = tephigram.plot(self.temps)
+        profile = self.tephigram.plot(self.temps)
         profile.barbs(self.barbs, gutter=0.9, length=10, zorder=10)
         self.check_graphic(nodeid)
 
     def test_color(self, nodeid):
-        tephigram = Tephigram()
-        profile = tephigram.plot(self.temps)
+        profile = self.tephigram.plot(self.temps)
         profile.barbs(self.barbs, color="green", zorder=10)
         self.check_graphic(nodeid)
 
     def test_pivot(self, nodeid):
-        tephigram = Tephigram()
-        tprofile = tephigram.plot(self.temps)
+        tprofile = self.tephigram.plot(self.temps)
         tprofile.barbs(self.barbs, gutter=0.2, pivot="tip", length=8)
-        dprofile = tephigram.plot(self.dews)
+        dprofile = self.tephigram.plot(self.dews)
         dprofile.barbs(self.barbs, gutter=0.3, pivot="middle", length=8)
+        self.check_graphic(nodeid)
+
+class TestSubplots(tests.GraphicsTest):
+    @pytest.fixture(autouse=True)
+    def _setup(self):
+        self.dews = _expected_dews.T
+        self.temps = _expected_temps.T
+
+    def test_subplot(self, nodeid):
+        tephi_one = TephiAxes(133)
+        tephi_two = TephiAxes((1,3,1))
+
+        tephi_one.plot(self.temps)
+        tephi_one.plot(self.dews)
+        tephi_two.plot(self.dews)
+
         self.check_graphic(nodeid)

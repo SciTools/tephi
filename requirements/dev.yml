@@ -4,6 +4,7 @@ channels:
   - nodefaults
 dependencies:
   - matplotlib>=3.10
+  - shapely
   - numpy
   - scipy
   - pip
