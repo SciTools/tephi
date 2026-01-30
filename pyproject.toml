@@ -37,7 +37,7 @@ license = "BSD-3-Clause"
 license-files = ["LICENSE"]
 name = "tephi"
 requires-python = ">=3.10"
-dependencies = ["matplotlib", "numpy", "scipy". "shapely"]
+dependencies = ["matplotlib", "numpy", "scipy", "shapely"]
 
 [project.urls]
 Code = "https://github.com/SciTools/tephi"
