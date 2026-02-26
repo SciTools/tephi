@@ -87,10 +87,6 @@ Here it is used to load the third example data set that contains four columns of
 Plotting tephigram data
 -----------------------
 
-.. note::
-   Tephigram *subplots* are currently **not** supported.
-
-
 Plotting a single data set
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
