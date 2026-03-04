@@ -248,7 +248,7 @@ class TephiAxes(Subplot):
             raise ValueError(msg.format(*args))
 
         # Process the kwargs
-        figure = kwargs.get("figure")
+        figure = kwargs.pop("figure", None)
         if figure is None:
             figure = plt.gcf()
 
