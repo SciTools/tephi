@@ -304,8 +304,6 @@ class TephiAxes(Subplot):
         )
 
         # Create each axis.
-        self.axis["isotherm"] = self.new_floating_axis(1, 0)
-        self.axis["theta"] = self.new_floating_axis(0, 0)
         self.axis["left"].get_helper().nth_coord_ticks = 0
         self.axis["left"].toggle(all=True)
         self.axis["bottom"].get_helper().nth_coord_ticks = 1
@@ -332,28 +330,21 @@ class TephiAxes(Subplot):
         axis.major_ticklabels.set_va("bottom")
         axis.major_ticklabels.set_rotation(-45)
 
-        # Isotherms: lines of constant temperature (degC).
-        axis = self.axis["isotherm"]
-        axis.set_axis_direction("right")
-        axis.set_axislabel_direction("-")
-        axis.major_ticklabels.set_rotation(90)
-        axis.major_ticklabels.set_fontsize(8)
-        axis.major_ticklabels.set_va("bottom")
-        axis.major_ticklabels.set_color("grey")
-        axis.major_ticklabels.set_visible(False)  # Turned-off
-        axis.major_ticklabels.set_clip_box(self.bbox)
-
-        # Dry adiabats: lines of constant potential temperature (degC).
-        axis = self.axis["theta"]
-        axis.set_axis_direction("right")
-        axis.set_axislabel_direction("+")
-        axis.major_ticklabels.set_fontsize(8)
-        axis.major_ticklabels.set_va("bottom")
-        axis.major_ticklabels.set_color("grey")
-        axis.major_ticklabels.set_visible(False)  # Turned-off
-        axis.major_ticklabels.set_clip_box(self.bbox)
-        axis.line.set_linewidth(3)
-        axis.line.set_linestyle("--")
+        # Reference lines for T=0 (isotherm) and theta=0 (dry adiabat).
+        xy_baselines = transforms.convert_Tt2xy(
+            *np.transpose([
+                [0.0, 0.0],     # Origin
+                [1.0, 0.0],     # Isotherm: T=0, theta varies.
+                [0.0, 1.0],     # Dry adiabat: theta=0, T varies.
+            ])
+        )
+        origin, isotherm, adiabat = np.array(xy_baselines).T
+        self._isotherm_line = self.axline(
+            origin, isotherm, color="black", linewidth=1, linestyle="-", zorder=2,
+        )
+        self._theta_line = self.axline(
+            origin, adiabat, color="black", linewidth=3, linestyle="--", zorder=2,
+        )
 
         # Lock down the aspect ratio.
         self.set_aspect("equal")
