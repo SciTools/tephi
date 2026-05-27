@@ -87,10 +87,6 @@ Here it is used to load the third example data set that contains four columns of
 Plotting tephigram data
 -----------------------
 
-.. note::
-   Tephigram *subplots* are currently **not** supported.
-
-
 Plotting a single data set
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -216,6 +212,6 @@ To fix the extent of a plot, simply specify an :term:`xylim` point to the tephig
    dew_point = os.path.join(tephi.DATA_DIR, 'dews.txt')
    dew_data = tephi.loadtxt(dew_point, column_titles=('pressure', 'dewpoint'))
    dews = zip(dew_data.pressure, dew_data.dewpoint)
-   tpg = tephi.TephiAxes(xylim=[(1000, 0), (300, 0)])
+   tpg = tephi.TephiAxes(xylim=[(0, 0), (0, 115)])
    tpg.plot(dews)
    plt.show()
